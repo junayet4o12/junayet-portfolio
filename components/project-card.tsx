@@ -14,8 +14,10 @@ import {
 } from "./ui/dialog";
 import { ScrollArea } from "./ui/scroll-area";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
+import { useState } from "react";
 
 export default function ProjectCard({ project }: { project: ProjectType }) {
+  const [open, setOpen] = useState(false)
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -33,7 +35,8 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
   return (
     <motion.div variants={fadeInUp} className="h-full flex flex-col">
       <Card className="bg-background border-none overflow-hidden group h-full flex flex-col">
-        <div className="relative h-64 md:h-80">
+        
+        <div onClick={() => setOpen(true)} className="relative h-64 md:h-80 cursor-pointer">
           <motion.div
           >
             <Image
@@ -46,7 +49,8 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
         </div>
 
         <motion.div
-          className="p-6 space-y-3 flex-grow"
+          onClick={() => setOpen(true)}
+          className="p-6 space-y-3 flex-grow cursor-pointer"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -86,7 +90,7 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
         {/* Actions Bar */}
         <div className="px-6 pb-6 pt-2 flex justify-between items-center">
           {/* View Details Button - Opens Modal */}
-          <Dialog>
+          <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button
                 variant="ghost"
@@ -240,7 +244,7 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
                     </div>
                   </div>
 
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <h2 className="text-lg font-bold mb-3">Features</h2>
                       <div className="grid gap-4">
@@ -280,8 +284,8 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
                         </div>
                       </div>
                     </div>
-  
-                 </div>
+
+                  </div>
                   {/* Tags */}
                   <div>
                     <h3 className="text-lg font-medium mb-3">Tags</h3>

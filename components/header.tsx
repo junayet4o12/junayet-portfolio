@@ -10,7 +10,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui
 import { ThemeToggle } from './theme-toggle';
 const navItems = [
     { name: 'HOME', icon: <Home size={16} />, href: '#hero' },
-    { name: 'ABOUT', icon: <User size={16} />, href: '#success' },
+    { name: 'ABOUT', icon: <User size={16} />, href: '#about' },
     { name: 'EXPERIENCE', icon: <Briefcase size={16} />, href: '#experience' },
     { name: 'PORTFOLIO', icon: <ImageIcon size={16} />, href: '#projects' },
     { name: 'CONTACT', icon: <FileText size={16} />, href: '#contact' },
@@ -53,7 +53,7 @@ export default function Header() {
             <div className="bg-muted border-b border-border z-20 relative h-12">
                 <div className="container mx-auto px-4 h-12 flex items-center justify-between">
                     <div className="text-muted-foreground text-sm">
-                        ELEMENTOR IS GREAT WORDPRESS...
+                        Others burned by Mern...
                     </div>
                     <div className="flex items-center gap-4">
                         {[Facebook, Twitter, Linkedin, Instagram].map((Icon, index) => (
@@ -81,7 +81,7 @@ export default function Header() {
                     <div className="flex items-center justify-between">
                         <Link href="/" className="flex items-center gap-2">
                             <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                                <span className="text-background font-bold">J</span>
+                                <span className="font-bold">J</span>
                             </div>
                             <span className="text-foreground text-xl font-bold">JUNAYET</span>
                         </Link>

@@ -1,71 +1,46 @@
 'use client'
 
 import { motion } from "framer-motion"
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Code2, UsersRound, Workflow } from 'lucide-react'
+import SectionTitle from "./section-title";
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen relative">
-      {/* Gradient Background */}
-      <div className="relative container mx-auto px-4">
+    <div className="bg-muted/30">
+      <div className="relative container mx-auto px-4 py-24 ">
 
         {/* Content */}
-        <div className="relative z-10">
+        <div className="relative z-10 space-y-16">
           {/* Header Section */}
-          <div className="pt-24 pb-20 ">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-primary font-medium tracking-wider text-sm mb-4">
-                WHAT WE DO
-              </h2>
-            </motion.div>
-
-            <div className="flex flex-col lg:flex-row justify-between items-start gap-8">
-              <motion.h1
-                className="text-4xl md:text-5xl xl:text-6xl font-bold tracking-tight"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                SERVICES AND{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary/70 to-primary">
-                  SOLUTIONS
-                </span>
-              </motion.h1>
-
-              <motion.p
-                className="text-muted-foreground text-lg md:max-w-xl leading-relaxed"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-              >
-                Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit. Sint Ratione Reprehenderit, Error Qui Enim Sit Ex Provident
-              </motion.p>
-            </div>
-          </div>
-
+          <SectionTitle
+            subtitle="I specialize in building modern web applications with clean code, scalable architecture, and elegant UI using the MERN stack and Tailwind."
+            title1="WHAT I DO"
+            title2={{ base: 'MY SERVICES &', active: ' EXPERTISE' }}
+          />
           {/* Services Grid */}
           <div className="pb-24">
             <div className="grid md:grid-cols-3 gap-8">
               <ServiceCard
-                icon={<DesignIcon />}
-                title="DESIGN PRINCIPLES"
+                icon={<Code2 className="w-10 h-10 text-primary" />}
+                title="MERN STACK DEVELOPMENT"
+                description="Modern full-stack apps using MongoDB, Express, React, and Node.js with clean code, REST APIs, and secure architecture."
                 delay={0.2}
                 isActive={false}
               />
+
               <ServiceCard
-                icon={<ValuesIcon />}
-                title="UNIQUE VALUES"
-                delay={0.4}
+                icon={<Workflow className="w-10 h-10 text-primary" />}
+                title="INDUSTRY-STANDARD WORKFLOW"
+                description="Using professional workflows including branching strategies, pull requests, code reviews, and modular design for maintainability."
+                delay={0.6}
                 isActive={true}
               />
+
               <ServiceCard
-                icon={<ComponentsIcon />}
-                title="STYLE COMPONENTS"
-                delay={0.6}
+                icon={<UsersRound className="w-10 h-10 text-primary" />}
+                title="TEAM-BASED MERN PROJECTS"
+                description="Built scalable MERN apps with teammates, managing roles like frontend/backend, deployment, and API design collaboratively."
+                delay={0.8}
                 isActive={false}
               />
             </div>
@@ -81,9 +56,10 @@ interface ServiceCardProps {
   title: string;
   delay: number;
   isActive?: boolean;
+  description: string;
 }
 
-function ServiceCard({ icon, title, delay, isActive = false }: ServiceCardProps) {
+function ServiceCard({ icon, title, delay, isActive = false, description }: ServiceCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -125,7 +101,7 @@ function ServiceCard({ icon, title, delay, isActive = false }: ServiceCardProps)
     text-sm leading-relaxed mb-8
     ${isActive ? 'text-foreground/90' : 'text-muted-foreground group-hover:text-foreground'}
   `}>
-          Need A Project Completed By An Expert? Let&lsquo;s Go! Access A Human Resources Consultant To Answer Questions
+         {description}
         </p>
 
         <div className={`relative

@@ -19,9 +19,9 @@ const personalInfo = [
   { label: "Languages", value: "Bangla (native), English" },
   { label: "Profession", value: "MERN Stack Developer" },
 ];
-export default function SuccessSection() {
+export default function AboutSection() {
   return (
-    <section id="success" className="text-foreground py-20">
+    <section id="about" className="text-foreground py-20">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-8 items-center">
           {/* Left: Video/Image Preview */}

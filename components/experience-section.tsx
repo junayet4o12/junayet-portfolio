@@ -1,32 +1,21 @@
 import { Card } from "@/components/ui/card"
+import SectionTitle from "./section-title"
+import { Technology, TechnologyCategory } from "@/type"
+import { experiences } from "@/data/experiences&Technologies/experiences"
+import { technologyCategories } from "@/data/experiences&Technologies/technologies"
 import { motion } from "framer-motion"
-import {
-  Database,
-  Terminal,
-  Globe,
-  GitBranch,
-  Server,
-  Settings,
-  Cloud,
-  Layout,
-  LayoutGrid,
-} from "lucide-react"
-import { FaCode, FaCss3Alt, FaDatabase, FaEnvelope, FaGithub, FaHtml5, FaMoneyBill, FaNodeJs, FaReact, FaRoute, FaStripe } from "react-icons/fa6"
-import { FiBox } from "react-icons/fi"
-import { RiNpmjsFill, RiTailwindCssFill, RiVercelLine } from "react-icons/ri"
-import { SiExpress, SiFirebase, SiJsonwebtokens, SiMui, SiNetlify, SiPostman, SiRedux, SiSocketdotio, SiStrapi, SiTypescript } from "react-icons/si"
-import { VscVscode } from "react-icons/vsc"
 
+// Refined animations with slightly more subtle effects
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 15 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
+  transition: { duration: 0.6, ease: "easeOut" }
 }
 
 const staggerContainer = {
   animate: {
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.08
     }
   }
 }
@@ -38,32 +27,26 @@ interface ExperienceCardProps {
   index: number
 }
 
-interface ExperienceData {
-  period: string
-  organization: string
-  description: string[]
-}
-
-interface Technology {
-  name: string
-  icon: React.ReactNode
-}
-
-interface TechnologyCategory {
-  name: string
-  icon: React.ReactNode
-  technologies: Technology[]
-}
-
 function ExperienceCard({ period, organization, description }: ExperienceCardProps) {
   return (
     <motion.div variants={fadeInUp}>
-      <Card className="bg-muted border-none p-6 space-y-4 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 h-full">
-        <p className="text-muted-foreground">{period}</p>
-        <h3 className="text-primary text-xl font-bold">{organization}</h3>
-        {description.map((line, index) => (
-          <p key={index} className="text-sm text-muted-foreground">{line}</p>
-        ))}
+      <Card className="bg-background border border-border/30 p-7 space-y-4 hover:shadow-lg transition-all duration-300 h-full relative overflow-hidden">
+        {/* Subtle accent line on the left side */}
+        <div className="absolute left-0 top-0 w-1 h-full bg-primary" />
+        
+        <div className="pl-2">
+          <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">{period}</p>
+          <h3 className="text-foreground text-xl font-bold mt-2">{organization}</h3>
+          
+          <div className="mt-4 space-y-2">
+            {description.map((line, index) => (
+              <div key={index} className="flex items-start">
+                <div className="text-primary mr-2 mt-1">•</div>
+                <p className="text-muted-foreground">{line}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </Card>
     </motion.div>
   );
@@ -72,13 +55,13 @@ function ExperienceCard({ period, organization, description }: ExperienceCardPro
 function TechnologyCard({ tech }: { tech: Technology }) {
   return (
     <motion.div
-      className="group flex flex-col items-center justify-center p-4 bg-muted rounded-xl hover:bg-background transition-all duration-300"
-      whileHover={{ y: -5 }}
+      className="group flex flex-col items-center justify-center p-4 bg-background border border-border/30 rounded-lg hover:border-primary/40 transition-all duration-300"
+      whileHover={{ y: -3, transition: { duration: 0.2 } }}
     >
-      <div className="text-primary mb-2 transition-transform duration-300 group-hover:scale-110">
+      <div className="text-primary mb-3 transition-transform duration-300 group-hover:scale-105 text-xl">
         {tech.icon}
       </div>
-      <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors duration-300">
+      <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-300">
         {tech.name}
       </span>
     </motion.div>
@@ -90,16 +73,17 @@ function CategorySection({ category }: { category: TechnologyCategory }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.7 }}
       className="space-y-6"
     >
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-3 pb-2 border-b border-border/50">
         <div className="text-primary w-8 h-8">
           {category.icon}
         </div>
         <h3 className="text-xl font-bold text-foreground">{category.name}</h3>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
         {category.technologies.map((tech, index) => (
           <TechnologyCard key={index} tech={tech} />
         ))}
@@ -109,144 +93,55 @@ function CategorySection({ category }: { category: TechnologyCategory }) {
 }
 
 export default function ExperienceSection() {
-  const experiences: ExperienceData[] = [
-    {
-      period: "June 1 - September 1, 2024",
-      organization: "Universe IT Institute",
-      description: [
-        "Completed a 3-month internship as a MERN Stack Developer.",
-        "Gained hands-on experience in full-stack development using React, Node.js, MongoDB, and Express.",
-        "Collaborated on real-world projects to enhance technical and teamwork skills."
-      ]
-    },
-    {
-      period: "October 2024 - Present",
-      organization: "Developer Look",
-      description: [
-        "Currently working as a developer.",
-        "Focusing on building robust and efficient web applications using the MERN stack.",
-        "Enhancing coding proficiency and project management skills."
-      ]
-    },
-    {
-      period: "February - April 2024",
-      organization: "Team Collaboration",
-      description: [
-        "Participated in a dedicated team for practicing and improving skills.",
-        "Worked on problem-solving tasks and mock projects to strengthen team collaboration.",
-        "Focused on continuous learning and sharing knowledge with peers."
-      ]
-    }
-  ]
-
-  const technologyCategories: TechnologyCategory[] = [
-    {
-      name: "Frontend Development",
-      icon: <Layout className="w-full h-full" />,
-      technologies: [
-        { name: "React.js", icon: <FaReact className="text-2xl" /> },
-        { name: "Next.js", icon: <Globe size={24} /> },
-        { name: "TypeScript", icon: <SiTypescript className="text-2xl" /> },
-        { name: "Redux", icon: <SiRedux className="text-2xl" /> },
-        { name: "Redux-Persist", icon: <SiRedux className="text-2xl" /> },
-        { name: "Tailwind CSS", icon: <RiTailwindCssFill className="text-2xl" /> },
-        { name: "Material-UI", icon: <SiMui className="text-2xl" /> },
-        { name: "Shadcn", icon: <LayoutGrid size={24} /> },
-        { name: "TanStack Query", icon: <FaDatabase className="text-2xl" /> },
-        { name: "React Router DOM", icon: <FaRoute className="text-2xl" /> },
-        { name: "HTML5", icon: <FaHtml5 className="text-2xl" /> },
-        { name: "CSS3", icon: <FaCss3Alt className="text-2xl" /> }
-      ]
-    },
-    {
-      name: "Backend Development",
-      icon: <Server className="w-full h-full" />,
-      technologies: [
-        { name: "Node.js", icon: <FaNodeJs className="text-2xl" /> },
-        { name: "Express.js", icon: <SiExpress className="text-2xl" /> },
-        { name: "MongoDB", icon: <Database size={24} /> },
-        { name: "Mongoose", icon: <Database size={24} /> },
-        { name: "REST APIs", icon: <Globe size={24} /> },
-        { name: "Socket.io", icon: <SiSocketdotio className="text-2xl" /> },
-        { name: "JWT", icon: <SiJsonwebtokens className="text-2xl" /> },
-        { name: "Zod", icon: <FaCode className="text-2xl" /> },
-        { name: "Nodemailer", icon: <FaEnvelope className="text-2xl" /> },
-        { name: "Strapi", icon: <SiStrapi className="text-2xl" /> },
-      ]
-    },
-    {
-      name: "Development Tools",
-      icon: <Settings className="w-full h-full" />,
-      technologies: [
-        { name: "Git", icon: <GitBranch size={24} /> },
-        { name: "GitHub", icon: <FaGithub className="text-2xl" /> },
-        { name: "VS Code", icon: <VscVscode className="text-2xl" /> },
-        { name: "Postman", icon: <SiPostman className="text-2xl" /> },
-        { name: "npm", icon: <RiNpmjsFill className="text-2xl" /> },
-        { name: "MongoDB Compass", icon: <Database size={24} /> },
-        { name: "Terminal", icon: <Terminal size={24} /> },
-        { name: "Cursor", icon: <FiBox className="text-2xl" /> }
-      ]
-    },
-    {
-      name: "Deployment & Testing",
-      icon: <Cloud className="w-full h-full" />,
-      technologies: [
-        { name: "Vercel", icon: <RiVercelLine className="text-2xl" /> },
-        { name: "Netlify", icon: <SiNetlify className="text-2xl" /> },
-        { name: "SSLCommerz", icon: <FaMoneyBill className="text-2xl" /> },
-        { name: "Firebase", icon: <SiFirebase className="text-2xl" /> },
-        { name: "Stripe", icon: <FaStripe className="text-2xl" /> }
-      ]
-    }
-  ];
-  
-
   return (
-    <section id="experience" className="text-foreground py-20">
-    <div className="container mx-auto px-4">
-      <div className="space-y-16">
-        {/* Header */}
-        <motion.div 
-          className="text-center space-y-6"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3 className="text-primary font-bold">MY EXPERIENCE</h3>
-          <h2 className="text-4xl md:text-5xl font-bold">
-            Experience & <span className="text-primary">Technologies</span>
-          </h2>
-          <div className="max-w-2xl mx-auto">
-            <p className="text-muted-foreground text-lg">
-              A MERN stack developer focused on building scalable and efficient web applications
-              with modern technologies.
-            </p>
+    <section id="experience" className="text-foreground py-24 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <div className="space-y-20">
+          {/* Header */}
+          <SectionTitle
+            subtitle="A MERN stack developer focused on building scalable and efficient web applications with modern technologies."
+            title1="PROFESSIONAL JOURNEY"
+            title2={{
+              base: 'Experience &',
+              active: 'Technical Expertise'
+            }}
+          />
+          
+          {/* Experience Cards */}
+          <div className="relative">
+            <motion.div
+              className="grid md:grid-cols-3 gap-6"
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              {experiences.map((exp, index) => (
+                <ExperienceCard key={index} {...exp} index={index} />
+              ))}
+            </motion.div>
+            
+            {/* Subtle decorative element */}
+            <div className="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-primary/5 blur-3xl opacity-70" />
           </div>
-        </motion.div>
-  
-        {/* Experience Cards */}
-        <motion.div 
-          className="grid md:grid-cols-3 gap-6"
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-        >
-          {experiences.map((exp, index) => (
-            <ExperienceCard key={index} {...exp} index={index} />
-          ))}
-        </motion.div>
-  
-        {/* Technology Categories */}
-        <div className="space-y-12">
-          {technologyCategories.map((category, index) => (
-            <CategorySection key={index} category={category} />
-          ))}
+
+          {/* Technology Categories */}
+          <div className="space-y-16 pt-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground">
+                Technical <span className="text-primary">Proficiencies</span>
+              </h2>
+              <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
+                Technologies and tools I've mastered throughout my professional career
+              </p>
+            </div>
+            
+            {technologyCategories.map((category, index) => (
+              <CategorySection key={index} category={category} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
   )
 }
