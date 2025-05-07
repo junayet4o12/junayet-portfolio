@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion } from "framer-motion"
@@ -9,81 +7,14 @@ import { useRef } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import { projects } from '@/data/projects/projects'
+import ProjectCard from './project-card'
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
-}
 
-interface ProjectCardProps {
-  imageUrl: string;
-  title: string;
-  description: string;
-}
-
-const ProjectCard: React.FC<ProjectCardProps> = ({ imageUrl, title, description }) => {
-  return (
-    <motion.div variants={fadeInUp}>
-      <Card className="bg-background border-none overflow-hidden group h-full">
-        <div className="relative h-64 md:h-80">
-          <motion.div
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Image
-              src={imageUrl}
-              alt={title}
-              fill
-              className="object-cover transition-transform duration-300"
-            />
-          </motion.div>
-        </div>
-        <motion.div
-          className="p-6 space-y-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-         <h3 className="text-xl font-bold text-foreground">{title}</h3>
-         <p className="text-muted-foreground">{description}</p>
-        </motion.div>
-      </Card>
-    </motion.div>
-  )
-}
 
 export default function LatestProjectsSection() {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
-
-  const projects = [
-    {
-      imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-01-10%20121120-xiYXh8v0bkNUkTNngtphblD11mxVyx.png",
-      title: "Food Service Website",
-      description: "We serve food but with a purpose."
-    },
-    {
-      imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-01-10%20121120-xiYXh8v0bkNUkTNngtphblD11mxVyx.png",
-      title: "Architecture Company Website",
-      description: "We do big things with big ideas."
-    },
-    {
-      imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-01-10%20121120-xiYXh8v0bkNUkTNngtphblD11mxVyx.png",
-      title: "Catering Service Website",
-      description: "Catering by chefs for people with taste buds."
-    },
-    {
-      imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-01-10%20121120-xiYXh8v0bkNUkTNngtphblD11mxVyx.png",
-      title: "Catering Service Website",
-      description: "Catering by chefs for people with taste buds."
-    },
-    {
-      imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-01-10%20121120-xiYXh8v0bkNUkTNngtphblD11mxVyx.png",
-      title: "Catering Service Website",
-      description: "Catering by chefs for people with taste buds."
-    }
-  ]
 
   return (
     <section id="projects" className=" py-24">
@@ -188,7 +119,7 @@ export default function LatestProjectsSection() {
             >
               {projects.map((project, index) => (
                 <SwiperSlide key={index}>
-                  <ProjectCard {...project} />
+                  <ProjectCard project={project} />
                 </SwiperSlide>
               ))}
             </Swiper>

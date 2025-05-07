@@ -9,7 +9,7 @@ export default function HeroSection() {
 
 
   return (
-    <section id="hero" className="relative flex max-h-[calc(100vh-120px)]  items-center justify-center text-foreground overflow-hidden z-10">
+    <section id="hero" className="relative flex max-h-[calc(100vh-120px)]  items-center justify-center overflow-hidden z-10">
       {/* Hero Section */}
       <main className="container mx-auto px-4 pt-16 flex-1 flex">
         <div className=" lg:grid-cols-2 gap-8 items-center hidden lg:grid">
@@ -19,7 +19,7 @@ export default function HeroSection() {
                 <span className="text-primary inline-block transform hover:scale-105 transition-transform duration-300">
                   Junayet Alam
                 </span>{" "}
-                <span className="text-foreground">
+                <span className="">
                   Mern Stack Developer
                 </span>
               </h1>
@@ -41,8 +41,8 @@ export default function HeroSection() {
             />
           </div>
         </div>
-        <Card className="lg:hidden">
-          <CardContent className="grid lg:grid-cols-2 gap-8 items-center flex-1 ">
+        <Card className="lg:hidden w-full">
+          <CardContent className="grid lg:grid-cols-2 gap-8 items-center flex-1 w-full">
             <div className="relative w-full aspect-[4/3] md:aspect-[4/2]">
               <Image
                 src={profile}
@@ -57,7 +57,7 @@ export default function HeroSection() {
                 <span className="text-primary inline-block transform hover:scale-105 transition-transform duration-300">
                   Junayet Alam
                 </span>{" "}
-                <span className="text-foreground">
+                <span className="">
                   Mern Stack Developer
                 </span>
               </h1>

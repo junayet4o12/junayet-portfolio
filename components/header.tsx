@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { Home, User, Briefcase, Image as ImageIcon, FileText } from 'lucide-react';
 import Link from 'next/link';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
+import { ThemeToggle } from './theme-toggle';
 const navItems = [
     { name: 'HOME', icon: <Home size={16} />, href: '#hero' },
     { name: 'ABOUT', icon: <User size={16} />, href: '#success' },
@@ -64,7 +65,7 @@ export default function Header() {
                                 <Icon size={16} />
                             </Link>
                         ))}
-                        <Button variant="default" className="bg-primary hover:bg-primary/80 text-background ml-4">
+                        <Button variant="default" className="bg-primary hover:bg-primary/80 ml-4">
                             Contact Me
                         </Button>
                     </div>
@@ -103,32 +104,42 @@ export default function Header() {
                                 </Link>
                             ))}
                         </div>
-
-                        {/* Mobile Menu */}
-                        <Sheet>
-                            <SheetTrigger asChild>
-                                <Button variant="ghost" className="text-foreground md:hidden">
-                                    <Menu />
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent side="right" className="backdrop-blur-sm border-l border-border">
-                                <SheetHeader>
-                                    <SheetTitle className="text-foreground">Menu</SheetTitle>
-                                </SheetHeader>
-                                <div className="flex flex-col gap-4 mt-8">
-                                    {navItems.map((item) => (
-                                        <Link
-                                            key={item.name}
-                                            href={item.href}
-                                            className="text-foreground hover:text-primary transition-colors duration-200 flex items-center gap-3 p-2"
-                                        >
-                                            {item.icon}
-                                            {item.name}
-                                        </Link>
-                                    ))}
-                                </div>
-                            </SheetContent>
-                        </Sheet>
+                        <div className='flex gap-2'>
+                            <ThemeToggle />
+                            {/* Mobile Menu */}
+                            <div className='md:hidden'>
+                                <Sheet>
+                                    <SheetTrigger asChild>
+                                        <Button variant="ghost" className="text-foreground">
+                                            <Menu />
+                                        </Button>
+                                    </SheetTrigger>
+                                    <SheetContent side="right" className="backdrop-blur-sm">
+                                        <SheetHeader>
+                                            <SheetTitle className="text-foreground">Menu</SheetTitle>
+                                        </SheetHeader>
+                                        <div className="flex flex-col gap-8 mt-8 px-4 ">
+                                            {navItems.map((item) => (
+                                                <Link
+                                                    key={item.name}
+                                                    href={item.href}
+                                                    onClick={(e) => scrollToSection(e, item.href)}
+                                                    className="text-foreground hover:text-primary transition-colors duration-200 flex items-center gap-2 group"
+                                                >
+                                                    <span className="transform group-hover:scale-110 transition-transform duration-200">
+                                                        {item.icon}
+                                                    </span>
+                                                    <span className="relative overflow-hidden">
+                                                        {item.name}
+                                                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                                                    </span>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </SheetContent>
+                                </Sheet>
+                            </div>
+                        </div>
                     </div>
                 </nav>
             </header>
