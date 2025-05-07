@@ -12,18 +12,21 @@ import ServicesSection from "@/components/services-section"
 
 
 export default function SyntheticV0PageForDeployment() {
-  return <div className="">
+  return <div className="relative">
+
+    
     <Header />
-   <div className="overflow-x-hidden relative">
-      <HeroSection/>
+
+    <div className="overflow-x-hidden relative">
+      <HeroSection />
       <AboutSection />
       <ExperienceSection />
       <LatestProjectsSection />
       <ServicesSection />
       <ContactSection />
       <Footer />
-      <ScrollTop/>
-   </div>
+      <ScrollTop />
+    </div>
 
   </div>
 }

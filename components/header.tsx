@@ -1,8 +1,8 @@
 'use client'
 import { Button } from '@/components/ui/button';
 
-import { Menu } from 'lucide-react';
-import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Github, Menu } from 'lucide-react';
+import { Facebook, Linkedin } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Home, User, Briefcase, Image as ImageIcon, FileText } from 'lucide-react';
 import Link from 'next/link';
@@ -56,15 +56,31 @@ export default function Header() {
                         Others burned by Mern...
                     </div>
                     <div className="flex items-center gap-4">
-                        {[Facebook, Twitter, Linkedin, Instagram].map((Icon, index) => (
-                            <Link
-                                key={index}
-                                href="#"
-                                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                            >
-                                <Icon size={16} />
-                            </Link>
-                        ))}
+                        <Link
+                            href="https://www.facebook.com/junayet4012/"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="Facebook"
+                            className="text-muted-foreground hover:text-primary">
+                            <Facebook size={20} />
+                        </Link>
+
+                        <Link
+                            href="https://www.linkedin.com/in/junayet-alam/"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="LinkedIn"
+                            className="text-muted-foreground hover:text-primary">
+                            <Linkedin size={20} />
+                        </Link>
+                        <Link
+                            href="https://github.com/junayet4o12"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="GitHub"
+                            className="text-muted-foreground hover:text-primary">
+                            <Github size={20} />
+                        </Link>
                         <Button variant="default" className="bg-primary hover:bg-primary/80 ml-4">
                             Contact Me
                         </Button>
