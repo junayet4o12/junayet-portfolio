@@ -16,7 +16,7 @@ export default function SyntheticV0PageForDeployment() {
 
     <Header />
     
-    <div className="overflow-x-hidden relative">
+    <div className="overflow-x-hidden relative ">
       <HeroSection />
       <AboutSection />
       <ExperienceSection />

@@ -1,11 +1,12 @@
 'use client'
 
 import { Button } from '@/components/ui/button';
-import { Github, ArrowUpRight, Mail,  Code } from 'lucide-react';
+import { Github, Menu, ArrowUpRight, Mail, Code } from 'lucide-react';
 import { Facebook, Linkedin } from 'lucide-react';
-import { cloneElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Home, User, Briefcase, Image as ImageIcon, FileText } from 'lucide-react';
 import Link from 'next/link';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { ThemeToggle } from './theme-toggle';
 import { motion } from 'framer-motion';
 
@@ -16,7 +17,8 @@ const navItems = [
     { name: 'PORTFOLIO', icon: <ImageIcon size={16} />, href: '#projects' },
     { name: 'SERVICE', icon: <Code size={16} />, href: '#services' },
     { name: 'CONTACT', icon: <FileText size={16} />, href: '#contact' },
-  ];
+];
+
 export default function Header() {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -41,14 +43,14 @@ export default function Header() {
                 } else {
                     setIsVisible(false);
                 }
-                
+
                 // Add shadow when scrolled
                 if (window.scrollY > 20) {
                     setIsScrolled(true);
                 } else {
                     setIsScrolled(false);
                 }
-                
+
                 setLastScrollY(window.scrollY);
             }
         };
@@ -57,7 +59,7 @@ export default function Header() {
         const handleScroll = () => {
             const sections = navItems.map(item => item.href);
             let currentSection = '#hero';
-            
+
             for (const section of sections) {
                 const element = document.querySelector(section);
                 if (element) {
@@ -68,7 +70,7 @@ export default function Header() {
                     }
                 }
             }
-            
+
             setActiveSection(currentSection);
         };
 
@@ -133,13 +135,11 @@ export default function Header() {
 
             {/* Navigation */}
             <header
-                className={`sticky top-0 z-50 transition-all duration-300 ${
-                    isVisible ? 'translate-y-0' : '-translate-y-full'
-                } ${
-                    isScrolled 
-                        ? 'bg-background/80 backdrop-blur-md shadow-sm border-b border-border/50' 
+                className={`sticky top-0 z-50 transition-all duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'
+                    } ${isScrolled
+                        ? 'bg-background/80 backdrop-blur-md shadow-sm border-b border-border/50'
                         : 'bg-background/60 backdrop-blur-sm border-b border-border'
-                }`}
+                    }`}
             >
                 <nav className="container mx-auto px-4">
                     <div className="flex items-center justify-between h-16">
@@ -161,11 +161,10 @@ export default function Header() {
                                         key={item.name}
                                         href={item.href}
                                         onClick={(e) => scrollToSection(e, item.href)}
-                                        className={`relative px-4 py-2 rounded-full flex items-center gap-1.5 text-xs font-medium transition-all duration-200 ${
-                                            activeSection === item.href 
-                                                ? 'text-background bg-primary' 
+                                        className={`relative px-4 py-2 rounded-full flex items-center gap-1.5 text-xs font-medium transition-all duration-200 ${activeSection === item.href
+                                                ? 'text-background bg-primary'
                                                 : 'text-muted-foreground hover:text-foreground'
-                                        }`}
+                                            }`}
                                     >
                                         <span>{item.icon}</span>
                                         <span>{item.name}</span>
@@ -183,39 +182,62 @@ export default function Header() {
                 </nav>
             </header>
 
-            {/* Right Side Navigation Bar for Mobile */}
-            <div className="md:hidden fixed right-4 top-2/3 transform -translate-y-1/2 z-50">
-                <div className="flex flex-col gap-4 bg-background/90 backdrop-blur-md p-1 py-2 rounded-full border border-border shadow-lg">
+            {/* Mobile Bottom Navigation Bar */}
+            <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-t border-border shadow-lg">
+                <div className="flex items-center justify-around h-14">
                     {navItems.map((item) => (
                         <Link
                             key={item.name}
                             href={item.href}
                             onClick={(e) => scrollToSection(e, item.href)}
-                            className="relative group"
+                            className="relative flex flex-col items-center justify-center h-full"
                         >
-                            <div className={`flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300 ${
-                                activeSection === item.href
+                            <div className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${activeSection === item.href
                                     ? 'bg-primary text-background'
                                     : 'bg-muted/50 text-muted-foreground hover:text-foreground'
-                            }`}>
-                                <span className="w-5 h-5">{cloneElement(item.icon, { size: 20 })}</span>
+                                }`}>
+                                <span className="w-5 h-5">{React.cloneElement(item.icon, { size: 20 })}</span>
                             </div>
-                            
-                            {/* Tooltip for nav item names */}
-                            <div className="absolute right-14 top-1/2 transform -translate-y-1/2 bg-background border border-border rounded-md px-2 py-1 text-xs font-medium shadow-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                {item.name}
-                            </div>
-                            
                             {activeSection === item.href && (
                                 <motion.div
-                                    layoutId="activeRightNav"
-                                    className="absolute -right-2 top-1/2 transform -translate-y-1/2 w-1 h-6 bg-primary rounded-full"
+                                    layoutId="activeBottomNav"
+                                    className="absolute top-0 w-4/5 h-1 bg-primary rounded-full"
                                 />
                             )}
                         </Link>
                     ))}
                 </div>
             </div>
+
+            {/* Alternative: Right Side Navigation Bar (Uncomment to use this instead of bottom navigation) */}
+            {/* 
+            <div className="md:hidden fixed right-4 top-1/2 transform -translate-y-1/2 z-50">
+                <div className="flex flex-col gap-4 bg-background/90 backdrop-blur-md p-3 rounded-full border border-border shadow-lg">
+                    {navItems.map((item) => (
+                        <Link
+                            key={item.name}
+                            href={item.href}
+                            onClick={(e) => scrollToSection(e, item.href)}
+                            className="relative"
+                        >
+                            <div className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
+                                activeSection === item.href
+                                    ? 'bg-primary text-background'
+                                    : 'bg-muted text-muted-foreground hover:text-foreground'
+                            }`}>
+                                <span className="w-5 h-5">{React.cloneElement(item.icon, { size: 20 })}</span>
+                            </div>
+                            {activeSection === item.href && (
+                                <motion.div
+                                    layoutId="activeRightNav"
+                                    className="absolute -right-1 top-1/2 transform -translate-y-1/2 w-1 h-6 bg-primary rounded-full"
+                                />
+                            )}
+                        </Link>
+                    ))}
+                </div>
+            </div>
+            */}
         </>
     );
 }
