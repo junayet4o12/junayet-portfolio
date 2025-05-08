@@ -2,7 +2,7 @@ import { ExperienceData } from "@/type";
 
 export const experiences: ExperienceData[] = [
   {
-    period: "June 1 - September 1, 2024",
+    period: "June 2024 - September 2024",
     organization: "Universe IT Institute",
     description: [
       "Completed a 3-month internship as a MERN Stack Developer.",
@@ -11,7 +11,7 @@ export const experiences: ExperienceData[] = [
     ]
   },
   {
-    period: "October 2024 - Present",
+    period: "October 2024 - January 2025",
     organization: "Developer Look",
     description: [
       "Currently working as a developer.",

@@ -9,39 +9,34 @@ type PropTypes = {
     };
     subtitle: string;
 }
+const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    }
+};
 export default function SectionTitle({
     title1,
     title2,
     subtitle
 }: PropTypes) {
+
     return (
-        <div className="space-y-4">
-            <motion.h3
-                className="text-primary font-bold"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-            >
+        <motion.div variants={itemVariants} className="text-center space-y-4 max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary text-sm font-medium rounded-full">
+                <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
                 {title1}
-            </motion.h3>
-            <motion.h2
-                className="text-4xl md:text-5xl font-bold text-foreground"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-            >
+            </div>
+
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
                 {title2.base} <span className="text-primary">{title2.active}</span>
-            </motion.h2>
-            <motion.p
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="text-muted-foreground">
+            </h2>
+
+            <p className="text-muted-foreground text-lg">
                 {subtitle}
-            </motion.p>
-        </div>
+            </p>
+        </motion.div>
     );
 }

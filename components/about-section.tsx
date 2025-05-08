@@ -1,7 +1,14 @@
-import { Facebook, Github, Linkedin } from 'lucide-react';
-import Image from 'next/image'
+'use client'
+
+import { Facebook, Github, Linkedin, Mail, Phone, MapPin, Calendar, Globe, Languages } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import SectionTitle from './section-title';
+import { Badge } from './ui/badge';
+
+// Calculate age dynamically
 const dob = new Date("2003-07-09");
 const today = new Date();
 const age = today.getFullYear() - dob.getFullYear();
@@ -9,107 +16,225 @@ const hasBirthdayPassed =
   today.getMonth() > dob.getMonth() ||
   (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
 const finalAge = hasBirthdayPassed ? age : age - 1;
+
+// Personal information with icons
 const personalInfo = [
-  { label: "Name", value: "Junayet Alam" },
-  { label: "Date of Birth", value: `July 09, 2003 (Age: ${finalAge})` },
-  { label: "Email", value: "muhammadjunayetmaruf@gmail.com", link: "mailto:muhammadjunayetmaruf@gmail.com" },
-  { label: "Contact", value: "+8801632884012" },
-  { label: "Address", value: "Feni, Bangladesh" },
-  { label: "Nationality", value: "Bangladeshi" },
-  { label: "Languages", value: "Bangla (native), English" },
-  { label: "Profession", value: "MERN Stack Developer" },
+  { icon: <Calendar className="w-4 h-4" />, label: "Date of Birth", value: `July 09, 2003 (Age: ${finalAge})` },
+  { icon: <Mail className="w-4 h-4" />, label: "Email", value: "muhammadjunayetmaruf@gmail.com", link: "mailto:muhammadjunayetmaruf@gmail.com" },
+  { icon: <Phone className="w-4 h-4" />, label: "Contact", value: "+8801632884012" },
+  { icon: <MapPin className="w-4 h-4" />, label: "Address", value: "Feni, Bangladesh" },
+  { icon: <Globe className="w-4 h-4" />, label: "Nationality", value: "Bangladeshi" },
+  { icon: <Languages className="w-4 h-4" />, label: "Languages", value: "Bangla (native), English" },
 ];
+
+// Skills data
+const skills = [
+  { name: "React", level: 90 },
+  { name: "Node.js", level: 85 },
+  { name: "MongoDB", level: 80 },
+  { name: "Express", level: 85 },
+  { name: "Next.js", level: 75 },
+  { name: "TypeScript", level: 70 },
+  { name: "Tailwind", level: 90 },
+  { name: "JWT", level: 90 },
+  { name: "ZOD", level: 90 },
+  { name: "ShadCn", level: 90 },
+];
+
 export default function AboutSection() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Set isLoaded to true after component mounts to enable animations
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  // Container variants for staggered animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  // Individual item variants
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    }
+  };
+
   return (
-    <section id="about" className="text-foreground py-20">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-8 items-center">
-          <div className="relative w-full hidden md:block">
-            <svg className="absolute -top-[999px] -left-[999px] w-0 h-0">
-              <defs>
-                <clipPath id="naymur1" clipPathUnits="objectBoundingBox">
-                  <path
-                    d="M0.116539 0.187984 L0.782476 0.013042 C0.855312 -0.009762 0.940747 -0.005957 0.970812 0.051068 C0.993884 0.094828 1.002030 0.135712 0.970812 0.188931 L0.771031 0.487477 L0.909421 0.564491 C0.978095 0.601593 1.006090 0.643428 0.998905 0.703327 C0.991033 0.768954 0.961446 0.793652 0.871961 0.820274 L0.220591 0.987611 C0.111335 1.012330 0.047614 0.998323 0.024972 0.960967 C-0.005404 0.910850 -0.013316 0.889933 0.031215 0.815520 L0.097809 0.721370 L0.240362 0.512197 L0.116539 0.440889 C0.050985 0.405713 0.035263 0.383845 0.015608 0.339155 C-0.001042 0.301299 0.022891 0.214605 0.116539 0.187984 Z"
-                    fill="black"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
+    <section
+      id="about"
+      className="relative py-20 bg-gradient-to-br from-background via-background to-background/90 overflow-hidden"
+    >
+      {/* Background decorations */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Subtle grid background */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
 
-            <figure style={{ clipPath: 'url(#naymur1)' }} className="">
-              <Image
-                src="/about.jpg"
-                width={800}
-                height={600}
-                unoptimized
-                alt="Description"
-                className="object-cover transition-transform duration-300 hover:scale-105"
-              />
-            </figure>
-          </div>
+        {/* Gradient orbs */}
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-60"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
 
-          {/* Right: Text Content */}
-          <div className="space-y-6 md:col-span-2">
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight uppercase">
-              About <span className="text-primary">Me</span>
-            </h2>
+        {/* Decorative elements */}
+        <div className="absolute top-40 left-[15%] w-16 h-16 border border-primary/20 rounded-full"></div>
+        <div className="absolute bottom-20 right-[20%] w-10 h-10 border border-primary/10 rounded-full"></div>
+        <div className="absolute top-1/3 right-[10%] w-6 h-6 bg-primary/20 rounded-full"></div>
+      </div>
 
-            {/* Personal Info */}
-            <div className="space-y-1 text-muted-foreground">
-              {personalInfo.map(({ label, value, link }) => (
-                <div key={label} className='flex'>
-                  <p className='font-bold w-28 flex justify-between mr-2'><span>{label}</span>:</p>{" "}
-                  {link ? (
-                    <a href={link} className="text-primary" target="_blank" rel="noreferrer">{value}</a>
-                  ) : (
-                    value
-                  )}
+      {/* Main content */}
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial="hidden"
+          animate={isLoaded ? "visible" : "hidden"}
+          variants={containerVariants}
+          className="space-y-12"
+        >
+          {/* Section Header */}
+          <SectionTitle
+            title1="ABOUT ME"
+            title2={{
+              active: ' Who I Am',
+              base: 'Know'
+            }}
+            subtitle="MERN Stack Developer focused on creating responsive and user-friendly web applications"
+          />
+
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-2 gap-10">
+            {/* Left Side: Personal Info */}
+            <motion.div variants={itemVariants} className="space-y-8">
+              <div className="p-6 md:p-8 bg-background/50 border border-border rounded-2xl backdrop-blur-sm shadow-lg">
+                <h3 className="text-2xl font-bold mb-6">
+                  <span className="text-primary">Personal</span> Information
+                </h3>
+
+                <div className="space-y-5">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                      <span className="font-bold">JA</span>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg">Junayet Alam</h4>
+                      <p className="text-muted-foreground">MERN Stack Developer</p>
+                    </div>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-4 mt-6">
+                    {personalInfo.map(({ icon, label, value, link }) => (
+                      <div key={label} className="flex items-start gap-3">
+                        <div className="mt-1 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                          {icon}
+                        </div>
+                        <div>
+                          <p className="text-sm text-muted-foreground">{label}</p>
+                          {link ? (
+                            <a href={link} className="font-medium hover:text-primary transition-colors" target="_blank" rel="noreferrer">{value}</a>
+                          ) : (
+                            <p className="font-medium">{value}</p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
-            </div>
+              </div>
 
-            {/* Summary */}
-            <p className="text-muted-foreground">
-              I’m a MERN Developer with expertise in MERN-Stack Technology. I’ve completed 1 team project and 6+ personal projects based on the MERN stack. My specialty and interest lie in building functionality in both the Front-End and Back-End to maximize user-friendliness. I enjoy challenges and am eager to contribute my skills to a dynamic team.
-            </p>
-            {/* Links */}
-            <div className="flex items-center gap-4 text-muted-foreground pt-2">
-              <Link
-                href="https://www.facebook.com/junayet4012/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Facebook"
-              >
-                <Button size={'icon'} variant={'outline'}>
-                  <Facebook className="w-5 h-5" />
+              {/* Social Links */}
+              <div className="flex flex-wrap items-center gap-4">
+                <Link
+                  href="https://www.github.com/junayet4o12"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-12 h-12 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
+                >
+                  <Github size={20} />
+                </Link>
+                <Link
+                  href="https://www.linkedin.com/in/junayet-alam/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-12 h-12 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
+                >
+                  <Linkedin size={20} />
+                </Link>
+                <Link
+                  href="https://www.facebook.com/junayet4012/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-12 h-12 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
+                >
+                  <Facebook size={20} />
+                </Link>
+                <div className="h-8 w-px bg-border/70 mx-2"></div>
+                <Button className="h-12">
+                  Contact Me
+                  <Mail className="ml-2 h-4 w-4" />
                 </Button>
-              </Link>
-              <Link
-                href="https://github.com/junayet4o12"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub"
-              >
-                <Button size={'icon'} variant={'outline'}>
-                  <Github className="w-5 h-5" />
-                </Button>
-              </Link>
+              </div>
+            </motion.div>
 
-              <Link
-                href="https://www.linkedin.com/in/junayet-alam/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-              >
-                <Button size={'icon'} variant={'outline'}>
-                  <Linkedin className="w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
+            {/* Right Side: Biography and Skills */}
+            <motion.div variants={itemVariants} className="space-y-8">
+              <div className="p-6 md:p-8 bg-background/50 border border-border rounded-2xl backdrop-blur-sm shadow-lg">
+                <h3 className="text-2xl font-bold mb-6">
+                  <span className="text-primary">My</span> Biography
+                </h3>
+
+                <div className="space-y-4 text-muted-foreground">
+                  <p>
+                    I&apos;m a passionate MERN Stack Developer with expertise in building modern web applications.
+                    My journey in web development started with a curiosity about how websites work, which
+                    eventually led me to dive deep into the MERN stack.
+                  </p>
+                  <p>
+                    I&apos;ve completed 1 team project and 6+ personal projects based on the MERN stack. My specialty
+                    and interest lie in building functionality in both the Front-End and Back-End to maximize
+                    user-friendliness.
+                  </p>
+                  <p>
+                    I enjoy taking on challenging problems and finding elegant solutions. I&apos;m constantly
+                    learning and staying updated with the latest technologies in web development.
+                  </p>
+                </div>
+
+                {/* Skills */}
+                <div className="mt-8">
+                  <h4 className="text-lg font-semibold mb-4">Technical Skills</h4>
+                  <div className="space-x-1">
+                    {skills.map((skill) => (
+                      <Badge key={skill.name} variant="secondary">
+                        {skill.name}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Experience Counter */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-6 bg-background/50 border border-border rounded-xl backdrop-blur-sm shadow-lg text-center">
+                  <div className="text-3xl font-bold text-primary">2+</div>
+                  <p className="text-muted-foreground text-sm">Years of Experience</p>
+                </div>
+                <div className="p-6 bg-background/50 border border-border rounded-xl backdrop-blur-sm shadow-lg text-center">
+                  <div className="text-3xl font-bold text-primary">7+</div>
+                  <p className="text-muted-foreground text-sm">Projects Completed</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
-  )
+  );
 }
-

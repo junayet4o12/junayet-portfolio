@@ -1,47 +1,59 @@
-import { Card } from "@/components/ui/card"
-import SectionTitle from "./section-title"
-import { Technology, TechnologyCategory } from "@/type"
-import { experiences } from "@/data/experiences&Technologies/experiences"
-import { technologyCategories } from "@/data/experiences&Technologies/technologies"
-import { motion } from "framer-motion"
+'use client'
 
-// Refined animations with slightly more subtle effects
-const fadeInUp = {
-  initial: { opacity: 0, y: 15 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: "easeOut" }
-}
+import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import {
+  Code, BrainCircuit, Laptop, BookOpen,
+  ChevronRight, Building
+} from 'lucide-react';
+import SectionTitle from "./section-title";
+import { technologyCategories } from "@/data/experiences&Technologies/technologies";
+import { ExperienceData, Technology, TechnologyCategory } from "@/type";
+import { experiences } from "@/data/experiences&Technologies/experiences";
 
-const staggerContainer = {
-  animate: {
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
     transition: {
-      staggerChildren: 0.08
+      staggerChildren: 0.1,
+      delayChildren: 0.2
     }
   }
-}
+};
 
-interface ExperienceCardProps {
-  period: string
-  organization: string
-  description: string[]
-  index: number
-}
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+  }
+};
 
-function ExperienceCard({ period, organization, description }: ExperienceCardProps) {
+function ExperienceCard({ experience }: { experience: ExperienceData }) {
   return (
-    <motion.div variants={fadeInUp}>
-      <Card className="bg-background border border-border/30 p-7 space-y-4 hover:shadow-lg transition-all duration-300 h-full relative overflow-hidden">
+    <motion.div variants={itemVariants}>
+      <Card className="bg-background/50 border border-border/60 p-7 space-y-4 hover:shadow-lg transition-all duration-300 h-full relative overflow-hidden backdrop-blur-sm">
         {/* Subtle accent line on the left side */}
         <div className="absolute left-0 top-0 w-1 h-full bg-primary" />
-        
+
         <div className="pl-2">
-          <p className="text-muted-foreground text-sm font-medium tracking-wide uppercase">{period}</p>
-          <h3 className="text-foreground text-xl font-bold mt-2">{organization}</h3>
-          
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+              {experience.organization.slice(0, 1)}
+            </div>
+            <p className="text-muted-foreground text-sm font-medium">{experience.period}</p>
+          </div>
+
+          <h3 className="text-foreground text-xl font-bold mt-3">{experience.organization}</h3>
+
           <div className="mt-4 space-y-2">
-            {description.map((line, index) => (
+            {experience.description.map((line, index) => (
               <div key={index} className="flex items-start">
-                <div className="text-primary mr-2 mt-1">•</div>
+                <ChevronRight className="text-primary h-4 w-4 mr-2 mt-1 flex-shrink-0" />
                 <p className="text-muted-foreground">{line}</p>
               </div>
             ))}
@@ -55,15 +67,15 @@ function ExperienceCard({ period, organization, description }: ExperienceCardPro
 function TechnologyCard({ tech }: { tech: Technology }) {
   return (
     <motion.div
-      className="group flex flex-col items-center justify-center p-4 bg-background border border-border/30 rounded-lg hover:border-primary/40 transition-all duration-300"
-      whileHover={{ y: -3, transition: { duration: 0.2 } }}
-    >
-      <div className="text-primary mb-3 transition-transform duration-300 group-hover:scale-105 text-xl">
-        {tech.icon}
+      variants={itemVariants}
+      className="bg-background/50 border border-border/60 rounded-lg p-4 hover:border-primary/40 transition-all duration-300 backdrop-blur-sm">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+          {tech.icon}
+        </div>
+        <span className="font-medium">{tech.name}</span>
       </div>
-      <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-300">
-        {tech.name}
-      </span>
+
     </motion.div>
   );
 }
@@ -71,19 +83,17 @@ function TechnologyCard({ tech }: { tech: Technology }) {
 function CategorySection({ category }: { category: TechnologyCategory }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.7 }}
+      variants={itemVariants}
       className="space-y-6"
     >
       <div className="flex items-center space-x-3 pb-2 border-b border-border/50">
-        <div className="text-primary w-8 h-8">
+        <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
           {category.icon}
         </div>
-        <h3 className="text-xl font-bold text-foreground">{category.name}</h3>
+        <h3 className="text-xl font-bold">{category.name}</h3>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {category.technologies.map((tech, index) => (
           <TechnologyCard key={index} tech={tech} />
         ))}
@@ -93,55 +103,114 @@ function CategorySection({ category }: { category: TechnologyCategory }) {
 }
 
 export default function ExperienceSection() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   return (
-    <section id="experience" className="text-foreground py-24 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <div className="space-y-20">
-          {/* Header */}
+    <section
+      id="experience"
+      className="relative py-24 bg-gradient-to-tl from-background via-background to-background/90 overflow-hidden"
+    >
+      {/* Background decorations */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Subtle grid background */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
+
+        {/* Gradient orbs */}
+        <div className="absolute top-1/4 right-1/3 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-40"></div>
+        <div className="absolute bottom-1/3 left-1/4 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-30"></div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-40 right-[20%] w-16 h-16 border border-primary/20 rounded-full"></div>
+        <div className="absolute bottom-60 left-[15%] w-12 h-12 border border-primary/10 rounded-full"></div>
+        <div className="absolute top-1/3 left-[10%] w-8 h-8 bg-primary/20 rounded-full"></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial="hidden"
+          animate={isLoaded ? "visible" : "hidden"}
+          variants={containerVariants}
+          className="space-y-20"
+        >
+          {/* Section Header */}
           <SectionTitle
-            subtitle="A MERN stack developer focused on building scalable and efficient web applications with modern technologies."
             title1="PROFESSIONAL JOURNEY"
             title2={{
-              base: 'Experience &',
-              active: 'Technical Expertise'
+              active: 'Technical Expertise ',
+              base: 'Experience &'
             }}
+            subtitle="  A MERN stack developer focused on building scalable and efficient web applications with modern technologies."
           />
-          
-          {/* Experience Cards */}
-          <div className="relative">
+          {/* Experience Timeline */}
+          <div className="space-y-12">
+            <motion.h3
+              variants={itemVariants}
+              className="text-2xl font-bold flex items-center gap-2"
+            >
+              <Building className="w-6 h-6 text-primary" />
+              Professional & Educational Background
+            </motion.h3>
+
             <motion.div
-              className="grid md:grid-cols-3 gap-6"
-              variants={staggerContainer}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, margin: "-100px" }}
+              variants={containerVariants}
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {experiences.map((exp, index) => (
-                <ExperienceCard key={index} {...exp} index={index} />
+                <ExperienceCard key={index} experience={exp} />
               ))}
             </motion.div>
-            
-            {/* Subtle decorative element */}
-            <div className="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-primary/5 blur-3xl opacity-70" />
           </div>
 
-          {/* Technology Categories */}
-          <div className="space-y-16 pt-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground">
-                Technical <span className="text-primary">Proficiencies</span>
-              </h2>
+          {/* Technologies */}
+          <div className="space-y-16 pt-6">
+            <motion.div variants={itemVariants} className="text-center">
+              <h3 className="text-2xl font-bold flex items-center justify-center gap-2">
+                <BrainCircuit className="w-6 h-6 text-primary" />
+                Technical Proficiencies
+              </h3>
               <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-                Technologies and tools I&apos;ve mastered throughout my professional career
+                Technologies and tools I&lsquo;ve mastered throughout my professional career
               </p>
-            </div>
-            
-            {technologyCategories.map((category, index) => (
-              <CategorySection key={index} category={category} />
-            ))}
+            </motion.div>
+
+            <motion.div
+              variants={containerVariants}
+              className="space-y-16"
+            >
+              {technologyCategories.map((category, index) => (
+                <CategorySection key={index} category={category} />
+              ))}
+            </motion.div>
           </div>
-        </div>
+
+          {/* Highlighted Skills */}
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-12"
+          >
+            {[
+              { label: "Problem Solving", icon: <BrainCircuit className="w-5 h-5" /> },
+              { label: "Clean Code", icon: <Code className="w-5 h-5" /> },
+              { label: "Responsive Design", icon: <Laptop className="w-5 h-5" /> },
+              { label: "Continuous Learning", icon: <BookOpen className="w-5 h-5" /> }
+            ].map((skill, index) => (
+              <div
+                key={index}
+                className="p-6 bg-background/50 border border-border rounded-xl backdrop-blur-sm shadow-lg flex flex-col items-center justify-center text-center"
+              >
+                <div className="w-12 h-12 mb-3 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                  {skill.icon}
+                </div>
+                <h4 className="font-medium">{skill.label}</h4>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
       </div>
     </section>
-  )
+  );
 }

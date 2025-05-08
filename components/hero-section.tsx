@@ -1,76 +1,283 @@
+'use client'
+
 import Image from "next/image";
-
-
-import profile from '@/public/profile.png'
-import { Card, CardContent } from "./ui/card";
+import profile from '@/public/profile.png';
+import { Button } from "./ui/button";
+import { ArrowRight, Github, Linkedin, Facebook } from "lucide-react";
+import { motion } from "framer-motion";
+import Link from "next/link";
 import Resume from "./resume";
-export default function HeroSection() {
-    
+import { useState, useEffect } from "react";
 
-   
+export default function HeroSection() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Set isLoaded to true after component mounts to enable animations
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  const scrollToProjects = () => {
+    const projectsSection = document.querySelector('#projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Container variants for staggered animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  // Individual item variants
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    }
+  };
+  const handleScrollToAbout = () => {
+    const projectsSection = document.querySelector('#about');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   return (
-    <section id="hero" className="relative flex max-h-[calc(100vh-120px)]  items-center justify-center overflow-hidden z-10">
-      {/* Hero Section */}
-      <main className="container mx-auto px-4 pt-16 flex-1 flex relative z-20">
-        <div className=" lg:grid-cols-2 gap-8 items-center hidden lg:grid">
-          <div className=" space-y-4 lg:space-y-8">
-            <div className=" space-y-4 lg:space-y-8">
-              <h1 className="text-3xl md:text-6xl xl:text-7xl font-bold leading-tight uppercase">
-                <span className="text-primary inline-block transform hover:scale-105 transition-transform duration-300">
-                  Junayet Alam
-                </span>{" "}
-                <span className="">
-                  Mern Stack Developer
-                </span>
-              </h1>
-              <p className="text-muted-foreground text-lg">
-                <span>
-                  Welcome to my portfolio! I specialize in creating dynamic and responsive web applications.
-                </span>
-              </p>
+    <section
+      id="hero"
+      className="relative min-h-[calc(100vh-112px)] flex items-center bg-gradient-to-br from-background via-background to-background/90 overflow-hidden"
+    >
+      {/* Background decorations */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Subtle grid background */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
+
+        {/* Gradient orbs */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-60"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-60"></div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-20 right-[15%] w-20 h-20 border border-primary/20 rounded-full"></div>
+        <div className="absolute bottom-32 left-[10%] w-12 h-12 border border-primary/10 rounded-full"></div>
+        <div className="absolute top-1/2 left-[5%] w-6 h-6 bg-primary/20 rounded-full"></div>
+        <div className="absolute bottom-1/4 right-[5%] w-8 h-8 bg-primary/10 rounded-full"></div>
+      </div>
+
+      {/* Main content */}
+      <div className="container mx-auto px-4 py-16 relative z-10">
+        <motion.div
+          initial="hidden"
+          animate={isLoaded ? "visible" : "hidden"}
+          variants={containerVariants}
+          className="  lg:grid lg:grid-cols-2 gap-16 items-center"
+        >
+          {/* Text content */}
+          <div className="space-y-8">
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary text-sm font-medium rounded-full">
+              <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+              MERN Stack Developer
+            </motion.div>
+
+            <div className="space-y-4">
+              <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl font-bold tracking-tight">
+                <span className="text-primary">Junayet Alam</span>
+                <span className="block mt-2 text-foreground">Building digital experiences.</span>
+              </motion.h1>
+
+              <motion.p variants={itemVariants} className="text-muted-foreground text-lg max-w-lg leading-relaxed">
+                I create modern, responsive web applications with the MERN stack. Focusing on clean code,
+                intuitive user experiences, and performance-optimized solutions.
+              </motion.p>
+            </div>
+
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-2">
               <Resume />
-            </div>
+              <Button
+                variant="outline"
+                className="md:h-12 group border-primary/20 hover:border-primary/60"
+                onClick={scrollToProjects}
+              >
+                View Projects
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <div className="flex flex-col sm:flex-row gap-6 pt-6 items-start sm:items-center">
+                <div className="flex items-center gap-3">
+                  <Link
+                    href="https://www.github.com/junayet4o12"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-10 h-10 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
+                  >
+                    <Github size={18} />
+                  </Link>
+                  <Link
+                    href="https://www.linkedin.com/in/junayet-alam/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-10 h-10 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
+                  >
+                    <Linkedin size={18} />
+                  </Link>
+                  <Link
+                    href="https://www.facebook.com/junayet4012/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-10 h-10 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
+                  >
+                    <Facebook size={18} />
+                  </Link>
+                </div>
+
+                <div className="hidden sm:block h-8 w-px bg-border/70"></div>
+
+                <div className="flex items-center gap-4">
+                  <div className="flex -space-x-3">
+                    {[
+                      { tech: 'MongoDB', color: '#13AA52', letter: 'M' },
+                      { tech: 'Express', color: '#303030', letter: 'E' },
+                      { tech: 'React', color: '#61DAFB', letter: 'R' },
+                      { tech: 'Node', color: '#339933', letter: 'N' }
+                    ].map((item, i) => (
+                      <div
+                        key={item.tech}
+                        className="w-10 h-10 rounded-full border-2 border-background flex items-center justify-center shadow-sm"
+                        style={{
+                          zIndex: 4 - i,
+                          backgroundColor: `${item.color}20`,
+                          color: item.color
+                        }}
+                      >
+                        <span className="text-xs font-bold">{item.letter}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <span className="text-xs text-muted-foreground">MERN Stack Expertise</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Scroll indicator */}
+            <motion.div
+              variants={itemVariants}
+              className="hidden lg:flex absolute bottom-8 left-1/2 transform -translate-x-1/2 flex-col items-center gap-2"
+            >
+              <span className="text-xs text-muted-foreground">Scroll to explore</span>
+              <div
+                onClick={handleScrollToAbout}
+                className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center pt-2 cursor-pointer">
+                <motion.div
+
+                  animate={{
+                    y: [0, 8, 0],
+                    opacity: [0.8, 0.4, 0.8]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    repeatType: "loop"
+                  }}
+                  className="w-1.5 h-1.5 bg-primary rounded-full"
+                />
+              </div>
+            </motion.div>
           </div>
-          <div className="relative w-full aspect-[4/4]  mt-auto">
-            <Image
-              src={profile}
-              alt="Professional in business attire"
-              fill
-              className="object-contain"
-              priority
-            />
-          </div>
-        </div>
-        <Card className="lg:hidden w-full relative overflow-hidden">
-          <CardContent className="grid lg:grid-cols-2 gap-8 items-center flex-1 w-full relative">
-            <div className="relative w-full aspect-[4/3] md:aspect-[4/2]">
-              <Image
-                src={profile}
-                alt="Professional in business attire"
-                fill
-                className="object-contain"
-                priority
-              />
+
+          {/* Image content */}
+          <motion.div
+            variants={itemVariants}
+            className="flex justify-center lg:justify-end relative"
+          >
+            <div className="relative w-full max-w-xl mx-auto lg:mr-0">
+              {/* Image frame with decorative elements */}
+              <div className="relative w-full aspect-square rounded-full">
+                {/* Profile image with layered frames */}
+                <div className="relative h-full w-full overflow-hidden">
+                  {/* Outer decorative ring */}
+                  <div className="absolute -inset-3 bg-gradient-to-tr from-primary/30 via-primary/20 to-transparent rounded-full blur-lg opacity-70"></div>
+
+                  {/* Decorative particles */}
+                  <motion.div
+                    animate={{
+                      rotate: 360,
+                      transition: { duration: 20, repeat: Infinity, ease: "linear" }
+                    }}
+                    className="absolute inset-0"
+                  >
+                    {[...Array(6)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute w-3 h-3 bg-primary rounded-full"
+                        style={{
+                          top: `${50 + 45 * Math.sin(i * (Math.PI / 3))}%`,
+                          left: `${50 + 45 * Math.cos(i * (Math.PI / 3))}%`,
+                          opacity: 0.3 + (i % 3) * 0.1
+                        }}
+                      />
+                    ))}
+                  </motion.div>
+
+                  {/* Inner frame */}
+                  <div className="absolute inset-0 rounded-full border border-primary/30"></div>
+
+                  {/* Image container */}
+                  <div className="absolute inset-2 bg-gradient-to-tr from-primary/10 to-background rounded-full">
+                    <div className="absolute inset-2 overflow-hidden rounded-full border-4 border-background shadow-2xl">
+                      <Image
+                        src={profile}
+                        alt="Junayet Alam - MERN Stack Developer"
+                        fill
+                        className="object-cover object-center scale-105"
+                        priority
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Experience badge */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+                className="absolute -right-4 top-1/4 bg-background shadow-lg rounded-full py-2 px-4 border border-border flex items-center gap-2"
+              >
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                  <span className="font-bold">2+</span>
+                </div>
+                <div className="text-xs">
+                  <p className="font-medium">Years of</p>
+                  <p className="text-muted-foreground">Experience</p>
+                </div>
+              </motion.div>
+
+              {/* Available badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
+                className="absolute -left-6 bottom-1/4 bg-background shadow-lg rounded-full py-2 px-3 border border-border flex items-center gap-2"
+              >
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <div className="text-xs font-medium">Available for Work</div>
+              </motion.div>
             </div>
-            <div className=" space-y-4 lg:space-y-8 text-center">
-              <h1 className="text-3xl font-bold leading-tight uppercase">
-                <span className="text-primary inline-block transform hover:scale-105 transition-transform duration-300">
-                  Junayet Alam
-                </span>{" "}
-                <span className="">
-                  Mern Stack Developer
-                </span>
-              </h1>
-              <p className="text-muted-foreground">
-                <span>
-                  Welcome to my portfolio! I specialize in creating dynamic and responsive web applications.
-                </span>
-              </p>
-              <Resume />
-            </div>
-          </CardContent>
-        </Card>
-      </main>
+          </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }

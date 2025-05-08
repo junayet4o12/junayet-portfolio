@@ -7,16 +7,15 @@ import Footer from "@/components/footer"
 import Header from "@/components/header"
 import HeroSection from "@/components/hero-section"
 import LatestProjectsSection from "@/components/latest-projects-section"
-import ScrollTop from "@/components/ScrollTop"
 import ServicesSection from "@/components/services-section"
 
 
 export default function SyntheticV0PageForDeployment() {
   return <div className="relative">
 
-    
-    <Header />
 
+    <Header />
+    
     <div className="overflow-x-hidden relative">
       <HeroSection />
       <AboutSection />
@@ -25,8 +24,8 @@ export default function SyntheticV0PageForDeployment() {
       <ServicesSection />
       <ContactSection />
       <Footer />
-      <ScrollTop />
+     
     </div>
-
+    {/* <ScrollTop /> */}
   </div>
 }

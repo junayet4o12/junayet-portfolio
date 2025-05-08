@@ -1,9 +1,11 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import {  ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion } from "framer-motion"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules'
-import { useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -11,100 +13,170 @@ import { projects } from '@/data/projects/projects'
 import ProjectCard from './project-card'
 import SectionTitle from "./section-title"
 
-
-
 export default function LatestProjectsSection() {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  // Set isLoaded to true after component mounts to enable animations
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
+
+  // Container variants for staggered animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  }
+
+  // Individual item variants
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    }
+  }
 
   return (
-    <section id="projects" className=" py-24">
-      <div className="container mx-auto px-4">
-        <div className="space-y-16">
+    <section
+      id="projects"
+      className="relative py-24 bg-gradient-to-br from-background via-background to-background/90 overflow-hidden"
+    >
+      {/* Background decorations */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Subtle grid background */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
+
+        {/* Gradient orbs */}
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-60"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-60"></div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-40 left-[15%] w-20 h-20 border border-primary/20 rounded-full"></div>
+        <div className="absolute bottom-20 right-[10%] w-12 h-12 border border-primary/10 rounded-full"></div>
+        <div className="absolute top-1/3 right-[5%] w-6 h-6 bg-primary/20 rounded-full"></div>
+        <div className="absolute bottom-1/3 left-[5%] w-8 h-8 bg-primary/10 rounded-full"></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial="hidden"
+          animate={isLoaded ? "visible" : "hidden"}
+          variants={containerVariants}
+          className="space-y-16"
+        >
           {/* Header */}
           <SectionTitle
-            subtitle="From planning to deployment, I follow modern practices to build reliable, scalable, and production-ready web applications."
-            title1="WORKING PROCESS"
+            title1=" WORKING PROCESS"
             title2={{
-              base: 'LATEST WORKING &',
-              active: 'PROJECT'
+              active: 'PROJECTS',
+              base: 'LATEST WORKING &'
             }}
+            subtitle="  From planning to deployment, I follow modern practices to build reliable,
+              scalable, and production-ready web applications."
           />
-          <div>
-            <motion.div
-              className="flex items-center"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              <div className="flex gap-2 ml-auto">
-                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                  <Button
-                    ref={prevRef}
-                    variant="outline"
-                    size="icon"
-                    className="bg-background border hover:bg-muted"
-                  >
-                    <ChevronLeft className="h-4 w-4 text-foreground" />
-                  </Button>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                  <Button
-                    ref={nextRef}
-                    variant="outline"
-                    size="icon"
-                    className="bg-background border hover:bg-muted"
-                  >
-                    <ChevronRight className="h-4 w-4 text-foreground" />
-                  </Button>
-                </motion.div>
-              </div>
+          
+          {/* Project Navigation */}
+          <motion.div variants={itemVariants} className="flex items-center justify-between">
 
-            </motion.div>
+            <div className="flex gap-3">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  ref={prevRef}
+                  variant="outline"
+                  size="icon"
+                  className="h-10 w-10 rounded-full bg-background border border-primary/20 hover:border-primary/60 text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </Button>
+              </motion.div>
 
-            {/* Project Cards Slider */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  ref={nextRef}
+                  variant="outline"
+                  size="icon"
+                  className="h-10 w-10 rounded-full bg-background border border-primary/20 hover:border-primary/60 text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </Button>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Project Cards Slider */}
+          <motion.div variants={itemVariants}>
+            <Swiper
+              modules={[Navigation, Pagination]}
+              spaceBetween={24}
+              slidesPerView={1}
+              navigation={{
+                prevEl: prevRef.current,
+                nextEl: nextRef.current,
+              }}
+              pagination={{
+                el: '.swiper-custom-pagination',
+                clickable: true,
+                renderBullet: (index, className) => {
+                  return `<span class="${className} w-2 h-2 bg-primary/30 hover:bg-primary/60 rounded-full transition-colors"></span>`;
+                }
+              }}
+              onBeforeInit={(swiper) => {
+                // @ts-expect-error: Swiper types don't allow manual assignment
+                swiper.params.navigation.prevEl = prevRef.current;
+                // @ts-expect-error: Swiper types don't allow manual assignment
+                swiper.params.navigation.nextEl = nextRef.current;
+              }}
+              breakpoints={{
+                768: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
+              className="!pb-14"
             >
-              <Swiper
-                modules={[Navigation, Pagination]}
-                spaceBetween={24}
-                slidesPerView={1}
-                navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }}
-                pagination={false}
-                onBeforeInit={(swiper) => {
-                  // @ts-expect-error: Swiper types don't allow manual assignment of prevEl
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  // @ts-expect-error: Swiper types don't allow manual assignment of nextEl
-                  swiper.params.navigation.nextEl = nextRef.current;
-                }}
-                breakpoints={{
-                  768: {
-                    slidesPerView: 2,
-                  },
-                  1024: {
-                    slidesPerView: 3,
-                  },
-                }}
-                className="!pb-12"
+              {projects.map((project, index) => (
+                <SwiperSlide key={index}>
+                  <ProjectCard project={project} />
+                </SwiperSlide>
+              ))}
+
+              {/* Custom pagination */}
+              <div className="swiper-custom-pagination flex justify-center gap-2 mt-8"></div>
+            </Swiper>
+          </motion.div>
+
+          {/* Additional project stats - Optional */}
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pt-8"
+          >
+            {[
+              { label: 'Completed Projects', value: projects.filter(p => p.status === 'completed').length },
+              { label: 'In Progress', value: projects.filter(p => p.status === 'in progress').length },
+              { label: 'Technologies', value: '15+' },
+              { label: 'Client Satisfaction', value: '100%' },
+            ].map((stat, i) => (
+              <div
+                key={i}
+                className="rounded-lg bg-background border border-primary/10 p-4 text-center"
               >
-                {projects.map((project, index) => (
-                  <SwiperSlide key={index}>
-                    <ProjectCard project={project} />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </motion.div>
-          </div>
-
-
-        </div>
+                <div className="text-2xl md:text-3xl font-bold text-primary">{stat.value}</div>
+                <div className="text-xs md:text-sm text-muted-foreground mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   )

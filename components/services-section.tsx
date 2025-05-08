@@ -1,121 +1,162 @@
 'use client'
 
-import { motion } from "framer-motion"
-import { ArrowRight, Code2, UsersRound, Workflow } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, Code2, UsersRound, Workflow } from 'lucide-react';
 import SectionTitle from "./section-title";
 
-export default function ServicesPage() {
-  return (
-    <div className="bg-muted/30">
-      <div className="relative container mx-auto px-4 py-24 ">
+export default function ServicesSection() {
+  const [isLoaded, setIsLoaded] = useState(false);
 
-        {/* Content */}
-        <div className="relative z-10 space-y-16">
-          {/* Header Section */}
+  // Set isLoaded to true after component mounts to enable animations
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  // Container variants for staggered animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  // Individual item variants
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    }
+  };
+
+  return (
+    <section
+      id="services"
+      className="relative py-24 bg-gradient-to-br from-background via-background/95 to-background/90 overflow-hidden"
+    >
+      {/* Background decorations */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Subtle grid background */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
+
+        {/* Gradient orbs */}
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-60"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-60"></div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-20 left-[15%] w-20 h-20 border border-primary/20 rounded-full"></div>
+        <div className="absolute bottom-32 right-[10%] w-12 h-12 border border-primary/10 rounded-full"></div>
+        <div className="absolute top-1/2 right-[5%] w-6 h-6 bg-primary/20 rounded-full"></div>
+        <div className="absolute bottom-1/4 left-[5%] w-8 h-8 bg-primary/10 rounded-full"></div>
+      </div>
+
+      {/* Main content */}
+      <div className="container mx-auto px-4 relative z-10">
+
+        <motion.div
+          initial="hidden"
+          animate={isLoaded ? "visible" : "hidden"}
+          variants={containerVariants}
+          className="space-y-16"
+        >
           <SectionTitle
-            subtitle="I specialize in building modern web applications with clean code, scalable architecture, and elegant UI using the MERN stack and Tailwind."
             title1="WHAT I DO"
-            title2={{ base: 'MY SERVICES &', active: ' EXPERTISE' }}
+            title2={{
+              base: 'MY SERVICES &',
+              active: 'EXPERTISE'
+            }}
+            subtitle="I specialize in building modern web applications with clean code, scalable architecture, 
+              and elegant UI using the MERN stack and Tailwind."
           />
           {/* Services Grid */}
-          <div className="pb-24">
-            <div className="grid md:grid-cols-3 gap-8">
-              <ServiceCard
-                icon={<Code2 className="w-10 h-10 text-primary" />}
-                title="MERN STACK DEVELOPMENT"
-                description="Modern full-stack apps using MongoDB, Express, React, and Node.js with clean code, REST APIs, and secure architecture."
-                delay={0.2}
-                isActive={false}
-              />
+          <motion.div variants={itemVariants} className="grid md:grid-cols-3 gap-8">
+            <ServiceCard
+              icon={<Code2 className="h-10 w-10" />}
+              title="MERN STACK DEVELOPMENT"
+              description="Modern full-stack apps using MongoDB, Express, React, and Node.js with clean code, REST APIs, and secure architecture."
+            />
 
-              <ServiceCard
-                icon={<Workflow className="w-10 h-10 text-primary" />}
-                title="INDUSTRY-STANDARD WORKFLOW"
-                description="Using professional workflows including branching strategies, pull requests, code reviews, and modular design for maintainability."
-                delay={0.6}
-                isActive={true}
-              />
+            <ServiceCard
+              icon={<Workflow className="h-10 w-10" />}
+              title="INDUSTRY-STANDARD WORKFLOW"
+              description="Using professional workflows including branching strategies, pull requests, code reviews, and modular design for maintainability."
+              featured={true}
+            />
 
-              <ServiceCard
-                icon={<UsersRound className="w-10 h-10 text-primary" />}
-                title="TEAM-BASED MERN PROJECTS"
-                description="Built scalable MERN apps with teammates, managing roles like frontend/backend, deployment, and API design collaboratively."
-                delay={0.8}
-                isActive={false}
-              />
-            </div>
-          </div>
-        </div>
+            <ServiceCard
+              icon={<UsersRound className="h-10 w-10" />}
+              title="TEAM-BASED MERN PROJECTS"
+              description="Built scalable MERN apps with teammates, managing roles like frontend/backend, deployment, and API design collaboratively."
+            />
+          </motion.div>
+        </motion.div>
       </div>
-    </div>
-  )
+    </section>
+  );
 }
 
 interface ServiceCardProps {
   icon: React.ReactNode;
   title: string;
-  delay: number;
-  isActive?: boolean;
   description: string;
+  featured?: boolean;
 }
 
-function ServiceCard({ icon, title, delay, isActive = false, description }: ServiceCardProps) {
+function ServiceCard({ icon, title, description, featured = false }: ServiceCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay }}
-      className="group relative"
-    >
-      <div
-        className={`
-    relative group overflow-hidden rounded-2xl p-8 h-full
-    ${isActive
-            ? 'bg-gradient-to-br from-primary/40 to-primary/50'
-            : 'bg-card hover:bg-primary/40'}
-    transition-all duration-500
-  `}
-      >
-        {/* background circles remain as-is */}
-        <div className={`bg-primary/80 w-[100px] aspect-square absolute bottom-[20px] right-[20px] rounded-full  scale-0 group-hover:scale-100 transition-all duration-500 origin-bottom-right ${isActive ? 'scale-100' : ''}`} />
-        <div className={`bg-primary/50 w-[150px] aspect-square absolute bottom-[0px] right-[0px] rounded-full  scale-0 group-hover:scale-100 transition-all duration-500 origin-bottom-right ${isActive ? 'scale-100' : ''}`} />
-        <div className={`bg-primary/40 w-[200px] aspect-square absolute bottom-[0px] right-[0px] rounded-full  scale-0 group-hover:scale-100 transition-all duration-500 origin-bottom-right ${isActive ? 'scale-100' : ''}`} />
-        <div className={`bg-primary/30 w-[300px] aspect-square absolute bottom-[-40px] right-[-40px] rounded-full scale-0 group-hover:scale-100 transition-all duration-500 origin-bottom-right ${isActive ? 'scale-100' : ''}`} />
+    <div className="group relative">
+      <div className={`
+        relative h-full overflow-hidden rounded-2xl p-8 border 
+        ${featured
+          ? 'bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30'
+          : 'bg-background border-border hover:border-primary/30'}
+        transition-all duration-300
+      `}>
+        {/* Background effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
+        {/* Service icon */}
         <div className={`
-    w-16 h-16 mb-8 transition-transform duration-500
-    ${isActive ? 'text-foreground' : 'text-primary group-hover:text-foreground'}
-    group-hover:scale-110
-  `}>
+          mb-6 w-16 h-16 rounded-full flex items-center justify-center
+          ${featured
+            ? 'bg-primary/20 text-primary'
+            : 'bg-primary/10 text-primary'}
+          group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300
+        `}>
           {icon}
         </div>
 
-        <h3 className={`relative
-    text-xl font-bold mb-4 tracking-wide
-    ${isActive ? 'text-foreground' : 'text-primary group-hover:text-foreground'}
-  `}>
+        {/* Content */}
+        <h3 className="text-xl font-bold mb-4 tracking-tight text-foreground group-hover:text-primary transition-colors duration-300">
           {title}
         </h3>
 
-        <p className={`relative
-    text-sm leading-relaxed mb-8
-    ${isActive ? 'text-foreground/90' : 'text-muted-foreground group-hover:text-foreground'}
-  `}>
-         {description}
+        <p className="text-muted-foreground mb-8 text-sm leading-relaxed">
+          {description}
         </p>
 
-        <div className={`relative
-    inline-flex items-center text-sm font-medium
-    text-foreground
-  `}>
+        {/* Action link */}
+        <div className="inline-flex items-center text-sm font-medium text-primary group-hover:translate-x-1 transition-transform duration-300">
           Learn More
-          <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
         </div>
 
-        {!isActive && (
-          <div className="absolute bottom-8 right-8 w-2 h-2 rounded-full bg-primary" />
+        {/* Featured indicator */}
+        {featured && (
+          <div className="absolute top-4 right-4 w-2 h-2 bg-primary rounded-full animate-pulse"></div>
         )}
       </div>
-    </motion.div>
-  )
+
+      {/* Bottom glow effect for featured card */}
+      {featured && (
+        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-primary/30 rounded-full blur-md"></div>
+      )}
+    </div>
+  );
 }
