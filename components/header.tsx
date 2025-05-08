@@ -1,12 +1,11 @@
 'use client'
 
 import { Button } from '@/components/ui/button';
-import { Github, Menu, ArrowUpRight, Mail, Code } from 'lucide-react';
+import { Github, ArrowUpRight, Mail, Code } from 'lucide-react';
 import { Facebook, Linkedin } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { Home, User, Briefcase, Image as ImageIcon, FileText } from 'lucide-react';
 import Link from 'next/link';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { ThemeToggle } from './theme-toggle';
 import { motion } from 'framer-motion';
 
@@ -154,7 +153,7 @@ export default function Header() {
                         </Link>
 
                         {/* Desktop Navigation */}
-                        <div className="hidden md:flex items-center">
+                        <div className="hidden lg:flex items-center">
                             <div className="flex items-center rounded-full bg-muted/50 p-1 backdrop-blur-sm mr-4">
                                 {navItems.map((item) => (
                                     <Link
@@ -175,7 +174,7 @@ export default function Header() {
                         </div>
 
                         {/* Mobile ThemeToggle */}
-                        <div className='md:hidden'>
+                        <div className='lg:hidden'>
                             <ThemeToggle />
                         </div>
                     </div>
@@ -183,7 +182,7 @@ export default function Header() {
             </header>
 
             {/* Mobile Bottom Navigation Bar */}
-            <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-t border-border shadow-lg">
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-t border-border shadow-lg">
                 <div className="flex items-center justify-around h-14">
                     {navItems.map((item) => (
                         <Link
