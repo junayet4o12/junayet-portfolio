@@ -7,7 +7,7 @@ import Resume from "./resume";
 export default function HeroSection() {
     
 
-
+   
   return (
     <section id="hero" className="relative flex max-h-[calc(100vh-120px)]  items-center justify-center overflow-hidden z-10">
       {/* Hero Section */}
