@@ -184,8 +184,8 @@ export default function Header() {
             </header>
 
             {/* Right Side Navigation Bar for Mobile */}
-            <div className="md:hidden fixed right-4 top-1/2 transform -translate-y-1/2 z-50">
-                <div className="flex flex-col gap-4 bg-background/90 backdrop-blur-md p-3 rounded-full border border-border shadow-lg">
+            <div className="md:hidden fixed right-4 top-2/3 transform -translate-y-1/2 z-50">
+                <div className="flex flex-col gap-4 bg-background/90 backdrop-blur-md p-1 py-2 rounded-full border border-border shadow-lg">
                     {navItems.map((item) => (
                         <Link
                             key={item.name}
@@ -193,7 +193,7 @@ export default function Header() {
                             onClick={(e) => scrollToSection(e, item.href)}
                             className="relative group"
                         >
-                            <div className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
+                            <div className={`flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300 ${
                                 activeSection === item.href
                                     ? 'bg-primary text-background'
                                     : 'bg-muted/50 text-muted-foreground hover:text-foreground'
