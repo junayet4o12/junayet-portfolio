@@ -74,27 +74,27 @@ export default function HeroSection() {
       </div>
 
       {/* Main content */}
-      <div className="container mx-auto px-4 py-16 relative z-10">
+      <div className="container mx-auto px-4 py-8 lg:py-16 relative z-10">
         <motion.div
           initial="hidden"
           animate={isLoaded ? "visible" : "hidden"}
           variants={containerVariants}
-          className="  lg:grid lg:grid-cols-2 gap-16 items-center"
+          className="flex flex-col-reverse lg:grid   lg:grid-cols-2 gap-y-8 gap-x-16 items-center"
         >
           {/* Text content */}
-          <div className="space-y-8">
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary text-sm font-medium rounded-full">
+          <div className=" space-y-4 lg:space-y-8 w-full">
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary text-xs sm:text-sm font-medium rounded-full">
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
               MERN Stack Developer
             </motion.div>
 
             <div className="space-y-4">
-              <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl font-bold tracking-tight">
+              <motion.h1 variants={itemVariants} className="text-2xl sm:text-4xl lg:text-6xl font-bold tracking-tight">
                 <span className="text-primary">Junayet Alam</span>
                 <span className="block mt-2 text-foreground">Building digital experiences.</span>
               </motion.h1>
 
-              <motion.p variants={itemVariants} className="text-muted-foreground text-lg max-w-lg leading-relaxed">
+              <motion.p variants={itemVariants} className="text-muted-foreground text-lg max-w-lg leading-relaxed hidden lg:block">
                 I create modern, responsive web applications with the MERN stack. Focusing on clean code,
                 intuitive user experiences, and performance-optimized solutions.
               </motion.p>
@@ -104,7 +104,7 @@ export default function HeroSection() {
               <Resume />
               <Button
                 variant="outline"
-                className="md:h-12 group border-primary/20 hover:border-primary/60"
+                className="lg:h-12 group border-primary/20 hover:border-primary/60"
                 onClick={scrollToProjects}
               >
                 View Projects
@@ -113,7 +113,7 @@ export default function HeroSection() {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <div className="flex flex-col sm:flex-row gap-6 pt-6 items-start sm:items-center">
+              <div className="flex flex-col sm:flex-row gap-6 lg:pt-6 items-start sm:items-center">
                 <div className="flex items-center gap-3">
                   <Link
                     href="https://www.github.com/junayet4o12"
@@ -198,9 +198,9 @@ export default function HeroSection() {
           {/* Image content */}
           <motion.div
             variants={itemVariants}
-            className="flex justify-center lg:justify-end relative"
+            className="flex justify-center lg:justify-end relative w-full"
           >
-            <div className="relative w-full max-w-xl mx-auto lg:mr-0">
+            <div className="relative w-full max-w-md lg:max-w-xl mx-auto lg:mr-0">
               {/* Image frame with decorative elements */}
               <div className="relative w-full aspect-square rounded-full">
                 {/* Profile image with layered frames */}

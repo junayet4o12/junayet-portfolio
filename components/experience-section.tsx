@@ -93,7 +93,7 @@ function CategorySection({ category }: { category: TechnologyCategory }) {
         <h3 className="text-xl font-bold">{category.name}</h3>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-4">
         {category.technologies.map((tech, index) => (
           <TechnologyCard key={index} tech={tech} />
         ))}
