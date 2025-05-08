@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: `Junayet's Portfolio`,
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 import { ThemeProvider } from "@/components/theme-provider"
 export default function RootLayout({
