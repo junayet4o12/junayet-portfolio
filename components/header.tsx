@@ -1,12 +1,11 @@
 'use client'
 
 import { Button } from '@/components/ui/button';
-import { Github, Menu, ArrowUpRight, Mail } from 'lucide-react';
+import { Github, ArrowUpRight, Mail,  Code } from 'lucide-react';
 import { Facebook, Linkedin } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { cloneElement, useEffect, useState } from 'react';
 import { Home, User, Briefcase, Image as ImageIcon, FileText } from 'lucide-react';
 import Link from 'next/link';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { ThemeToggle } from './theme-toggle';
 import { motion } from 'framer-motion';
 
@@ -15,9 +14,9 @@ const navItems = [
     { name: 'ABOUT', icon: <User size={16} />, href: '#about' },
     { name: 'EXPERIENCE', icon: <Briefcase size={16} />, href: '#experience' },
     { name: 'PORTFOLIO', icon: <ImageIcon size={16} />, href: '#projects' },
+    { name: 'SERVICE', icon: <Code size={16} />, href: '#services' },
     { name: 'CONTACT', icon: <FileText size={16} />, href: '#contact' },
-];
-
+  ];
 export default function Header() {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -90,7 +89,7 @@ export default function Header() {
                 <div className="container mx-auto px-4 h-12 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <span className="text-muted-foreground text-sm font-medium">
+                        <span className="text-muted-foreground text-xs sm:text-sm font-medium">
                             Available for Office Work
                         </span>
                     </div>
@@ -120,8 +119,8 @@ export default function Header() {
                             className="text-muted-foreground hover:text-primary transition-all duration-200 opacity-70 hover:opacity-100">
                             <Github size={18} />
                         </Link>
-                        <div className="h-4 w-px bg-border mx-2"></div>
-                        <Link href="#contact">
+                        <div className="h-4 w-px bg-border mx-2 hidden lg:block"></div>
+                        <Link className='hidden lg:block' href="#contact">
                             <Button size="sm" variant="default" className="bg-primary hover:bg-primary/90 text-xs gap-1.5 h-8">
                                 <Mail size={14} />
                                 Contact Me
@@ -176,89 +175,47 @@ export default function Header() {
                             <ThemeToggle />
                         </div>
 
-                        {/* Mobile Navigation */}
-                        <div className='flex gap-2 md:hidden'>
+                        {/* Mobile ThemeToggle */}
+                        <div className='md:hidden'>
                             <ThemeToggle />
-                            <Sheet>
-                                <SheetTrigger asChild>
-                                    <Button variant="outline" size="icon" className="border-primary/20">
-                                        <Menu size={18} />
-                                    </Button>
-                                </SheetTrigger>
-                                <SheetContent side="right" className="w-[300px] backdrop-blur-lg bg-background/95 border-l border-border">
-                                    <SheetHeader className="text-left pb-6 border-b border-border">
-                                        <Link href="/" className="flex items-center gap-2">
-                                            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                                                <span className="font-bold text-white">J</span>
-                                            </div>
-                                            <SheetTitle className="text-foreground text-xl font-bold">JUNAYET</SheetTitle>
-                                        </Link>
-                                    </SheetHeader>
-                                    <div className="flex flex-col gap-1 mt-6">
-                                        {navItems.map((item) => (
-                                            <Link
-                                                key={item.name}
-                                                href={item.href}
-                                                onClick={(e) => scrollToSection(e, item.href)}
-                                                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                                                    activeSection === item.href 
-                                                        ? 'bg-primary/10 text-primary font-medium' 
-                                                        : 'text-foreground hover:bg-muted/50'
-                                                }`}
-                                            >
-                                                <span className={`${activeSection === item.href ? 'bg-primary/20' : 'bg-muted'} w-8 h-8 rounded-full flex items-center justify-center`}>
-                                                    {item.icon}
-                                                </span>
-                                                <span>{item.name}</span>
-                                                {activeSection === item.href && (
-                                                    <motion.div 
-                                                        layoutId="activeMobile"
-                                                        className="w-1.5 h-1.5 bg-primary rounded-full ml-auto"
-                                                    />
-                                                )}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                    <div className="absolute bottom-8 left-0 right-0 px-6">
-                                        <div className="flex flex-col gap-4">
-                                            <div className="flex justify-center gap-4">
-                                                <Link
-                                                    href="https://github.com/junayet4o12"
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                    className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
-                                                >
-                                                    <Github size={18} />
-                                                </Link>
-                                                <Link
-                                                    href="https://www.linkedin.com/in/junayet-alam/"
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                    className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
-                                                >
-                                                    <Linkedin size={18} />
-                                                </Link>
-                                                <Link
-                                                    href="https://www.facebook.com/junayet4012/"
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                    className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
-                                                >
-                                                    <Facebook size={18} />
-                                                </Link>
-                                            </div>
-                                            <Button className="w-full mt-4" variant="default">
-                                                <Mail size={16} className="mr-2" />
-                                                Contact Me
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </SheetContent>
-                            </Sheet>
                         </div>
                     </div>
                 </nav>
             </header>
+
+            {/* Right Side Navigation Bar for Mobile */}
+            <div className="md:hidden fixed right-4 top-1/2 transform -translate-y-1/2 z-50">
+                <div className="flex flex-col gap-4 bg-background/90 backdrop-blur-md p-3 rounded-full border border-border shadow-lg">
+                    {navItems.map((item) => (
+                        <Link
+                            key={item.name}
+                            href={item.href}
+                            onClick={(e) => scrollToSection(e, item.href)}
+                            className="relative group"
+                        >
+                            <div className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
+                                activeSection === item.href
+                                    ? 'bg-primary text-background'
+                                    : 'bg-muted/50 text-muted-foreground hover:text-foreground'
+                            }`}>
+                                <span className="w-5 h-5">{cloneElement(item.icon, { size: 20 })}</span>
+                            </div>
+                            
+                            {/* Tooltip for nav item names */}
+                            <div className="absolute right-14 top-1/2 transform -translate-y-1/2 bg-background border border-border rounded-md px-2 py-1 text-xs font-medium shadow-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                {item.name}
+                            </div>
+                            
+                            {activeSection === item.href && (
+                                <motion.div
+                                    layoutId="activeRightNav"
+                                    className="absolute -right-2 top-1/2 transform -translate-y-1/2 w-1 h-6 bg-primary rounded-full"
+                                />
+                            )}
+                        </Link>
+                    ))}
+                </div>
+            </div>
         </>
     );
 }

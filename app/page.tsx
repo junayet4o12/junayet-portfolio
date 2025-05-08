@@ -22,10 +22,11 @@ export default function SyntheticV0PageForDeployment() {
       <ExperienceSection />
       <LatestProjectsSection />
       <ServicesSection />
-      <ContactSection />
-      <Footer />
+     <section id="contact" className="pt-24">
+        <ContactSection />
+        <Footer />
+     </section>
      
     </div>
-    {/* <ScrollTop /> */}
   </div>
 }

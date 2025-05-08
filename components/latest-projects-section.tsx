@@ -1,10 +1,10 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import {  ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion } from "framer-motion"
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination } from 'swiper/modules'
+import { Navigation } from 'swiper/modules'
 import { useState, useRef, useEffect } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -83,11 +83,11 @@ export default function LatestProjectsSection() {
             subtitle="  From planning to deployment, I follow modern practices to build reliable,
               scalable, and production-ready web applications."
           />
-          
-          {/* Project Navigation */}
-          <motion.div variants={itemVariants} className="flex items-center justify-between">
 
-            <div className="flex gap-3">
+          {/* Project Navigation */}
+          <div className="space-y-8">
+            <motion.div variants={itemVariants} className="flex gap-3 ml-auto max-w-max">
+
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   ref={prevRef}
@@ -109,73 +109,63 @@ export default function LatestProjectsSection() {
                   <ChevronRight className="h-5 w-5" />
                 </Button>
               </motion.div>
-            </div>
-          </motion.div>
+            </motion.div>
 
-          {/* Project Cards Slider */}
-          <motion.div variants={itemVariants}>
-            <Swiper
-              modules={[Navigation, Pagination]}
-              spaceBetween={24}
-              slidesPerView={1}
-              navigation={{
-                prevEl: prevRef.current,
-                nextEl: nextRef.current,
-              }}
-              pagination={{
-                el: '.swiper-custom-pagination',
-                clickable: true,
-                renderBullet: (index, className) => {
-                  return `<span class="${className} w-2 h-2 bg-primary/30 hover:bg-primary/60 rounded-full transition-colors"></span>`;
-                }
-              }}
-              onBeforeInit={(swiper) => {
-                // @ts-expect-error: Swiper types don't allow manual assignment
-                swiper.params.navigation.prevEl = prevRef.current;
-                // @ts-expect-error: Swiper types don't allow manual assignment
-                swiper.params.navigation.nextEl = nextRef.current;
-              }}
-              breakpoints={{
-                768: {
-                  slidesPerView: 2,
-                },
-                1024: {
-                  slidesPerView: 3,
-                },
-              }}
-              className="!pb-14"
-            >
-              {projects.map((project, index) => (
-                <SwiperSlide key={index}>
-                  <ProjectCard project={project} />
-                </SwiperSlide>
-              ))}
-
-              {/* Custom pagination */}
-              <div className="swiper-custom-pagination flex justify-center gap-2 mt-8"></div>
-            </Swiper>
-          </motion.div>
-
-          {/* Additional project stats - Optional */}
-          <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pt-8"
-          >
-            {[
-              { label: 'Completed Projects', value: projects.filter(p => p.status === 'completed').length },
-              { label: 'In Progress', value: projects.filter(p => p.status === 'in progress').length },
-              { label: 'Technologies', value: '15+' },
-              { label: 'Client Satisfaction', value: '100%' },
-            ].map((stat, i) => (
-              <div
-                key={i}
-                className="rounded-lg bg-background border border-primary/10 p-4 text-center"
+            {/* Project Cards Slider */}
+            <motion.div variants={itemVariants}>
+              <Swiper
+                modules={[Navigation]}
+                spaceBetween={24}
+                slidesPerView={1}
+                navigation={{
+                  prevEl: prevRef.current,
+                  nextEl: nextRef.current,
+                }}
+                onBeforeInit={(swiper) => {
+                  // @ts-expect-error: Swiper types don't allow manual assignment
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  // @ts-expect-error: Swiper types don't allow manual assignment
+                  swiper.params.navigation.nextEl = nextRef.current;
+                }}
+                breakpoints={{
+                  768: {
+                    slidesPerView: 2,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                  },
+                }}
               >
-                <div className="text-2xl md:text-3xl font-bold text-primary">{stat.value}</div>
-                <div className="text-xs md:text-sm text-muted-foreground mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </motion.div>
+                {projects.map((project, index) => (
+                  <SwiperSlide key={index}>
+                    <ProjectCard project={project} />
+                  </SwiperSlide>
+                ))}
+
+              </Swiper>
+            </motion.div>
+
+            {/* Additional project stats - Optional */}
+            <motion.div
+              variants={itemVariants}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pt-8"
+            >
+              {[
+                { label: 'Completed Projects', value: projects.filter(p => p.status === 'completed').length },
+                { label: 'In Progress', value: projects.filter(p => p.status === 'in progress').length },
+                { label: 'Technologies', value: '15+' },
+                { label: 'Client Satisfaction', value: '100%' },
+              ].map((stat, i) => (
+                <div
+                  key={i}
+                  className="rounded-lg bg-background border border-primary/10 p-4 text-center"
+                >
+                  <div className="text-2xl md:text-3xl font-bold text-primary">{stat.value}</div>
+                  <div className="text-xs md:text-sm text-muted-foreground mt-1">{stat.label}</div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>

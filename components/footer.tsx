@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Facebook, Linkedin, Github, Mail, Phone, MapPin } from 'lucide-react';
-import ScrollTop from "./ScrollTop";
 
 export default function Footer() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -37,7 +36,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-gradient-to-br from-background/95 via-background to-background/90 border-t border-border/50 overflow-hidden">
+    <footer id="contact"  className="relative bg-gradient-to-br from-background/95 via-background to-background/90 border-t border-border/50 overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Subtle grid background */}
@@ -50,7 +49,6 @@ export default function Footer() {
 
 
       <div className="container mx-auto px-4 py-16 relative z-10">
-        <ScrollTop />
         <motion.div
           initial="hidden"
           animate={isLoaded ? "visible" : "hidden"}

@@ -26,6 +26,23 @@ const personalInfo = [
   { icon: <Globe className="w-4 h-4" />, label: "Nationality", value: "Bangladeshi" },
   { icon: <Languages className="w-4 h-4" />, label: "Languages", value: "Bangla (native), English" },
 ];
+const socialLinks = [
+  {
+    href: "https://www.github.com/junayet4o12",
+    icon: <Github className="size-4 md:size-5" />,
+    label: "GitHub",
+  },
+  {
+    href: "https://www.linkedin.com/in/junayet-alam/",
+    icon: <Linkedin className="size-4 md:size-5" />,
+    label: "LinkedIn",
+  },
+  {
+    href: "https://www.facebook.com/junayet4012/",
+    icon: <Facebook className="size-4 md:size-5" />,
+    label: "Facebook",
+  },
+];
 
 // Skills data
 const skills = [
@@ -112,13 +129,13 @@ export default function AboutSection() {
           {/* Main Content Grid */}
           <div className="grid lg:grid-cols-2 gap-10">
             {/* Left Side: Personal Info */}
-            <motion.div variants={itemVariants} className="space-y-8">
-              <div className="p-6 md:p-8 bg-background/50 border border-border rounded-2xl backdrop-blur-sm shadow-lg">
+            <motion.div variants={itemVariants} className="space-y-8 max-w-full overflow-hidden">
+              <div className="p-6 md:p-8 bg-background/50 border border-border rounded-2xl backdrop-blur-sm shadow-lg ">
                 <h3 className="text-2xl font-bold mb-6">
                   <span className="text-primary">Personal</span> Information
                 </h3>
 
-                <div className="space-y-5">
+                <div className="space-y-5 ">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                       <span className="font-bold">JA</span>
@@ -129,18 +146,18 @@ export default function AboutSection() {
                     </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-4 mt-6">
+                  <div className="grid sm:grid-cols-2 gap-4 mt-6 ">
                     {personalInfo.map(({ icon, label, value, link }) => (
                       <div key={label} className="flex items-start gap-3">
-                        <div className="mt-1 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                        <div className="mt-1 min-w-8 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                           {icon}
                         </div>
                         <div>
                           <p className="text-sm text-muted-foreground">{label}</p>
                           {link ? (
-                            <a href={link} className="font-medium hover:text-primary transition-colors" target="_blank" rel="noreferrer">{value}</a>
+                            <a href={link} className="font-medium hover:text-primary transition-colors break-all" target="_blank" rel="noreferrer">{value}</a>
                           ) : (
-                            <p className="font-medium">{value}</p>
+                            <p className="font-medium break-words">{value}</p>
                           )}
                         </div>
                       </div>
@@ -151,34 +168,22 @@ export default function AboutSection() {
 
               {/* Social Links */}
               <div className="flex flex-wrap items-center gap-4">
-                <Link
-                  href="https://www.github.com/junayet4o12"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-12 h-12 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  <Github size={20} />
-                </Link>
-                <Link
-                  href="https://www.linkedin.com/in/junayet-alam/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-12 h-12 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  <Linkedin size={20} />
-                </Link>
-                <Link
-                  href="https://www.facebook.com/junayet4012/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-12 h-12 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  <Facebook size={20} />
-                </Link>
+                {socialLinks.map((link, index) => (
+                  <Link
+                    key={index}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={link.label}
+                    className="w-9 md:w-12 aspect-square bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
+                  >
+                    {link.icon}
+                  </Link>
+                ))}
                 <div className="h-8 w-px bg-border/70 mx-2"></div>
-                <Button className="h-12">
+                <Button className="md:h-12">
                   Contact Me
-                  <Mail className="ml-2 h-4 w-4" />
+                  <Mail className="md:ml-2 h-4 w-4" />
                 </Button>
               </div>
             </motion.div>
