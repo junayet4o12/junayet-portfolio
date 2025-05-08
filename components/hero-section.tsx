@@ -4,9 +4,8 @@ import Image from "next/image";
 import profile from '@/public/profile.png'
 import { Card, CardContent } from "./ui/card";
 import Resume from "./resume";
-import AnimatedBackground from "./animated-background";
 export default function HeroSection() {
-
+    
 
 
   return (
@@ -43,7 +42,6 @@ export default function HeroSection() {
           </div>
         </div>
         <Card className="lg:hidden w-full relative overflow-hidden">
-        <AnimatedBackground />
           <CardContent className="grid lg:grid-cols-2 gap-8 items-center flex-1 w-full relative">
             <div className="relative w-full aspect-[4/3] md:aspect-[4/2]">
               <Image
@@ -73,7 +71,6 @@ export default function HeroSection() {
           </CardContent>
         </Card>
       </main>
-      <div className="absolute w-full h-full hidden lg:block"><AnimatedBackground /></div>
     </section>
   );
 }

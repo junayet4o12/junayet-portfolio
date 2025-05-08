@@ -132,7 +132,7 @@ export default function ExperienceSection() {
                 Technical <span className="text-primary">Proficiencies</span>
               </h2>
               <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-                Technologies and tools I've mastered throughout my professional career
+                Technologies and tools I&apos;ve mastered throughout my professional career
               </p>
             </div>
             

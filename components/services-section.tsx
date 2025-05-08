@@ -119,30 +119,3 @@ function ServiceCard({ icon, title, delay, isActive = false, description }: Serv
     </motion.div>
   )
 }
-
-function DesignIcon() {
-  return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <rect x="12" y="12" width="30" height="30" transform="rotate(15 12 12)" className="fill-current" />
-      <circle cx="42" cy="42" r="15" className="fill-current opacity-50" />
-    </svg>
-  )
-}
-
-function ValuesIcon() {
-  return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <circle cx="32" cy="32" r="25" className="fill-current" />
-      <circle cx="45" cy="20" r="5" className="fill-current" />
-    </svg>
-  )
-}
-
-function ComponentsIcon() {
-  return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <rect x="12" y="12" width="20" height="20" className="fill-current" />
-      <rect x="32" y="32" width="20" height="20" className="fill-current" />
-    </svg>
-  )
-}
