@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
-import { Button } from "./ui/button";
+import { useState, useEffect, useMemo } from "react";
 
 export default function ThemeColorToggle() {
   // Define available themes
-  const themes = {
+
+  const themes = useMemo(() => ({
     green: "theme-green",
     orange: "theme-orange",
     blackWhite: "theme-bw"
-  };
-
+  }), []);
   // Initialize state with the current theme (defaulting to green)
   const [currentTheme, setCurrentTheme] = useState(themes.green);
 
@@ -21,7 +20,7 @@ export default function ThemeColorToggle() {
       document.documentElement.classList.remove(...Object.values(themes));
       document.documentElement.classList.add(savedTheme);
     }
-  }, []);
+  }, [themes]);
 
   // Handle theme changes
   const changeTheme = (theme: string) => {
