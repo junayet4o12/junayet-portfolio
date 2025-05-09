@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Resume from "./resume";
 import { useState, useEffect } from "react";
+import SubtleGridBg from "./subtle-grid-bg";
 
 export default function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -60,7 +61,7 @@ export default function HeroSection() {
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Subtle grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
+        <SubtleGridBg />
 
         {/* Gradient orbs */}
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-60"></div>

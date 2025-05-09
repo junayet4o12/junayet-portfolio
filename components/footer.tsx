@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Facebook, Linkedin, Github, Mail, Phone, MapPin } from 'lucide-react';
+import SubtleGridBg from "./subtle-grid-bg";
 
 export default function Footer() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -40,8 +41,7 @@ export default function Footer() {
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Subtle grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
-
+        <SubtleGridBg />
         {/* Gradient orb */}
         <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-40"></div>
       </div>
