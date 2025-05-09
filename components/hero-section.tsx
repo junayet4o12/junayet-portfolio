@@ -206,7 +206,7 @@ export default function HeroSection() {
               {/* Image frame with decorative elements */}
               <div className="relative w-full aspect-square rounded-full">
                 {/* Profile image with layered frames */}
-                <div className="relative h-full w-full overflow-hidden">
+                <div className="relative h-full w-full">
                   {/* Outer decorative ring */}
                   <div className="absolute -inset-3 bg-gradient-to-tr from-primary/30 via-primary/20 to-transparent rounded-full blur-lg opacity-70"></div>
 
