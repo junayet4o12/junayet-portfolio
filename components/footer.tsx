@@ -37,7 +37,7 @@ export default function Footer() {
   };
 
   return (
-    <footer id="contact"  className="relative bg-gradient-to-br from-background/95 via-background to-background/90 border-t border-border/50 overflow-hidden">
+    <footer id="contact" className="relative bg-gradient-to-br from-background/95 via-background to-background/90 border-t border-border/50 overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Subtle grid background */}
@@ -53,7 +53,7 @@ export default function Footer() {
           initial="hidden"
           animate={isLoaded ? "visible" : "hidden"}
           variants={containerVariants}
-          className="grid md:grid-cols-4 gap-8 lg:gap-12"
+          className="grid md:grid-cols-3 gap-8 lg:gap-12"
         >
           {/* Logo & About */}
           <motion.div variants={itemVariants} className="space-y-4">
@@ -139,14 +139,14 @@ export default function Footer() {
                 <Phone size={16} className="text-primary/70 group-hover:text-primary transition-colors duration-200" />
                 <span className="group-hover:text-foreground transition-colors duration-200">+8801632884012</span>
               </li>
-              <li className="flex items-center gap-3 text-muted-foreground group">
-                <Mail size={16} className="text-primary/70 group-hover:text-primary transition-colors duration-200" />
-                <span className="group-hover:text-foreground transition-colors duration-200 break-words">muhammadjunayetmaruf@gmail.com</span>
+              <li className="flex gap-3 text-muted-foreground group">
+                <Mail size={16} className="text-primary/70 group-hover:text-primary transition-colors duration-200 mt-1" />
+                <span className="group-hover:text-foreground transition-colors duration-200 break-all">muhammadjunayetmaruf@gmail.com</span>
               </li>
             </ul>
           </motion.div>
 
-          {/* Newsletter */}
+          {/* Newsletter
           <motion.div variants={itemVariants} className="space-y-5">
             <div className="flex items-center gap-2">
               <div className="w-1 h-4 bg-primary rounded-full"></div>
@@ -171,7 +171,7 @@ export default function Footer() {
             <p className="text-xs text-muted-foreground/70">
               I respect your privacy. No spam, ever.
             </p>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
 
         {/* Bottom Bar */}
@@ -184,14 +184,14 @@ export default function Footer() {
             <p className="text-muted-foreground text-sm">© 2025 Junayet. All rights reserved.</p>
           </div>
 
-          <div className="flex items-center gap-6">
+          {/* <div className="flex items-center gap-6">
             <Link href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors duration-200">
               Privacy Policy
             </Link>
             <Link href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors duration-200">
               Terms of Service
             </Link>
-          </div>
+          </div> */}
         </motion.div>
       </div>
     </footer>
