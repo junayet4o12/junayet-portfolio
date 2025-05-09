@@ -2,13 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "./ui/badge";
-import { Facebook, Github, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import SubtleGridBg from "./subtle-grid-bg";
+import ContactForm from "./contact-form";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export default function ContactSection() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -144,7 +143,7 @@ export default function ContactSection() {
                         <Github size={18} />
                       </Link>
                       <Link
-                        href="https://www.linkedin.com/in/junayet-alam/"
+                        href="https://wa.me/8801632884012"
                         target="_blank"
                         rel="noreferrer"
                         className="w-10 h-10 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
@@ -152,12 +151,12 @@ export default function ContactSection() {
                         <Linkedin size={18} />
                       </Link>
                       <Link
-                        href="https://www.facebook.com/junayet4012/"
+                        href="https://wa.me/8801632884012"
                         target="_blank"
                         rel="noreferrer"
                         className="w-10 h-10 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
                       >
-                        <Facebook size={18} />
+                        <FaWhatsapp size={18} />
                       </Link>
                     </div>
                   </motion.div>
@@ -177,42 +176,7 @@ export default function ContactSection() {
                     </Badge>
                   </div>
 
-                  <div className="space-y-4">
-                    <Input
-                      placeholder="Your name"
-                      className="h-12 bg-background/50 border-border focus-visible:border-primary/50 rounded-xl"
-                    />
-
-                    <Input
-                      type="email"
-                      placeholder="your@email.com"
-                      className="h-12 bg-background/50 border-border focus-visible:border-primary/50 rounded-xl"
-                    />
-
-                    <Textarea
-                      placeholder="Your message"
-                      className="min-h-[150px] bg-background/50 border-border focus-visible:border-primary/50 rounded-xl resize-none"
-                    />
-
-                    <Button
-                      className="w-full h-12 group rounded-xl font-medium"
-                    >
-                      Send Message
-                      <motion.div
-                        className="ml-2"
-                        animate={{
-                          x: [0, 4, 0],
-                          transition: { duration: 1.5, repeat: Infinity }
-                        }}
-                      >
-                        →
-                      </motion.div>
-                    </Button>
-
-                    <p className="text-xs text-muted-foreground text-center pt-2">
-                      I&apos;ll get back to you as soon as possible
-                    </p>
-                  </div>
+                  <ContactForm />
                 </motion.div>
               </div>
             </div>

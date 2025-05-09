@@ -2,12 +2,13 @@
 
 import { Button } from '@/components/ui/button';
 import { Github, ArrowUpRight, Mail, Code } from 'lucide-react';
-import { Facebook, Linkedin } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { Home, User, Briefcase, Image as ImageIcon, FileText } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeToggle } from './theme-toggle';
 import { motion } from 'framer-motion';
+import { FaWhatsapp } from 'react-icons/fa6';
 
 const navItems = [
     { name: 'HOME', icon: <Home size={16} />, href: '#hero' },
@@ -96,12 +97,12 @@ export default function Header() {
                     </div>
                     <div className="flex items-center gap-4">
                         <Link
-                            href="https://www.facebook.com/junayet4012/"
+                            href="https://wa.me/8801632884012"
                             target="_blank"
                             rel="noreferrer"
-                            aria-label="Facebook"
+                            aria-label="WhatsApp"
                             className="text-muted-foreground hover:text-primary transition-all duration-200 opacity-70 hover:opacity-100">
-                            <Facebook size={18} />
+                            <FaWhatsapp size={18} />
                         </Link>
 
                         <Link

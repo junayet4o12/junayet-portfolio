@@ -1,6 +1,6 @@
 'use client'
 
-import { Facebook, Github, Linkedin, Mail, Phone, MapPin, Calendar, Globe, Languages } from 'lucide-react';
+import {  Github, Linkedin, Mail, Phone, MapPin, Calendar, Globe, Languages } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { motion } from "framer-motion";
@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import SectionTitle from './section-title';
 import { Badge } from './ui/badge';
 import SubtleGridBg from './subtle-grid-bg';
+import { FaWhatsapp } from 'react-icons/fa6';
 
 // Calculate age dynamically
 const dob = new Date("2003-07-09");
@@ -39,9 +40,9 @@ const socialLinks = [
     label: "LinkedIn",
   },
   {
-    href: "https://www.facebook.com/junayet4012/",
-    icon: <Facebook className="size-4 md:size-5" />,
-    label: "Facebook",
+    href: "https://wa.me/8801632884012",
+    icon: <FaWhatsapp className="size-4 md:size-5" />,
+    label: "WhatsApp",
   },
 ];
 

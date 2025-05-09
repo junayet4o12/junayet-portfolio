@@ -3,12 +3,13 @@
 import Image from "next/image";
 import profile from '@/public/profile.png';
 import { Button } from "./ui/button";
-import { ArrowRight, Github, Linkedin, Facebook } from "lucide-react";
+import { ArrowRight, Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Resume from "./resume";
 import { useState, useEffect } from "react";
 import SubtleGridBg from "./subtle-grid-bg";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export default function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -133,12 +134,12 @@ export default function HeroSection() {
                     <Linkedin size={18} />
                   </Link>
                   <Link
-                    href="https://www.facebook.com/junayet4012/"
+                    href="https://wa.me/8801632884012"
                     target="_blank"
                     rel="noreferrer"
                     className="w-10 h-10 bg-background border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
                   >
-                    <Facebook size={18} />
+                    <FaWhatsapp size={18} />
                   </Link>
                 </div>
 

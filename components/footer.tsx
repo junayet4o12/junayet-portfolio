@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Facebook, Linkedin, Github, Mail, Phone, MapPin } from 'lucide-react';
+import { Linkedin, Github, Mail, Phone, MapPin } from 'lucide-react';
 import SubtleGridBg from "./subtle-grid-bg";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export default function Footer() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -85,12 +86,12 @@ export default function Footer() {
                 <Linkedin size={16} />
               </Link>
               <Link
-                href="https://www.facebook.com/junayet4012/"
+                href="https://wa.me/8801632884012"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 bg-background/50 border border-border hover:border-primary/60 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary transition-colors duration-200"
               >
-                <Facebook size={16} />
+                <FaWhatsapp size={16} />
               </Link>
             </div>
           </motion.div>
