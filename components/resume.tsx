@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 export default function Resume() {
     const handleShowResume = () => {
-        window.open("/junayet-Resume.pdf", "_blank");
+        window.open("/junayet-resume.pdf", "_blank");
     }
     return (
         <Button onClick={handleShowResume} className="group lg:h-12 lg:text-base relative px-3 lg:px-4">
