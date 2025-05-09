@@ -273,7 +273,7 @@ export default function HeroSection() {
                 transition={{ delay: 0.8, duration: 0.5 }}
                 className="absolute -left-6 bottom-1/4 bg-background shadow-lg rounded-full py-2 px-3 border border-border flex items-center gap-2"
               >
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                 <div className="text-xs font-medium">Available for Work</div>
               </motion.div>
             </div>

@@ -90,7 +90,7 @@ export default function Header() {
             <div className="bg-background border-b border-border z-20 relative h-12">
                 <div className="container mx-auto px-4 h-12 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                         <span className="text-muted-foreground text-xs sm:text-sm font-medium">
                             Available for Office Work
                         </span>

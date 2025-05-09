@@ -8,25 +8,26 @@ import Header from "@/components/header"
 import HeroSection from "@/components/hero-section"
 import LatestProjectsSection from "@/components/latest-projects-section"
 import ServicesSection from "@/components/services-section"
+import ThemeColorToggle from "@/components/theme-color-toggle"
 
 
 export default function SyntheticV0PageForDeployment() {
   return <div className="relative">
-
+    <ThemeColorToggle />
 
     <Header />
-    
+
     <div className="overflow-x-hidden relative ">
       <HeroSection />
       <AboutSection />
       <ExperienceSection />
       <LatestProjectsSection />
       <ServicesSection />
-     <section id="contact" className="pt-24">
+      <section id="contact" className="pt-24">
         <ContactSection />
         <Footer />
-     </section>
-     
+      </section>
+
     </div>
   </div>
 }

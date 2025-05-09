@@ -41,7 +41,7 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
 
   const getStatusIcon = (status: string) => {
     if (status === "completed") {
-      return <CheckCircle className="h-4 w-4 text-green-500" />;
+      return <CheckCircle className="h-4 w-4 text-primary" />;
     } else if (status === "in progress") {
       return <Clock className="h-4 w-4 text-blue-500" />;
     } else {
@@ -146,7 +146,7 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
             </DialogTrigger>
             <DialogContent className="min-w-[80vw] max-h-[90vh]">
               <DialogHeader>
-                <DialogTitle className="text-2xl flex items-center justify-between px-5">
+                <DialogTitle className="text-2xl flex items-center justify-between pt-2.5">
                   <span className="font-bold">{project.name}</span>
                   <Badge 
                     variant={project.status === "completed" ? "default" : "secondary"} 
@@ -158,7 +158,7 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
                 </DialogTitle>
               </DialogHeader>
 
-              <ScrollArea className="max-h-[calc(90vh-8rem)] px-4">
+              <ScrollArea className="max-h-[calc(90vh-8rem)]">
                 <div className="space-y-6">
                   {/* Project Images and Description */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
