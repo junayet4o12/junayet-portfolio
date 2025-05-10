@@ -1,22 +1,28 @@
 "use client"
 
-import * as React from "react"
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "./ui/button"
+import { useEffect, useState } from "react"
 
 export function ThemeToggle() {
   const { theme: incomingTheme, setTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
-  const theme = incomingTheme !== 'system' ? incomingTheme : 'dark';
+  const [mounted, setMounted] = useState(false)
+  const theme = !incomingTheme ? 'dark' : incomingTheme !== 'system' ? incomingTheme : 'dark';
 
   const isDark = theme === "dark"
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true)
   }, [])
 
+  useEffect(() => {
+    if (incomingTheme !== 'dark' && incomingTheme !== 'light') {
+      setTheme('dark')
+    }
+  }, [incomingTheme, setTheme])
+
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark")
+    setTheme(theme === "dark" ? "light" : "dark");
   }
 
   if (!mounted) {
