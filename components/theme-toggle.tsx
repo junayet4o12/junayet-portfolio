@@ -6,20 +6,13 @@ import { Button } from "./ui/button"
 import { useEffect, useState } from "react"
 
 export function ThemeToggle() {
-  const { theme: incomingTheme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-  const theme = !incomingTheme ? 'dark' : incomingTheme !== 'system' ? incomingTheme : 'dark';
 
   const isDark = theme === "dark"
   useEffect(() => {
     setMounted(true)
   }, [])
-
-  useEffect(() => {
-    if (incomingTheme !== 'dark' && incomingTheme !== 'light') {
-      setTheme('dark')
-    }
-  }, [incomingTheme, setTheme])
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
