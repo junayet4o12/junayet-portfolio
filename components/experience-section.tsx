@@ -2,7 +2,6 @@
 
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 import {
   Code, BrainCircuit, Laptop, BookOpen,
   ChevronRight, Building
@@ -68,6 +67,9 @@ function ExperienceCard({ experience }: { experience: ExperienceData }) {
 function TechnologyCard({ tech }: { tech: Technology }) {
   return (
     <motion.div
+      initial="hidden"
+      whileInView={'visible'}
+      viewport={{ once: true }}
       variants={itemVariants}
       className="bg-background/50 border border-border/60 rounded-lg p-4 hover:border-primary/40 transition-all duration-300 backdrop-blur-sm">
       <div className="flex items-center gap-3 mb-3">
@@ -104,12 +106,6 @@ function CategorySection({ category }: { category: TechnologyCategory }) {
 }
 
 export default function ExperienceSection() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
   return (
     <section
       id="experience"
@@ -133,7 +129,8 @@ export default function ExperienceSection() {
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true }}
           variants={containerVariants}
           className="space-y-20"
         >

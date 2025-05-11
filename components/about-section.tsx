@@ -1,14 +1,14 @@
 'use client'
 
-import {  Github, Linkedin, Mail, Phone, MapPin, Calendar, Globe, Languages } from 'lucide-react';
+import { Github, Linkedin, Mail, Phone, MapPin, Calendar, Globe, Languages } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 import SectionTitle from './section-title';
 import { Badge } from './ui/badge';
 import SubtleGridBg from './subtle-grid-bg';
 import { FaWhatsapp } from 'react-icons/fa6';
+import CountUp from 'react-countup';
 
 // Calculate age dynamically
 const dob = new Date("2003-07-09");
@@ -28,6 +28,7 @@ const personalInfo = [
   { icon: <Globe className="w-4 h-4" />, label: "Nationality", value: "Bangladeshi" },
   { icon: <Languages className="w-4 h-4" />, label: "Languages", value: "Bangla (native), English" },
 ];
+
 const socialLinks = [
   {
     href: "https://www.github.com/junayet4o12",
@@ -61,21 +62,15 @@ const skills = [
 ];
 
 export default function AboutSection() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  // Set isLoaded to true after component mounts to enable animations
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
   // Container variants for staggered animations
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+        duration: 0.5
       }
     }
   };
@@ -98,7 +93,7 @@ export default function AboutSection() {
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Subtle grid background */}
-       <SubtleGridBg />
+        <SubtleGridBg />
 
         {/* Gradient orbs */}
         <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-60"></div>
@@ -114,30 +109,33 @@ export default function AboutSection() {
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true }}
           variants={containerVariants}
           className="space-y-12"
         >
           {/* Section Header */}
-          <SectionTitle
-            title1="ABOUT ME"
-            title2={{
-              active: ' Who I Am',
-              base: 'Know'
-            }}
-            subtitle="MERN Stack Developer focused on creating responsive and user-friendly web applications"
-          />
+          <motion.div variants={itemVariants}>
+            <SectionTitle
+              title1="ABOUT ME"
+              title2={{
+                active: ' Who I Am',
+                base: 'Know'
+              }}
+              subtitle="MERN Stack Developer focused on creating responsive and user-friendly web applications"
+            />
+          </motion.div>
 
           {/* Main Content Grid */}
           <div className="grid lg:grid-cols-2 gap-10">
             {/* Left Side: Personal Info */}
             <motion.div variants={itemVariants} className="space-y-8 max-w-full overflow-hidden">
-              <div className="p-6 md:p-8 bg-background/50 border border-border rounded-2xl backdrop-blur-sm shadow-lg ">
+              <div className="p-6 md:p-8 bg-background/50 border border-border rounded-2xl backdrop-blur-sm shadow-lg">
                 <h3 className="text-2xl font-bold mb-6">
                   <span className="text-primary">Personal</span> Information
                 </h3>
 
-                <div className="space-y-5 ">
+                <div className="space-y-5">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                       <span className="font-bold">JA</span>
@@ -148,9 +146,13 @@ export default function AboutSection() {
                     </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-4 mt-6 ">
+                  <div className="grid sm:grid-cols-2 gap-4 mt-6">
                     {personalInfo.map(({ icon, label, value, link }) => (
-                      <div key={label} className="flex items-start gap-3">
+                      <motion.div 
+                        key={label}
+                        variants={itemVariants}
+                        className="flex items-start gap-3"
+                      >
                         <div className="mt-1 min-w-8 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                           {icon}
                         </div>
@@ -162,14 +164,14 @@ export default function AboutSection() {
                             <p className="font-medium break-words">{value}</p>
                           )}
                         </div>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
               </div>
 
               {/* Social Links */}
-              <div className="flex flex-wrap items-center gap-4">
+              <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4">
                 {socialLinks.map((link, index) => (
                   <Link
                     key={index}
@@ -187,7 +189,7 @@ export default function AboutSection() {
                   Contact Me
                   <Mail className="md:ml-2 h-4 w-4" />
                 </Button>
-              </div>
+              </motion.div>
             </motion.div>
 
             {/* Right Side: Biography and Skills */}
@@ -229,14 +231,24 @@ export default function AboutSection() {
 
               {/* Experience Counter */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-6 bg-background/50 border border-border rounded-xl backdrop-blur-sm shadow-lg text-center">
-                  <div className="text-3xl font-bold text-primary">2+</div>
+                <motion.div 
+                  variants={itemVariants}
+                  className="p-6 bg-background/50 border border-border rounded-xl backdrop-blur-sm shadow-lg text-center"
+                >
+                  <div className="text-3xl font-bold text-primary">
+                    <CountUp end={2} suffix="+" duration={5} />
+                  </div>
                   <p className="text-muted-foreground text-sm">Years of Experience</p>
-                </div>
-                <div className="p-6 bg-background/50 border border-border rounded-xl backdrop-blur-sm shadow-lg text-center">
-                  <div className="text-3xl font-bold text-primary">7+</div>
+                </motion.div>
+                <motion.div 
+                  variants={itemVariants}
+                  className="p-6 bg-background/50 border border-border rounded-xl backdrop-blur-sm shadow-lg text-center"
+                >
+                  <div className="text-3xl font-bold text-primary">
+                    <CountUp end={7} suffix="+" duration={5} />
+                  </div>
                   <p className="text-muted-foreground text-sm">Projects Completed</p>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>

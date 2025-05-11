@@ -1,14 +1,9 @@
 'use client'
-
-import { Button } from '@/components/ui/button';
-import { Github, ArrowUpRight, Mail, Code } from 'lucide-react';
-import { Linkedin } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { Home, User, Briefcase, Image as ImageIcon, FileText } from 'lucide-react';
+import { Home, User, Briefcase, Image as ImageIcon, FileText, Code } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeToggle } from './theme-toggle';
 import { motion } from 'framer-motion';
-import { FaWhatsapp } from 'react-icons/fa6';
 
 const navItems = [
     { name: 'HOME', icon: <Home size={16} />, href: '#hero' },
@@ -87,51 +82,7 @@ export default function Header() {
     return (
         <>
             {/* Status Bar */}
-            <div className="bg-background border-b border-border z-20 relative h-12">
-                <div className="container mx-auto px-4 h-12 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                        <span className="text-muted-foreground text-xs sm:text-sm font-medium">
-                            Available for Office Work
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <Link
-                            href="https://wa.me/8801632884012"
-                            target="_blank"
-                            rel="noreferrer"
-                            aria-label="WhatsApp"
-                            className="text-muted-foreground hover:text-primary transition-all duration-200 opacity-70 hover:opacity-100">
-                            <FaWhatsapp size={18} />
-                        </Link>
-
-                        <Link
-                            href="https://www.linkedin.com/in/junayet-alam/"
-                            target="_blank"
-                            rel="noreferrer"
-                            aria-label="LinkedIn"
-                            className="text-muted-foreground hover:text-primary transition-all duration-200 opacity-70 hover:opacity-100">
-                            <Linkedin size={18} />
-                        </Link>
-                        <Link
-                            href="https://github.com/junayet4o12"
-                            target="_blank"
-                            rel="noreferrer"
-                            aria-label="GitHub"
-                            className="text-muted-foreground hover:text-primary transition-all duration-200 opacity-70 hover:opacity-100">
-                            <Github size={18} />
-                        </Link>
-                        <div className="h-4 w-px bg-border mx-2 hidden lg:block"></div>
-                        <Link className='hidden lg:block' href="#contact">
-                            <Button size="sm" variant="default" className="bg-primary hover:bg-primary/90 text-xs gap-1.5 h-8">
-                                <Mail size={14} />
-                                Contact Me
-                                <ArrowUpRight size={14} className="ml-1" />
-                            </Button>
-                        </Link>
-                    </div>
-                </div>
-            </div>
+            
 
             {/* Navigation */}
             <header
@@ -208,36 +159,6 @@ export default function Header() {
                     ))}
                 </div>
             </div>
-
-            {/* Alternative: Right Side Navigation Bar (Uncomment to use this instead of bottom navigation) */}
-            {/* 
-            <div className="md:hidden fixed right-4 top-1/2 transform -translate-y-1/2 z-50">
-                <div className="flex flex-col gap-4 bg-background/90 backdrop-blur-md p-3 rounded-full border border-border shadow-lg">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.name}
-                            href={item.href}
-                            onClick={(e) => scrollToSection(e, item.href)}
-                            className="relative"
-                        >
-                            <div className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
-                                activeSection === item.href
-                                    ? 'bg-primary text-background'
-                                    : 'bg-muted text-muted-foreground hover:text-foreground'
-                            }`}>
-                                <span className="w-5 h-5">{React.cloneElement(item.icon, { size: 20 })}</span>
-                            </div>
-                            {activeSection === item.href && (
-                                <motion.div
-                                    layoutId="activeRightNav"
-                                    className="absolute -right-1 top-1/2 transform -translate-y-1/2 w-1 h-6 bg-primary rounded-full"
-                                />
-                            )}
-                        </Link>
-                    ))}
-                </div>
-            </div>
-            */}
         </>
     );
 }

@@ -1,6 +1,4 @@
 'use client'
-
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Linkedin, Github, Mail, Phone, MapPin } from 'lucide-react';
@@ -8,13 +6,6 @@ import SubtleGridBg from "./subtle-grid-bg";
 import { FaWhatsapp } from "react-icons/fa6";
 
 export default function Footer() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  // Set isLoaded to true after component mounts to enable animations
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
   // Container variants for staggered animations
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -52,7 +43,8 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-16 relative z-10">
         <motion.div
           initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
+           whileInView={'visible'}
+          viewport={{ once: true }}
           variants={containerVariants}
           className="grid md:grid-cols-3 gap-8 lg:gap-12"
         >

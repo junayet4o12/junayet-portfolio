@@ -1,18 +1,10 @@
 'use client'
-
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Code2, UsersRound, Workflow } from 'lucide-react';
 import SectionTitle from "./section-title";
 import SubtleGridBg from "./subtle-grid-bg";
 
 export default function ServicesSection() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  // Set isLoaded to true after component mounts to enable animations
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
 
   // Container variants for staggered animations
   const containerVariants = {
@@ -62,7 +54,8 @@ export default function ServicesSection() {
 
         <motion.div
           initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
+           whileInView={'visible'}
+          viewport={{ once: true }}
           variants={containerVariants}
           className="space-y-16"
         >

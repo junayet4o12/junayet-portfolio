@@ -1,30 +1,16 @@
 'use client'
-
 import Image from "next/image";
 import profile from '@/public/profile.png';
-import { Button } from "./ui/button";
-import { ArrowRight, Github, Linkedin } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Resume from "./resume";
-import { useState, useEffect } from "react";
 import SubtleGridBg from "./subtle-grid-bg";
 import { FaWhatsapp } from "react-icons/fa6";
+import ScrollDown from "./scroll-down";
+import ViewProjectBtn from "./view-project-btn";
 
 export default function HeroSection() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  // Set isLoaded to true after component mounts to enable animations
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
-  const scrollToProjects = () => {
-    const projectsSection = document.querySelector('#projects');
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   // Container variants for staggered animations
   const containerVariants = {
@@ -47,12 +33,7 @@ export default function HeroSection() {
       transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
     }
   };
-  const handleScrollToAbout = () => {
-    const projectsSection = document.querySelector('#about');
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
+
 
   return (
     <section
@@ -79,7 +60,7 @@ export default function HeroSection() {
       <div className="container mx-auto px-4 py-8 lg:py-16 relative z-10">
         <motion.div
           initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
+          animate={'visible'}
           variants={containerVariants}
           className="flex flex-col-reverse lg:grid   lg:grid-cols-2 gap-y-8 gap-x-16 items-center"
         >
@@ -104,14 +85,7 @@ export default function HeroSection() {
 
             <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-2">
               <Resume />
-              <Button
-                variant="outline"
-                className="lg:h-12 group border-primary/20 hover:border-primary/60"
-                onClick={scrollToProjects}
-              >
-                View Projects
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
+             <ViewProjectBtn/>
             </motion.div>
 
             <motion.div variants={itemVariants}>
@@ -172,29 +146,7 @@ export default function HeroSection() {
             </motion.div>
 
             {/* Scroll indicator */}
-            <motion.div
-              variants={itemVariants}
-              className="hidden lg:flex absolute bottom-8 left-1/2 transform -translate-x-1/2 flex-col items-center gap-2"
-            >
-              <span className="text-xs text-muted-foreground">Scroll to explore</span>
-              <div
-                onClick={handleScrollToAbout}
-                className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center pt-2 cursor-pointer">
-                <motion.div
-
-                  animate={{
-                    y: [0, 8, 0],
-                    opacity: [0.8, 0.4, 0.8]
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    repeatType: "loop"
-                  }}
-                  className="w-1.5 h-1.5 bg-primary rounded-full"
-                />
-              </div>
-            </motion.div>
+           <ScrollDown/>
           </div>
 
           {/* Image content */}

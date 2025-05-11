@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion } from "framer-motion"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
-import { useState, useRef, useEffect } from 'react'
+import { useRef, } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -17,12 +17,7 @@ import SubtleGridBg from "./subtle-grid-bg"
 export default function LatestProjectsSection() {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
-  const [isLoaded, setIsLoaded] = useState(false)
 
-  // Set isLoaded to true after component mounts to enable animations
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
 
   // Container variants for staggered animations
   const containerVariants = {
@@ -70,7 +65,8 @@ export default function LatestProjectsSection() {
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
+          whileInView={'visible'}
+          viewport={{ once: true }}
           variants={containerVariants}
           className="space-y-16"
         >

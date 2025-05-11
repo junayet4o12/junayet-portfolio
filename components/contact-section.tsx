@@ -1,6 +1,4 @@
 'use client'
-
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Badge } from "./ui/badge";
 import { Github, Linkedin, Mail, MapPin, Phone } from "lucide-react";
@@ -10,12 +8,7 @@ import ContactForm from "./contact-form";
 import { FaWhatsapp } from "react-icons/fa6";
 
 export default function ContactSection() {
-  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Set isLoaded to true after component mounts to enable animations
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
 
   // Container variants for staggered animations
   const containerVariants = {
@@ -64,7 +57,8 @@ export default function ContactSection() {
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true }}
           variants={containerVariants}
           className="space-y-8"
         >
