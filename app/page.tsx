@@ -1,6 +1,7 @@
 
 import AboutSection from "@/components/about-section"
 import ContactSection from "@/components/contact-section"
+import EducationSection from "@/components/education"
 import ExperienceSection from "@/components/experience-section"
 import Footer from "@/components/footer"
 import Header from "@/components/header"
@@ -22,6 +23,7 @@ export default function SyntheticV0PageForDeployment() {
       <AboutSection />
       <ExperienceSection />
       <LatestProjectsSection />
+      <EducationSection />
       <ServicesSection />
       <section id="contact" className="pt-24">
         <ContactSection />
