@@ -25,6 +25,7 @@ const navItems = [
 export default function Sidebar() {
     const pathname = usePathname();
     const [activeSection, setActiveSection] = useState(pathname);
+    console.log(pathname);
 
     useEffect(() => {
         setActiveSection(pathname);
