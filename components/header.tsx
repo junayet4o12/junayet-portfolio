@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 
 const navItems = [
-    { name: 'HOME', icon: <Home size={16} />, href: '#hero' },
+    { name: 'HOME', icon: <Home size={16} />, href: '/' },
     { name: 'ABOUT', icon: <User size={16} />, href: '#about' },
     { name: 'EXPERIENCE', icon: <Briefcase size={16} />, href: '#experience' },
     { name: 'PORTFOLIO', icon: <ImageIcon size={16} />, href: '#projects' },
@@ -19,15 +19,20 @@ const navItems = [
 export default function Header() {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
-    const [activeSection, setActiveSection] = useState('#hero');
+    const [activeSection, setActiveSection] = useState('/');
     const [isScrolled, setIsScrolled] = useState(false);
 
     const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault();
-        const element = document.querySelector(href);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            setActiveSection(href);
+        if (href === '/') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setActiveSection('/');
+        } else {
+            const element = document.querySelector(href);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                setActiveSection(href);
+            }
         }
     };
 
@@ -53,11 +58,13 @@ export default function Header() {
         };
 
         // Check which section is in viewport
-        const handleScroll = () => {
-            const sections = navItems.map(item => item.href);
-            let currentSection = '';
+       const handleScroll = () => {
+    const sections = navItems.map(item => item.href);
+    let currentSection = '/'; // Default to HOME when at the top
 
-            for (const section of sections) {
+    if (window.scrollY > 50) {
+        for (const section of sections) {
+            if (section !== '/') {
                 const element = document.querySelector(section);
                 if (element) {
                     const rect = element.getBoundingClientRect();
@@ -67,9 +74,11 @@ export default function Header() {
                     }
                 }
             }
+        }
+    }
 
-            setActiveSection(currentSection);
-        };
+    setActiveSection(currentSection);
+};
 
         if (typeof window !== 'undefined') {
             window.addEventListener('scroll', controlNavbar);

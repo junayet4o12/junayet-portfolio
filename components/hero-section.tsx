@@ -37,7 +37,7 @@ export default function HeroSection() {
 
   return (
     <section
-      id="hero"
+      
       className="relative min-h-[calc(100vh-112px)] flex items-center bg-gradient-to-br from-background via-background to-background/90 overflow-hidden"
     >
       {/* Background decorations */}
