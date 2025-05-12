@@ -1,17 +1,19 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Home, User, Briefcase, Image as ImageIcon, FileText, Code } from 'lucide-react';
+import { Home, User, Briefcase, Image as ImageIcon, Code, BookOpen, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeToggle } from './theme-toggle';
 import { motion } from 'framer-motion';
+import { Button } from './ui/button';
 
 const navItems = [
     { name: 'HOME', icon: <Home size={16} />, href: '#hero' },
     { name: 'ABOUT', icon: <User size={16} />, href: '#about' },
     { name: 'EXPERIENCE', icon: <Briefcase size={16} />, href: '#experience' },
     { name: 'PORTFOLIO', icon: <ImageIcon size={16} />, href: '#projects' },
+    { name: 'EDUCATION', icon: <BookOpen size={16} />, href: '#education' },
+    { name: 'CONTACT', icon: <Mail size={16} />, href: '#contact', hiddenInMobile: true },
     { name: 'SERVICE', icon: <Code size={16} />, href: '#services' },
-    { name: 'CONTACT', icon: <FileText size={16} />, href: '#contact' },
 ];
 
 export default function Header() {
@@ -53,7 +55,7 @@ export default function Header() {
         // Check which section is in viewport
         const handleScroll = () => {
             const sections = navItems.map(item => item.href);
-            let currentSection = '#hero';
+            let currentSection = '';
 
             for (const section of sections) {
                 const element = document.querySelector(section);
@@ -82,7 +84,7 @@ export default function Header() {
     return (
         <>
             {/* Status Bar */}
-            
+
 
             {/* Navigation */}
             <header
@@ -113,8 +115,8 @@ export default function Header() {
                                         href={item.href}
                                         onClick={(e) => scrollToSection(e, item.href)}
                                         className={`relative px-4 py-2 rounded-full flex items-center gap-1.5 text-xs font-medium transition-all duration-200 ${activeSection === item.href
-                                                ? 'text-background bg-primary'
-                                                : 'text-muted-foreground hover:text-foreground'
+                                            ? 'text-primary-foreground bg-primary'
+                                            : 'text-muted-foreground hover:text-foreground'
                                             }`}
                                     >
                                         <span>{item.icon}</span>
@@ -126,7 +128,17 @@ export default function Header() {
                         </div>
 
                         {/* Mobile ThemeToggle */}
-                        <div className='lg:hidden'>
+                        <div className='lg:hidden flex items-center gap-4'>
+                            <Link
+                                href={'#contact'}
+                                onClick={(e) => scrollToSection(e, '#contact')}
+                            >
+                                <Button size="sm" className="h-8.5 text-xs">
+
+                                    Contact Me
+                                    <Mail />
+                                </Button>
+                            </Link>
                             <ThemeToggle />
                         </div>
                     </div>
@@ -136,7 +148,7 @@ export default function Header() {
             {/* Mobile Bottom Navigation Bar */}
             <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-t border-border shadow-lg">
                 <div className="flex items-center justify-around h-14">
-                    {navItems.map((item) => (
+                    {navItems.filter(item => !item.hiddenInMobile).map((item) => (
                         <Link
                             key={item.name}
                             href={item.href}
@@ -144,8 +156,8 @@ export default function Header() {
                             className="relative flex flex-col items-center justify-center h-full"
                         >
                             <div className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${activeSection === item.href
-                                    ? 'bg-primary text-background'
-                                    : 'bg-muted/50 text-muted-foreground hover:text-foreground'
+                                ? 'bg-primary text-primary-foreground'
+                                : 'bg-muted/50 text-muted-foreground hover:text-foreground'
                                 }`}>
                                 <span className="w-5 h-5">{React.cloneElement(item.icon, { size: 20 })}</span>
                             </div>

@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Github, ArrowUpRight, Mail } from 'lucide-react';
+import { Github, Mail } from 'lucide-react';
 import { Linkedin } from 'lucide-react';
 import Link from 'next/link';
 import { FaWhatsapp } from 'react-icons/fa6';
@@ -43,9 +43,8 @@ export default function StatusHeader() {
             <div className="h-4 w-px bg-border mx-2 hidden lg:block"></div>
             <Link className='hidden lg:block' href="#contact">
                 <Button size="sm" variant="default" className="bg-primary hover:bg-primary/90 text-xs gap-1.5 h-8">
-                    <Mail size={14} />
                     Contact Me
-                    <ArrowUpRight size={14} className="ml-1" />
+                    <Mail />
                 </Button>
             </Link>
         </div>
