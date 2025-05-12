@@ -4,12 +4,10 @@ import { ReactNode } from "react";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
     return (
-        <div className="flex gap-5">
+        <div className="flex">
             <Sidebar />
-          <div>
-                <header>Navbar</header>
+          <div className="px-8 py-8 flex-1">
                 {children}
-                <footer>footer</footer>
           </div>
         </div>
     );
