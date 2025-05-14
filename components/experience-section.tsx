@@ -11,6 +11,7 @@ import { technologyCategories } from "@/data/experiences&Technologies/technologi
 import { ExperienceData, Technology, TechnologyCategory } from "@/type";
 import { experiences } from "@/data/experiences&Technologies/experiences";
 import SubtleGridBg from "./subtle-grid-bg";
+import { Badge } from "./ui/badge";
 
 // Animation variants
 const containerVariants = {
@@ -71,19 +72,36 @@ function TechnologyCard({ tech }: { tech: Technology }) {
       whileInView={'visible'}
       viewport={{ once: true }}
       variants={itemVariants}
-      className="bg-background/50 border border-border/60 rounded-lg p-4 hover:border-primary/40 transition-all duration-300 backdrop-blur-sm">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+      className={`bg-background/50 border rounded-lg p-4 transition-all duration-300 backdrop-blur-sm
+        ${tech.isCore
+          ? "border-primary/40 shadow-sm shadow-primary/10"
+          : "border-border/60 hover:border-primary/30"}`}>
+      <div className="flex gap-2 flex-col">
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center 
+          ${tech.isCore
+            ? "bg-primary/15 text-primary"
+            : "bg-primary/10 text-primary/80"}`}>
           {tech.icon}
         </div>
-        <span className="font-medium">{tech.name}</span>
-      </div>
+        <div className="flex items-center gap-2">
+          <span className="font-medium line-clamp-1">{tech.name}</span>
 
+        </div>
+        {tech.isCore && (
+          <Badge variant="outline" className="bg-background/30 backdrop-blur-sm text-xs font-normal py-0 px-2 h-5 border-primary/20 absolute right-3">
+            Core
+          </Badge>
+        )}
+      </div>
     </motion.div>
   );
 }
 
 function CategorySection({ category }: { category: TechnologyCategory }) {
+  // Separate technologies into core and other
+  const coreTechnologies = category.technologies.filter(tech => tech.isCore);
+  const otherTechnologies = category.technologies.filter(tech => !tech.isCore);
+
   return (
     <motion.div
       variants={itemVariants}
@@ -96,9 +114,9 @@ function CategorySection({ category }: { category: TechnologyCategory }) {
         <h3 className="text-xl font-bold">{category.name}</h3>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {category.technologies.map((tech, index) => (
-          <TechnologyCard key={index} tech={tech} />
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4">
+        {[...coreTechnologies, ...otherTechnologies].map((tech, index) => (
+          <TechnologyCard key={`core-${index}`} tech={tech} />
         ))}
       </div>
     </motion.div>
