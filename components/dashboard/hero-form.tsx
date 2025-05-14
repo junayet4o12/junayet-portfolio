@@ -3,17 +3,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-    Link as LinkIcon,
-    CheckCircle,
-    XCircle,
-    PlusCircle,
     Loader2,
-    Eye,
-    ChevronUp,
-    ChevronDown,
-    Edit
+    Upload,
+    X
 } from "lucide-react";
-import MDEditor from '@uiw/react-md-editor';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -24,47 +17,56 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import SectionTitle from "@/components/section-title";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "../ui/label";
-import { ScrollArea } from "../ui/scroll-area";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import Image from "next/image";
 
 // Define the form schema with Zod
 const formSchema = z.object({
-    name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-    role: z.string().min(2, { message: "Role must be at least 2 characters" }),
     title: z.string().optional(),
-    importantLinks: z.array(z.object({
-        name: z.string().min(1, { message: "Link name is required" }),
-        link: z.string().url({ message: "Invalid URL" }),
-        icon: z.string()
-    })).optional(),
-    experience: z.string().optional(),
-    status: z.enum(["available", "unavailable"]),
-    description: z.string()
+    description: z.string(),
+    profileImage: z.instanceof(File).optional()
 });
 
 // Infer the form values type from the schema
 type FormValues = z.infer<typeof formSchema>;
 
 export default function HeroForm() {
-    const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [links, setLinks] = useState<{ name: string; link: string; icon: string }[]>([]);
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
 
     // Initialize the form with React Hook Form and Zod resolver
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: "",
-            role: "",
             title: "",
-            importantLinks: [],
-            experience: "",
-            status: "available",
             description: ""
         },
     });
+
+    // Handle image upload
+    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            form.setValue("profileImage", file);
+
+            // Create preview URL
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewImage(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // Remove image
+    const removeImage = () => {
+        form.setValue("profileImage", undefined);
+        setPreviewImage(null);
+
+        // Reset the file input
+        const fileInput = document.getElementById('profile-image-input') as HTMLInputElement;
+        if (fileInput) fileInput.value = '';
+    };
 
     // Handle form submission
     const onSubmit = async (values: FormValues) => {
@@ -77,7 +79,7 @@ export default function HeroForm() {
 
             // Success handling
             toast.success('Profile successfully updated!', { id: toastId });
-            console.log("Profile values:", { ...values, importantLinks: links });
+            console.log("Profile values:", values);
 
             // You would typically handle navigation or state updates here
         } catch (error) {
@@ -86,26 +88,6 @@ export default function HeroForm() {
         } finally {
             setIsSubmitting(false);
         }
-    };
-
-    // Add a new link
-    const addLink = () => {
-        const newLink = { name: "", link: "", icon: "" };
-        setLinks([...links, newLink]);
-        setEditingIndex(links.length);
-    };
-
-    // Update a specific link
-    const updateLink = (index: number, field: keyof typeof links[0], value: string | undefined) => {
-        const updatedLinks = [...links];
-        updatedLinks[index] = { ...updatedLinks[index], [field]: value || '' };
-        setLinks(updatedLinks);
-    };
-
-    // Remove a link
-    const removeLink = (index: number) => {
-        const updatedLinks = links.filter((_, i) => i !== index);
-        setLinks(updatedLinks);
     };
 
     // Container variants for staggered animations
@@ -128,16 +110,6 @@ export default function HeroForm() {
             y: 0,
             transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
         }
-    };
-    const toggleEditMode = (index: number) => {
-        setEditingIndex(editingIndex === index ? null : index);
-    };
-    const moveItem = (fromIndex: number, toIndex: number) => {
-        const updatedLinks = [...links];
-        const [movedItem] = updatedLinks.splice(fromIndex, 1);
-        updatedLinks.splice(toIndex, 0, movedItem);
-        setLinks(updatedLinks);
-        setEditingIndex(toIndex)
     };
 
     return <section
@@ -188,46 +160,68 @@ export default function HeroForm() {
                     <div className="relative bg-background/60 backdrop-blur-sm border border-primary/20 p-8 md:p-10 rounded-3xl shadow-lg">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                                {/* Name and Role */}
-                                <div className="grid md:grid-cols-2 gap-4">
-                                    <FormField
-                                        control={form.control}
-                                        name="name"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormControl>
-                                                    <div className="relative space-y-2">
-                                                        <Label>Full Name</Label>
-                                                        <Input
-                                                            placeholder="Full Name"
-                                                            className="h-12 bg-background/50 border-border focus-visible:border-primary/50 rounded-xl"
-                                                            {...field}
+                                {/* Profile Image Upload */}
+                                <div className="space-y-2">
+                                    <Label>Profile Image</Label>
+                                    <div className="flex items-center justify-center space-y-4 flex-col">
+                                        {/* Profile Image Preview */}
+                                        <div className="relative">
+                                            {previewImage && (
+                                                <button
+                                                    type="button"
+                                                    onClick={removeImage}
+                                                    className="absolute top-2 right-2 bg-background text-muted-foreground hover:text-foreground rounded-full p-1 border border-border shadow-sm transition-colors"
+                                                >
+                                                    <X size={14} />
+                                                </button>
+                                            )}
+                                            <div className="relative  rounded-full overflow-hidden">
+                                                <div className={`w-70 aspect-square rounded-full flex items-center justify-center bg-primary/5 border-2 ${previewImage ? 'border-primary/40' : 'border-dashed border-primary/20'} overflow-hidden`}>
+                                                    {previewImage ? (
+                                                        <Image
+                                                            src={previewImage}
+                                                            alt="Junayet Alam - MERN Stack Developer"
+                                                            fill
+                                                            className="object-cover object-center scale-105 mt-5"
+                                                            priority
+                                                            sizes="(max-width: 768px) 100vw, 50vw"
                                                         />
-                                                    </div>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="role"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormControl>
-                                                    <div className="relative space-y-2">
-                                                        <Label>Professional Role</Label>
-                                                        <Input
-                                                            placeholder="Professional Role"
-                                                            className="h-12  bg-background/50 border-border focus-visible:border-primary/50 rounded-xl"
-                                                            {...field}
-                                                        />
-                                                    </div>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
+                                                    ) : (
+                                                        <span className="text-muted-foreground text-xs text-center px-2">
+                                                            No image selected
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+
+                                        {/* Upload Button */}
+                                        <div>
+                                            <div className="flex items-center space-x-2 justify-center">
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    size="sm"
+                                                    className="h-10 px-4 rounded-xl border-primary/20 hover:border-primary/40 bg-background/50"
+                                                    onClick={() => document.getElementById('profile-image-input')?.click()}
+                                                >
+                                                    <Upload size={16} className="mr-2" />
+                                                    {previewImage ? 'Change Image' : 'Upload Image'}
+                                                </Button>
+                                                <input
+                                                    id="profile-image-input"
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={handleImageUpload}
+                                                    className="hidden"
+                                                />
+                                            </div>
+                                            <p className="text-xs text-muted-foreground mt-2">
+                                                Recommended: Square image, at least 400x400px. Max 2MB.
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div className="grid md:grid-cols-2 gap-4">
@@ -242,27 +236,6 @@ export default function HeroForm() {
                                                         <Label>Section Title</Label>
                                                         <Input
                                                             placeholder="Section Title"
-                                                            className="h-12  bg-background/50 border-border focus-visible:border-primary/50 rounded-xl"
-                                                            {...field}
-                                                        />
-                                                    </div>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    {/* Experience */}
-                                    <FormField
-                                        control={form.control}
-                                        name="experience"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormControl>
-                                                    <div className="relative space-y-2">
-                                                        <Label>Professional Experience (Year)</Label>
-                                                        <Input
-                                                            type="number"
-                                                            placeholder="Professional Experience"
                                                             className="h-12 bg-background/50 border-border focus-visible:border-primary/50 rounded-xl"
                                                             {...field}
                                                         />
@@ -282,7 +255,7 @@ export default function HeroForm() {
                                                 <div className="relative space-y-2">
                                                     <Label>Description</Label>
                                                     <Textarea
-                                                        placeholder="description"
+                                                        placeholder="Description"
                                                         className="min-h-[100px] bg-background/50 border-border focus-visible:border-primary/50 rounded-xl"
                                                         {...field}
                                                     />
@@ -292,245 +265,6 @@ export default function HeroForm() {
                                         </FormItem>
                                     )}
                                 />
-
-                                {/* Important Links */}
-                                <div className="relative bg-background/60 backdrop-blur-sm border border-primary/20 p-6 md:p-8 rounded-3xl shadow-lg">
-                                    <div>
-                                        <div className="flex justify-between items-center mb-6">
-                                            <div className="flex items-center gap-2">
-                                                <LinkIcon className="h-5 w-5 text-primary" />
-                                                <span className="font-medium text-lg">Menu Items</span>
-                                                <span className="text-sm text-muted-foreground ml-2">
-                                                    {links.length} {links.length === 1 ? 'item' : 'items'}
-                                                </span>
-                                            </div>
-                                            <Button
-                                                type="button"
-                                                variant="default"
-                                                size="sm"
-                                                onClick={addLink}
-                                                className="flex items-center gap-2 shadow-sm"
-                                            >
-                                                <PlusCircle className="h-4 w-4" /> Add Item
-                                            </Button>
-                                        </div>
-
-                                        <ScrollArea className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
-                                            {links.length === 0 ? (
-                                                <div className="flex flex-col items-center justify-center py-12 gap-4 text-center">
-                                                    <LinkIcon className="h-10 w-10 text-muted-foreground" />
-                                                    <h3 className="text-lg font-medium">No links yet</h3>
-                                                    <p className="text-muted-foreground max-w-md">
-                                                        Add your first profile link to start building your navigation.
-                                                    </p>
-                                                    <Button
-                                                        type="button"
-                                                        variant="default"
-                                                        size="sm"
-                                                        onClick={addLink}
-                                                        className="mt-2 flex items-center gap-2"
-                                                    >
-                                                        <PlusCircle className="h-4 w-4" /> Add First Link
-                                                    </Button>
-                                                </div>
-                                            ) : (
-                                                <div className="flex flex-col gap-y-4">
-                                                    {links.map((item, index) => (
-                                                        <div key={index}>
-                                                            {editingIndex === index ? (
-                                                                <div className="bg-background/80 border border-border rounded-xl p-4 space-y-4">
-                                                                    <div className="grid grid-cols-12 gap-3">
-                                                                        <div className="col-span-5 space-y-2">
-                                                                            <Label htmlFor={`name-${index}`}>Name</Label>
-                                                                            <Input
-                                                                                id={`name-${index}`}
-                                                                                placeholder="Github"
-                                                                                value={item.name}
-                                                                                onChange={(e) => updateLink(index, 'name', e.target.value)}
-                                                                                className="bg-background border-border focus-visible:border-primary/50 rounded-lg"
-                                                                            />
-                                                                        </div>
-                                                                        <div className="col-span-5 space-y-2">
-                                                                            <Label htmlFor={`link-${index}`}>URL</Label>
-                                                                            <Input
-                                                                                id={`link-${index}`}
-                                                                                placeholder="https://github/junayet4o12"
-                                                                                value={item.link}
-                                                                                onChange={(e) => updateLink(index, 'link', e.target.value)}
-                                                                                className="bg-background border-border focus-visible:border-primary/50 rounded-lg"
-                                                                            />
-                                                                        </div>
-                                                                        <div className="col-span-2 flex items-end justify-end gap-2">
-                                                                            <Tooltip>
-                                                                                <TooltipTrigger asChild>
-                                                                                    <Button
-                                                                                        type="button"
-                                                                                        variant="ghost"
-                                                                                        size="icon"
-                                                                                        onClick={() => toggleEditMode(index)}
-                                                                                        className="hover:bg-background"
-                                                                                    >
-                                                                                        <Eye className="h-4 w-4" />
-                                                                                    </Button>
-                                                                                </TooltipTrigger>
-                                                                                <TooltipContent>Preview</TooltipContent>
-                                                                            </Tooltip>
-                                                                            <Tooltip>
-                                                                                <TooltipTrigger asChild>
-                                                                                    <Button
-                                                                                        type="button"
-                                                                                        variant="ghost"
-                                                                                        size="icon"
-                                                                                        onClick={() => removeLink(index)}
-                                                                                        className="hover:bg-destructive/10 hover:text-destructive"
-                                                                                    >
-                                                                                        <XCircle className="h-4 w-4" />
-                                                                                    </Button>
-                                                                                </TooltipTrigger>
-                                                                                <TooltipContent>Remove</TooltipContent>
-                                                                            </Tooltip>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className="grid grid-cols-12 gap-3">
-                                                                        <div className="col-span-10 space-y-2">
-                                                                            <Label>Icon SVG</Label>
-                                                                            <MDEditor
-                                                                                preview="edit"
-                                                                                hideToolbar={true}
-                                                                                value={item.icon}
-                                                                                onChange={(value) => updateLink(index, 'icon', value)}
-                                                                                height={120}
-                                                                                className="rounded-lg border-border"
-                                                                            />
-                                                                        </div>
-                                                                        <div className="col-span-2 flex flex-col justify-between">
-                                                                            <div className="space-y-2">
-                                                                                <Label>Preview</Label>
-                                                                                <div
-                                                                                    dangerouslySetInnerHTML={{ __html: item.icon }}
-                                                                                    className="flex items-center justify-center h-16 w-16 border border-border rounded-lg bg-background"
-                                                                                />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className="flex justify-between items-center pt-2 border-t border-border/50">
-                                                                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                                                            <span>Item {index + 1} of {links.length}</span>
-                                                                        </div>
-                                                                        <div className="flex gap-2">
-                                                                            {index > 0 && (
-                                                                                <Button
-                                                                                    variant="ghost"
-                                                                                    type="button"
-                                                                                    size="sm"
-                                                                                    onClick={() => moveItem(index, index - 1)}
-                                                                                    className="gap-1"
-                                                                                >
-                                                                                    <ChevronUp className="h-4 w-4" /> Move Up
-                                                                                </Button>
-                                                                            )}
-                                                                            {index < links.length - 1 && (
-                                                                                <Button
-                                                                                    type="button"
-                                                                                    variant="ghost"
-                                                                                    size="sm"
-                                                                                    onClick={() => moveItem(index, index + 1)}
-                                                                                    className="gap-1"
-                                                                                >
-                                                                                    <ChevronDown className="h-4 w-4" /> Move Down
-                                                                                </Button>
-                                                                            )}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            ) : (
-                                                                <div className="bg-background/50 hover:bg-background/70 border border-border rounded-xl p-4 transition-colors">
-                                                                    <div className="flex items-center justify-between">
-                                                                        <div className="flex items-center gap-4">
-                                                                            {item.icon && (
-                                                                                <div
-                                                                                    dangerouslySetInnerHTML={{ __html: item.icon }}
-                                                                                    className="w-5 h-5 flex-shrink-0 text-muted-foreground"
-                                                                                />
-                                                                            )}
-                                                                            <div>
-                                                                                <div className="font-medium">{item.name || 'Untitled Item'}</div>
-                                                                                <div className="text-sm text-muted-foreground line-clamp-1">
-                                                                                    {item.link || 'No URL provided'}
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className="flex items-center gap-2">
-                                                                            <Button
-                                                                                type="button"
-                                                                                variant="ghost"
-                                                                                size="icon"
-                                                                                onClick={() => toggleEditMode(index)}
-                                                                                className="text-primary hover:bg-primary/10"
-                                                                            >
-                                                                                <Edit className="h-4 w-4" />
-                                                                            </Button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </ScrollArea>
-
-                                        {links.length > 0 && (
-                                            <div className="flex justify-between items-center mt-6 pt-4 border-t border-border/50">
-                                                <Button
-                                                    type="button"
-                                                    variant="outline"
-                                                    size="sm"
-                                                    onClick={addLink}
-                                                    className="flex items-center gap-2"
-                                                >
-                                                    <PlusCircle className="h-4 w-4" /> Add Another
-                                                </Button>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-
-
-
-                                {/* Status */}
-                                <FormField
-                                    control={form.control}
-                                    name="status"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormControl>
-                                                <div className="relative">
-                                                    <Select
-                                                        onValueChange={field.onChange}
-                                                        defaultValue={field.value}
-                                                    >
-                                                        <SelectTrigger className="h-12 bg-background/50 border-border focus-visible:border-primary/50 rounded-xl">
-                                                            <SelectValue placeholder="Select Availability" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            <SelectItem value="available" className="flex items-center gap-2">
-                                                                <CheckCircle className="h-4 w-4 text-green-500" /> Available
-                                                            </SelectItem>
-                                                            <SelectItem value="unavailable" className="flex items-center gap-2">
-                                                                <XCircle className="h-4 w-4 text-destructive" /> Unavailable
-                                                            </SelectItem>
-                                                        </SelectContent>
-                                                    </Select>
-                                                </div>
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-
                                 <Button
                                     type="submit"
                                     className="w-full h-12 group rounded-xl font-medium"
