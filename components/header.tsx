@@ -12,8 +12,9 @@ const navItems = [
     { name: 'EXPERIENCE', icon: <Briefcase size={16} />, href: '#experience' },
     { name: 'PORTFOLIO', icon: <ImageIcon size={16} />, href: '#projects' },
     { name: 'EDUCATION', icon: <BookOpen size={16} />, href: '#education' },
-    { name: 'CONTACT', icon: <Mail size={16} />, href: '#contact', hiddenInMobile: true },
+
     { name: 'SERVICE', icon: <Code size={16} />, href: '#services' },
+    { name: 'CONTACT', icon: <Mail size={16} />, href: '#contact', hiddenInMobile: true },
 ];
 
 export default function Header() {
@@ -58,27 +59,27 @@ export default function Header() {
         };
 
         // Check which section is in viewport
-       const handleScroll = () => {
-    const sections = navItems.map(item => item.href);
-    let currentSection = '/'; // Default to HOME when at the top
+        const handleScroll = () => {
+            const sections = navItems.map(item => item.href);
+            let currentSection = '/'; // Default to HOME when at the top
 
-    if (window.scrollY > 50) {
-        for (const section of sections) {
-            if (section !== '/') {
-                const element = document.querySelector(section);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    if (rect.top <= 100 && rect.bottom >= 100) {
-                        currentSection = section;
-                        break;
+            if (window.scrollY > 50) {
+                for (const section of sections) {
+                    if (section !== '/') {
+                        const element = document.querySelector(section);
+                        if (element) {
+                            const rect = element.getBoundingClientRect();
+                            if (rect.top <= 100 && rect.bottom >= 100) {
+                                currentSection = section;
+                                break;
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
 
-    setActiveSection(currentSection);
-};
+            setActiveSection(currentSection);
+        };
 
         if (typeof window !== 'undefined') {
             window.addEventListener('scroll', controlNavbar);
