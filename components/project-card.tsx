@@ -65,6 +65,7 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
   }, [active]);
 
   return (
+    
     <>
       {/* Overlay Background */}
       <AnimatePresence>
