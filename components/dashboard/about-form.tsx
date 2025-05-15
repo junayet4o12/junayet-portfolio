@@ -170,8 +170,8 @@ export default function AboutForm() {
                 <SectionTitle
                     title1="ABOUT"
                     title2={{
-                        active: 'You',
-                        base: 'TELL US'
+                        active: 'about you',
+                        base: 'Tell us'
                     }}
                     subtitle="Share your professional background and expertise"
                 />
