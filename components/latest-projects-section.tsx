@@ -112,7 +112,7 @@ export default function LatestProjectsSection() {
             <motion.div variants={itemVariants}>
               <Swiper
                 modules={[Navigation]}
-                spaceBetween={24}
+                spaceBetween={27}
                 slidesPerView={1}
                 navigation={{
                   prevEl: prevRef.current,

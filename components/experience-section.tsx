@@ -1,17 +1,16 @@
 'use client'
 
-import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import {
   Code, BrainCircuit, Laptop, BookOpen,
-  ChevronRight, Building
+  Building
 } from 'lucide-react';
 import SectionTitle from "./section-title";
 import { technologyCategories } from "@/data/experiences&Technologies/technologies";
-import { ExperienceData, Technology, TechnologyCategory } from "@/type";
 import { experiences } from "@/data/experiences&Technologies/experiences";
 import SubtleGridBg from "./subtle-grid-bg";
-import { Badge } from "./ui/badge";
+import ESCExperienceCard from "./experience-section-components/esc-experience-card";
+import ESCTechCategory from "./experience-section-components/esc-tech-category";
 
 // Animation variants
 const containerVariants = {
@@ -33,96 +32,6 @@ const itemVariants = {
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
   }
 };
-
-function ExperienceCard({ experience }: { experience: ExperienceData }) {
-  return (
-    <motion.div variants={itemVariants}>
-      <Card className="bg-background/50 border border-border/60 p-7 space-y-4 hover:shadow-lg transition-all duration-300 h-full relative overflow-hidden backdrop-blur-sm">
-        {/* Subtle accent line on the left side */}
-        <div className="absolute left-0 top-0 w-1 h-full bg-primary" />
-
-        <div className="pl-2">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-              {experience.organization.slice(0, 1)}
-            </div>
-            <p className="text-muted-foreground text-sm font-medium">{experience.period}</p>
-          </div>
-
-          <h3 className="text-foreground text-xl font-bold mt-3">{experience.organization}</h3>
-
-          <div className="mt-4 space-y-2">
-            {experience.description.map((line, index) => (
-              <div key={index} className="flex items-start">
-                <ChevronRight className="text-primary h-4 w-4 mr-2 mt-1 flex-shrink-0" />
-                <p className="text-muted-foreground">{line}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Card>
-    </motion.div>
-  );
-}
-
-function TechnologyCard({ tech }: { tech: Technology }) {
-  return (
-    <motion.div
-      initial="hidden"
-      whileInView={'visible'}
-      viewport={{ once: true }}
-      variants={itemVariants}
-      className={`bg-background/50 border rounded-lg p-4 transition-all duration-300 backdrop-blur-sm
-        ${tech.isCore
-          ? "border-primary/40 shadow-sm shadow-primary/10"
-          : "border-border/60 hover:border-primary/30"}`}>
-      <div className="flex gap-2 flex-col">
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center 
-          ${tech.isCore
-            ? "bg-primary/15 text-primary"
-            : "bg-primary/10 text-primary/80"}`}>
-          {tech.icon}
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="font-medium line-clamp-1">{tech.name}</span>
-
-        </div>
-        {tech.isCore && (
-          <Badge variant="outline" className="bg-background/30 backdrop-blur-sm text-xs font-normal py-0 px-2 h-5 border-primary/20 absolute right-3">
-            Core
-          </Badge>
-        )}
-      </div>
-    </motion.div>
-  );
-}
-
-function CategorySection({ category }: { category: TechnologyCategory }) {
-  // Separate technologies into core and other
-  const coreTechnologies = category.technologies.filter(tech => tech.isCore);
-  const otherTechnologies = category.technologies.filter(tech => !tech.isCore);
-
-  return (
-    <motion.div
-      variants={itemVariants}
-      className="space-y-6"
-    >
-      <div className="flex items-center space-x-3 pb-2 border-b border-border/50">
-        <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-          {category.icon}
-        </div>
-        <h3 className="text-xl font-bold">{category.name}</h3>
-      </div>
-
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4">
-        {[...coreTechnologies, ...otherTechnologies].map((tech, index) => (
-          <TechnologyCard key={`core-${index}`} tech={tech} />
-        ))}
-      </div>
-    </motion.div>
-  );
-}
-
 export default function ExperienceSection() {
   return (
     <section
@@ -176,7 +85,7 @@ export default function ExperienceSection() {
               className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {experiences.map((exp, index) => (
-                <ExperienceCard key={index} experience={exp} />
+                <ESCExperienceCard key={index} experience={exp} />
               ))}
             </motion.div>
           </div>
@@ -198,7 +107,7 @@ export default function ExperienceSection() {
               className="space-y-16"
             >
               {technologyCategories.map((category, index) => (
-                <CategorySection key={index} category={category} />
+                <ESCTechCategory key={index} category={category} />
               ))}
             </motion.div>
           </div>
