@@ -193,7 +193,7 @@ export default function HeroSection() {
                         src={profile}
                         alt="Junayet Alam - MERN Stack Developer"
                         fill
-                        className="object-cover object-center scale-105 mt-5"
+                        className={`object-cover object-center scale-105 mt-5 grayImg`}
                         priority
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
