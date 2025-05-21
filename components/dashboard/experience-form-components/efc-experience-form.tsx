@@ -7,18 +7,18 @@ import { ExperienceFormValues } from "@/schema/experience.schema";
 import { Loader2, Plus, X } from "lucide-react";
 import { UseFormReturn, useFieldArray } from "react-hook-form";
 
-
+type PropsType = {
+    form: UseFormReturn<ExperienceFormValues>,
+    onSubmit: (values: ExperienceFormValues) => Promise<void>,
+    isSubmitting: boolean,
+    buttonText: string
+}
 export default function EFCExperienceForm({
     form,
     onSubmit,
     isSubmitting,
     buttonText
-}: {
-    form: UseFormReturn<ExperienceFormValues>,
-    onSubmit: (values: ExperienceFormValues) => Promise<void>,
-    isSubmitting: boolean,
-    buttonText: string
-}) {
+}: PropsType) {
     // Set up field array for projects
     const { fields: projectFields, append: appendProject, remove: removeProject } = useFieldArray({
         control: form.control,

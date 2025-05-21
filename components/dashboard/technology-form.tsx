@@ -134,7 +134,7 @@ export default function TechnologyForm() {
                                     active: 'Technologies',
                                     base: 'Your Explored '
                                 }}
-                                subtitle="Customize your website navigation menu items and structure"
+                                subtitle="Add all technologies you learnt and know as a professional."
                             />
 
                         </div>
