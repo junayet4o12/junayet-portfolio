@@ -24,7 +24,12 @@ import Image from "next/image";
 const formSchema = z.object({
     title: z.string().optional(),
     description: z.string(),
-    profileImage: z.instanceof(File).optional()
+    profileImage: z
+        .any()
+        .refine((file) => file instanceof File || file === undefined, {
+            message: "Invalid file type.",
+        })
+        .optional(),
 });
 
 // Infer the form values type from the schema
@@ -192,7 +197,7 @@ export default function HeroForm() {
                                                         </span>
                                                     )}
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
 
