@@ -1,6 +1,5 @@
 'use client'
 import Image from "next/image";
-import profile from '@/public/profile.png';
 import { Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -190,7 +189,7 @@ export default function HeroSection() {
                   <div className="absolute inset-2 bg-gradient-to-tr from-primary/10 to-background rounded-full">
                     <div className="absolute inset-2 overflow-hidden rounded-full border-4 border-background shadow-2xl">
                       <Image
-                        src={profile}
+                        src='/junayet-alam-profile.png'
                         alt="Junayet Alam - MERN Stack Developer"
                         fill
                         className={`object-cover object-center scale-105 mt-5 grayImg`}
