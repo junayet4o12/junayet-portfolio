@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Home, User, Briefcase, Image as ImageIcon, Code, BookOpen, Mail } from 'lucide-react';
 import Link from 'next/link';
-import { ThemeToggle } from './theme-toggle';
+import { ThemeToggle } from './mode-toggle';
 import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 

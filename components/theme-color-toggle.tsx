@@ -41,7 +41,7 @@ export default function ThemeColorToggle() {
       <div 
         className={`group cursor-pointer rounded-l-none rounded-r-sm p-0.5 md:p-1 transition-all ${
           currentTheme === themes.green 
-            ? "outline outline-2 outline-offset-2 outline-primary" 
+            ? "outline-2 outline-offset-2 outline-primary" 
             : "hover:opacity-80"
         }`}
         onClick={() => changeTheme(themes.green)}
@@ -59,7 +59,7 @@ export default function ThemeColorToggle() {
       <div 
         className={`group cursor-pointer rounded-l-none rounded-r-sm p-0.5 md:p-1 transition-all ${
           currentTheme === themes.orange 
-            ? "outline outline-2 outline-offset-2 outline-primary" 
+            ? "outline-2 outline-offset-2 outline-primary" 
             : "hover:opacity-80"
         }`}
         onClick={() => changeTheme(themes.orange)}
@@ -67,8 +67,8 @@ export default function ThemeColorToggle() {
       >
         <div className="w-7 md:w-8 aspect-square bg-[var(--theme-orange-primary)] dark:bg-[var(--theme-orange-primary-dark)] rounded-sm" 
           style={{
-            "--theme-orange-primary": "oklch(0.705 0.213 47.604)",
-            "--theme-orange-primary-dark": "oklch(0.646 0.222 41.116)"
+            "--theme-orange-primary": "oklch(0.623 0.214 259.815)",
+            "--theme-orange-primary-dark": "oklch(0.546 0.245 262.881)"
           } as React.CSSProperties}
         />
       </div>
@@ -77,7 +77,7 @@ export default function ThemeColorToggle() {
       <div 
         className={`group cursor-pointer rounded-l-none rounded-r-sm  p-0.5 md:p-1 transition-all ${
           currentTheme === themes.blackWhite 
-            ? "outline outline-2 outline-offset-2 outline-primary" 
+            ? "outline-2 outline-offset-2 outline-primary" 
             : "hover:opacity-80"
         }`}
         onClick={() => changeTheme(themes.blackWhite)}

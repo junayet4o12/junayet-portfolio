@@ -17,7 +17,7 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ThemeToggle } from '../theme-toggle';
+import { ThemeToggle } from '../mode-toggle';
 import SubtleGridBg from '../subtle-grid-bg';
 
 const navItems = [

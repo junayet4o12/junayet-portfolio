@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     description: "Explore Junayet Alam's portfolio showcasing expertise in React, Node.js, and full-stack web development.",
     images: [
       {
-        url: "/profile.png",
+        url: "junayet-alam-profile.png",
         width: 800,
         height: 600,
         alt: "Junayet Alam"
