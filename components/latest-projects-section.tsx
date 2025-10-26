@@ -109,7 +109,7 @@ export default function LatestProjectsSection() {
             </motion.div>
 
             {/* Project Cards Slider */}
-            <motion.div variants={itemVariants}>
+            <div>
               <Swiper
                 modules={[Navigation]}
                 spaceBetween={27}
@@ -140,7 +140,7 @@ export default function LatestProjectsSection() {
                 ))}
 
               </Swiper>
-            </motion.div>
+            </div>
 
             {/* Additional project stats - Optional */}
             <motion.div

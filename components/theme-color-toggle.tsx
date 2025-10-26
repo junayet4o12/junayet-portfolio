@@ -6,11 +6,11 @@ export default function ThemeColorToggle() {
 
   const themes = useMemo(() => ({
     green: "theme-green",
-    orange: "theme-orange",
+    blue: "theme-blue",
     blackWhite: "theme-bw"
   }), []);
   // Initialize state with the current theme (defaulting to green)
-  const [currentTheme, setCurrentTheme] = useState(themes.green);
+  const [currentTheme, setCurrentTheme] = useState(themes.blue);
 
   // Set up initial theme on component mount
   useEffect(() => {
@@ -20,6 +20,10 @@ export default function ThemeColorToggle() {
       setCurrentTheme(savedTheme);
       document.documentElement.classList.remove(...Object.values(themes));
       document.documentElement.classList.add(savedTheme);
+    } else {
+      setCurrentTheme(themes.blue);
+      document.documentElement.classList.remove(...Object.values(themes));
+      document.documentElement.classList.add(themes.blue);
     }
   }, [themes]);
 
@@ -55,20 +59,20 @@ export default function ThemeColorToggle() {
         />
       </div>
 
-      {/* Orange theme */}
+      {/* Blue theme */}
       <div 
         className={`group cursor-pointer rounded-l-none rounded-r-sm p-0.5 md:p-1 transition-all ${
-          currentTheme === themes.orange 
+          currentTheme === themes.blue 
             ? "outline-2 outline-offset-2 outline-primary" 
             : "hover:opacity-80"
         }`}
-        onClick={() => changeTheme(themes.orange)}
-        aria-label="Switch to orange theme"
+        onClick={() => changeTheme(themes.blue)}
+        aria-label="Switch to Blue theme"
       >
-        <div className="w-7 md:w-8 aspect-square bg-[var(--theme-orange-primary)] dark:bg-[var(--theme-orange-primary-dark)] rounded-sm" 
+        <div className="w-7 md:w-8 aspect-square bg-[var(--theme-blue-primary)] dark:bg-[var(--theme-blue-primary-dark)] rounded-sm" 
           style={{
-            "--theme-orange-primary": "oklch(0.623 0.214 259.815)",
-            "--theme-orange-primary-dark": "oklch(68.525% 0.13784 258.625)"
+            "--theme-blue-primary": "oklch(0.623 0.214 259.815)",
+            "--theme-blue-primary-dark": "oklch(68.525% 0.13784 258.625)"
           } as React.CSSProperties}
         />
       </div>
