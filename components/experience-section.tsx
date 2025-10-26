@@ -68,7 +68,7 @@ export default function ExperienceSection() {
               active: 'Technical Expertise ',
               base: 'Experience &'
             }}
-            subtitle="  A MERN stack developer focused on building scalable and efficient web applications with modern technologies."
+            subtitle="  A Backend developer focused on building scalable and efficient web applications with modern technologies."
           />
           {/* Experience Timeline */}
           <div className="space-y-12">

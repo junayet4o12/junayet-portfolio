@@ -185,7 +185,7 @@ export default function HeroForm() {
                                                     {previewImage ? (
                                                         <Image
                                                             src={previewImage}
-                                                            alt="Junayet Alam - MERN Stack Developer"
+                                                            alt="Junayet Alam - Backend Developer"
                                                             fill
                                                             className="object-cover object-center scale-105 mt-5"
                                                             priority

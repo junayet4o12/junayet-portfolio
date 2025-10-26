@@ -11,7 +11,7 @@ export default function StatusHeader() {
         <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
             <span className="text-muted-foreground text-xs sm:text-sm font-medium">
-                Available for Office Work
+                Working as a Backend Developer
             </span>
         </div>
         <div className="flex items-center gap-4">

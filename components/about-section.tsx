@@ -122,7 +122,7 @@ export default function AboutSection() {
                 active: ' Who I Am',
                 base: 'Know'
               }}
-              subtitle="MERN Stack Developer focused on creating responsive and user-friendly web applications"
+              subtitle="Backend Developer focused on creating responsive and user-friendly web applications"
             />
           </motion.div>
 
@@ -142,7 +142,7 @@ export default function AboutSection() {
                     </div>
                     <div>
                       <h4 className="font-bold text-lg">Junayet Alam</h4>
-                      <p className="text-muted-foreground">MERN Stack Developer</p>
+                      <p className="text-muted-foreground">Backend Developer</p>
                     </div>
                   </div>
 
@@ -201,7 +201,7 @@ export default function AboutSection() {
 
                 <div className="space-y-4 text-muted-foreground">
                   <p>
-                    I&apos;m a passionate MERN Stack Developer with expertise in building modern web applications.
+                    I&apos;m a passionate Backend Developer with expertise in building modern web applications.
                     My journey in web development started with a curiosity about how websites work, which
                     eventually led me to dive deep into the MERN stack.
                   </p>
@@ -236,7 +236,7 @@ export default function AboutSection() {
                   className="p-6 bg-background/50 border border-border rounded-xl backdrop-blur-sm shadow-lg text-center"
                 >
                   <div className="text-3xl font-bold text-primary">
-                    <CountUp end={2} suffix="+" duration={5} />
+                    <CountUp end={3} suffix="+" duration={5} />
                   </div>
                   <p className="text-muted-foreground text-sm">Years of Experience</p>
                 </motion.div>

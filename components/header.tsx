@@ -112,7 +112,7 @@ export default function Header() {
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-foreground text-lg font-bold leading-none tracking-wide">JUNAYET</span>
-                                <span className="text-muted-foreground text-xs">Developer</span>
+                                <span className="text-muted-foreground text-xs">Backend Developer</span>
                             </div>
                         </Link>
 

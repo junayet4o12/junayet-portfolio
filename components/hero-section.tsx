@@ -67,7 +67,7 @@ export default function HeroSection() {
           <div className=" space-y-4 lg:space-y-8 w-full">
             <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary text-xs sm:text-sm font-medium rounded-full">
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-              MERN Stack Developer
+              Backend Developer
             </motion.div>
 
             <div className="space-y-4">
@@ -190,7 +190,7 @@ export default function HeroSection() {
                     <div className="absolute inset-2 overflow-hidden rounded-full border-4 border-background shadow-2xl">
                       <Image
                         src='/junayet-alam-profile.png'
-                        alt="Junayet Alam - MERN Stack Developer"
+                        alt="Junayet Alam - Backend Developer"
                         fill
                         className={`object-cover object-center scale-105 mt-5 grayImg`}
                         priority
@@ -209,7 +209,7 @@ export default function HeroSection() {
                 className="absolute -right-4 top-1/4 bg-background shadow-lg rounded-full py-2 px-4 border border-border flex items-center gap-2"
               >
                 <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-                  <span className="font-bold">2+</span>
+                  <span className="font-bold">3+</span>
                 </div>
                 <div className="text-xs">
                   <p className="font-medium">Years of</p>
@@ -225,7 +225,7 @@ export default function HeroSection() {
                 className="absolute -left-6 bottom-1/4 bg-background shadow-lg rounded-full py-2 px-3 border border-border flex items-center gap-2"
               >
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                <div className="text-xs font-medium">Available for Work</div>
+                <div className="text-xs font-medium">Currently At <Link className="underline text-blue-400" href={'https://www.linkedin.com/company/smtechnology/'} target="_blank" ><strong>SM Technology</strong></Link></div>
               </motion.div>
             </div>
           </motion.div>
