@@ -11,16 +11,12 @@ const navItems = [
     { name: 'EXPERIENCE', icon: <Briefcase size={16} />, href: '#experience' },
     { name: 'PORTFOLIO', icon: <ImageIcon size={16} />, href: '#projects' },
     { name: 'EDUCATION', icon: <BookOpen size={16} />, href: '#education' },
-
     { name: 'SERVICE', icon: <Code size={16} />, href: '#services' },
     { name: 'CONTACT', icon: <Mail size={16} />, href: '#contact', hiddenInMobile: true },
 ];
 
 export default function Header() {
-    const [isVisible, setIsVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
     const [activeSection, setActiveSection] = useState('/');
-    const [isScrolled, setIsScrolled] = useState(false);
 
     const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault();
@@ -37,30 +33,12 @@ export default function Header() {
     };
 
     useEffect(() => {
-        const controlNavbar = () => {
-            if (typeof window !== 'undefined') {
-                // Show navbar when scrolling up or at top
-                if (window.scrollY < lastScrollY || window.scrollY < 10) {
-                    setIsVisible(true);
-                } else {
-                    setIsVisible(false);
-                }
-
-                // Add shadow when scrolled
-                if (window.scrollY > 20) {
-                    setIsScrolled(true);
-                } else {
-                    setIsScrolled(false);
-                }
-
-                setLastScrollY(window.scrollY);
-            }
-        };
-
-        // Check which section is in viewport
         const handleScroll = () => {
+            // Add shadow when scrolled
+
+            // Highlight current section
             const sections = navItems.map(item => item.href);
-            let currentSection = '/'; // Default to HOME when at the top
+            let currentSection = '/'; // Default to HOME
 
             if (window.scrollY > 50) {
                 for (const section of sections) {
@@ -80,28 +58,14 @@ export default function Header() {
             setActiveSection(currentSection);
         };
 
-        if (typeof window !== 'undefined') {
-            window.addEventListener('scroll', controlNavbar);
-            window.addEventListener('scroll', handleScroll);
-            return () => {
-                window.removeEventListener('scroll', controlNavbar);
-                window.removeEventListener('scroll', handleScroll);
-            };
-        }
-    }, [lastScrollY]);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <>
-            {/* Status Bar */}
-
-
-            {/* Navigation */}
             <header
-                className={`sticky top-0 z-50 transition-all duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'
-                    } ${isScrolled
-                        ? 'bg-background/80 backdrop-blur-md shadow-sm border-b border-border/50'
-                        : 'bg-background/60 backdrop-blur-sm border-b border-border'
-                    }`}
+                className={`sticky top-0 z-50 transition-all duration-300bg-background/80 backdrop-blur-md shadow-sm border-b border-border/50`}
             >
                 <nav className="container mx-auto px-4">
                     <div className="flex items-center justify-between h-16">
@@ -138,12 +102,8 @@ export default function Header() {
 
                         {/* Mobile ThemeToggle */}
                         <div className='lg:hidden flex items-center gap-4'>
-                            <Link
-                                href={'#contact'}
-                                onClick={(e) => scrollToSection(e, '#contact')}
-                            >
+                            <Link href={'#contact'} onClick={(e) => scrollToSection(e, '#contact')}>
                                 <Button size="sm" className="h-8.5 text-xs">
-
                                     Contact Me
                                     <Mail />
                                 </Button>
@@ -171,9 +131,7 @@ export default function Header() {
                                 <span className="w-5 h-5">{React.cloneElement(item.icon, { size: 20 })}</span>
                             </div>
                             {activeSection === item.href && (
-                                <div
-                                    className="absolute top-0 w-4/5 h-1 bg-primary rounded-full"
-                                />
+                                <div className="absolute top-0 w-4/5 h-1 bg-primary rounded-full" />
                             )}
                         </Link>
                     ))}
