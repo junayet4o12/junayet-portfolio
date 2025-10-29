@@ -1,43 +1,12 @@
 import { Technology } from '@/type';
-import { AnimatePresence, motion } from 'framer-motion'
 import { Badge } from '../ui/badge';
-import { Dispatch, SetStateAction } from 'react';
-const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
-    }
-};
-export default function ESCTechCard({ tech, hoveredIndex, index, setHoveredIndex }: { tech: Technology; hoveredIndex: number | null; index: number; setHoveredIndex: Dispatch<SetStateAction<number | null>> }) {
+
+export default function ESCTechCard({ tech }: { tech: Technology; }) {
     return (
-        <motion.div
-            initial="hidden"
-            whileInView={'visible'}
-            viewport={{ once: true }}
-            variants={itemVariants}
+        <div
             className='p-2 relative'
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
         >
-            <AnimatePresence>
-                {hoveredIndex === index && (
-                    <motion.span
-                        className="absolute inset-0 h-full w-full bg-primary/10 block  rounded-lg"
-                        layoutId="hoverBackground"
-                        initial={{ opacity: 0 }}
-                        animate={{
-                            opacity: 1,
-                            transition: { duration: 0.15 },
-                        }}
-                        exit={{
-                            opacity: 0,
-                            transition: { duration: 0.15, delay: 0.2 },
-                        }}
-                    />
-                )}
-            </AnimatePresence>
+
             <div
 
                 className={`bg-background/50 relative border rounded-lg p-4 transition-all duration-300 backdrop-blur-sm
@@ -63,6 +32,6 @@ export default function ESCTechCard({ tech, hoveredIndex, index, setHoveredIndex
                     )}
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 }

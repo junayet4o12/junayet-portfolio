@@ -1,9 +1,7 @@
-'use client'
 
 import { Card } from "@/components/ui/card";
-import { motion } from "framer-motion";
 import {
-  GraduationCap, Calendar, Medal, 
+  GraduationCap, Calendar, Medal,
   ChevronRight, BookOpen, School
 } from 'lucide-react';
 import SectionTitle from "./section-title";
@@ -11,33 +9,9 @@ import SubtleGridBg from "./subtle-grid-bg";
 import { educationData } from "@/data/education/education";
 import { Education } from "@/type";
 
-// Animation variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-// Education data
-
-
-function EducationCard({ education }: {education: Education}) {
+function EducationCard({ education }: { education: Education }) {
   return (
-    <motion.div variants={itemVariants}>
+    <div>
       <Card className="bg-background/50 border border-border/60 p-7 space-y-4 hover:shadow-lg transition-all duration-300 h-full relative overflow-hidden backdrop-blur-sm">
         {/* Subtle accent line on the left side */}
         <div className="absolute left-0 top-0 w-1 h-full bg-primary" />
@@ -55,12 +29,12 @@ function EducationCard({ education }: {education: Education}) {
             <GraduationCap className="text-primary h-4 w-4" />
             <p className="text-muted-foreground">{education.degree}</p>
           </div>
-          
+
           <div className="mt-1 flex items-center gap-2">
             <BookOpen className="text-primary h-4 w-4" />
             <p className="text-muted-foreground">{education.field}</p>
           </div>
-          
+
           <div className="mt-1 flex items-center gap-2">
             <Medal className="text-primary h-4 w-4" />
             <p className="text-muted-foreground font-medium">{education.gpa}</p>
@@ -76,7 +50,7 @@ function EducationCard({ education }: {education: Education}) {
           </div>
         </div>
       </Card>
-    </motion.div>
+    </div>
   );
 }
 
@@ -88,7 +62,6 @@ export default function EducationSection() {
     >
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Subtle grid background */}
         <SubtleGridBg />
 
         {/* Gradient orbs */}
@@ -101,67 +74,50 @@ export default function EducationSection() {
         <div className="absolute top-1/2 right-[10%] w-8 h-8 bg-primary/20 rounded-full"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
-          className="space-y-20"
-        >
-          {/* Section Header */}
-          <SectionTitle
-            title1="ACADEMIC JOURNEY"
-            title2={{
-              active: 'Background',
-              base: 'Educational '
-            }}
-            subtitle="My academic path that has shaped my knowledge and technical foundation in computer technology."
-          />
-          
-          {/* Education Timeline */}
-          <div className="space-y-12">
-            <motion.h3
-              variants={itemVariants}
-              className="text-2xl font-bold flex items-center gap-2"
-            >
-              <GraduationCap className="w-6 h-6 text-primary" />
-              Education & Qualifications
-            </motion.h3>
+      <div className="container mx-auto px-4 relative z-10 space-y-20">
+        {/* Section Header */}
+        <SectionTitle
+          title1="ACADEMIC JOURNEY"
+          title2={{
+            active: 'Background',
+            base: 'Educational '
+          }}
+          subtitle="My academic path that has shaped my knowledge and technical foundation in computer technology."
+        />
 
-            <motion.div
-              variants={containerVariants}
-              className="grid md:grid-cols-2 gap-6"
-            >
-              {educationData.map((edu, index) => (
-                <EducationCard key={index} education={edu} />
-              ))}
-            </motion.div>
-          </div>
+        {/* Education Timeline */}
+        <div className="space-y-12">
+          <h3 className="text-2xl font-bold flex items-center gap-2">
+            <GraduationCap className="w-6 h-6 text-primary" />
+            Education & Qualifications
+          </h3>
 
-          {/* Educational Highlights */}
-          <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-12"
-          >
-            {[
-              { label: "Technical Training", icon: <School className="w-5 h-5" /> },
-              { label: "Project-Based Learning", icon: <BookOpen className="w-5 h-5" /> },
-              { label: "Academic Excellence", icon: <Medal className="w-5 h-5" /> },
-              { label: "Continuous Learning", icon: <Calendar className="w-5 h-5" /> }
-            ].map((skill, index) => (
-              <div
-                key={index}
-                className="p-6 bg-background/50 border border-border rounded-xl backdrop-blur-sm shadow-lg flex flex-col items-center justify-center text-center"
-              >
-                <div className="w-12 h-12 mb-3 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-                  {skill.icon}
-                </div>
-                <h4 className="font-medium">{skill.label}</h4>
-              </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {educationData.map((edu, index) => (
+              <EducationCard key={index} education={edu} />
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
+
+        {/* Educational Highlights */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-12">
+          {[
+            { label: "Technical Training", icon: <School className="w-5 h-5" /> },
+            { label: "Project-Based Learning", icon: <BookOpen className="w-5 h-5" /> },
+            { label: "Academic Excellence", icon: <Medal className="w-5 h-5" /> },
+            { label: "Continuous Learning", icon: <Calendar className="w-5 h-5" /> }
+          ].map((skill, index) => (
+            <div
+              key={index}
+              className="p-6 bg-background/50 border border-border rounded-xl backdrop-blur-sm shadow-lg flex flex-col items-center justify-center text-center"
+            >
+              <div className="w-12 h-12 mb-3 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                {skill.icon}
+              </div>
+              <h4 className="font-medium">{skill.label}</h4>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

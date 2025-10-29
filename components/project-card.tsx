@@ -1,7 +1,5 @@
-'use client'
 
 import { ProjectType } from "@/type";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import {
   Code, Calendar, Tag, CheckCircle,
@@ -11,12 +9,10 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { ScrollArea } from "./ui/scroll-area";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
-import { useId, useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { Card, CardContent } from "./ui/card";
+import { DialogTrigger } from "@radix-ui/react-dialog";
 export default function ProjectCard({ project }: { project: ProjectType }) {
-  const [active, setActive] = useState<boolean>(false);
-  const id = useId();
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -39,10 +35,105 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
 
   return (
 
-    <>
+    <div className="relative">
 
 
-      <Dialog open={active} onOpenChange={setActive}>
+      <Dialog>
+        <DialogTrigger asChild>
+
+          <Card>
+            <CardContent>
+              {/* Thumbnail Image */}
+              <div
+                className="relative h-64 overflow-hidden"
+              >
+                <div
+                  className="h-full w-full"
+                >
+                  <Image
+                    src={project.thumbnail}
+                    alt={project.name}
+                    fill
+                    className="object-cover"
+                  />
+
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                    <div className="text-white">
+                      <div className="flex items-center gap-2 mb-2">
+                        {getStatusIcon(project.status)}
+                        <span className="text-xs uppercase tracking-wider">{project.status}</span>
+                      </div>
+                      <h3 className="text-lg font-bold">{project.name}</h3>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Badge */}
+                <Badge
+                  variant={project.status === "completed" ? "default" : "secondary"}
+                  className="absolute top-4 right-4 z-10 bg-background/80 backdrop-blur-sm"
+                >
+                  {project.status}
+                </Badge>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 space-y-4 flex-grow">
+                <h3
+                  className="text-xl font-bold text-foreground group-hover:text-primary transition-colors"
+                >
+                  {project.name}
+                </h3>
+
+                <p
+                  className="text-sm text-muted-foreground line-clamp-3"
+                >
+                  {project.description}
+                </p>
+
+                {/* Technologies */}
+                <div className="pt-1">
+                  <div className="flex flex-wrap gap-2">
+                    {project.technology.frontend.slice(0, 3).map((tech) => (
+                      <Badge key={tech} variant="secondary" className="text-xs">
+                        {tech}
+                      </Badge>
+                    ))}
+                    {(project.technology.frontend.length > 3 || project.technology.backend.length > 0) && (
+                      <Badge variant="outline" className="text-xs">
+                        +{project.technology.frontend.length + project.technology.backend.length - 3}
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+
+                {/* Timeline */}
+                <div className="flex items-center text-xs text-muted-foreground">
+                  <Calendar className="h-3 w-3 mr-1" />
+                  <span>
+                    {formatDate(project.duration.start)} - {project.duration.end === new Date().toLocaleString() ? "Present" : formatDate(project.duration.end)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Actions Bar */}
+              <div className="px-6 pb-6 flex justify-between items-center">
+                {/* View Details Button */}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center gap-1 hover:text-primary"
+                >
+                  <Info className="h-4 w-4" /> Details
+                </Button>
+
+                {/* External Links */}
+
+              </div>
+            </CardContent>
+          </Card>
+        </DialogTrigger>
         <DialogContent className="!max-w-7xl">
           <DialogTitle className="hidden"></DialogTitle>
           <div
@@ -75,9 +166,9 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
 
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
-                      <motion.h3 layoutId={`title-${project.name}-${id}`} className="text-2xl font-bold text-foreground">
+                      <h3 className="text-2xl font-bold text-foreground">
                         {project.name}
-                      </motion.h3>
+                      </h3>
                       <Badge
                         variant={project.status === "completed" ? "default" : "secondary"}
                         className="flex items-center gap-1"
@@ -88,9 +179,9 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
                     </div>
 
                     {/* Full Description */}
-                    <motion.div className="text-muted-foreground">
+                    <div className="text-muted-foreground">
                       {project.description}
-                    </motion.div>
+                    </div>
 
                     {/* Project Details */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -294,137 +385,45 @@ export default function ProjectCard({ project }: { project: ProjectType }) {
           </div>
         </DialogContent>
       </Dialog>
-      <Card>
-        <CardContent>
-          {/* Thumbnail Image */}
-          <div
-            className="relative h-64 overflow-hidden"
-            onClick={() => setActive(true)}
+
+      <div className="flex gap-2 absolute bottom-11 right-6">
+        {project.live_link.frontend && (
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8 rounded-full border-primary/20 hover:border-primary/60 text-muted-foreground hover:text-primary transition-colors"
+            asChild
           >
-            <div
-              className="h-full w-full"
+            <a
+              href={project.live_link.frontend}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Live Demo"
             >
-              <Image
-                src={project.thumbnail}
-                alt={project.name}
-                fill
-                className="object-cover"
-              />
+              <Globe className="h-4 w-4" />
+            </a>
+          </Button>
+        )}
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                <div className="text-white">
-                  <div className="flex items-center gap-2 mb-2">
-                    {getStatusIcon(project.status)}
-                    <span className="text-xs uppercase tracking-wider">{project.status}</span>
-                  </div>
-                  <h3 className="text-lg font-bold">{project.name}</h3>
-                </div>
-              </div>
-            </div>
-
-            {/* Badge */}
-            <Badge
-              variant={project.status === "completed" ? "default" : "secondary"}
-              className="absolute top-4 right-4 z-10 bg-background/80 backdrop-blur-sm"
+        {project.code_repo.frontend && (
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8 rounded-full border-primary/20 hover:border-primary/60 text-muted-foreground hover:text-primary transition-colors"
+            asChild
+          >
+            <a
+              href={project.code_repo.frontend}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="GitHub Repository"
             >
-              {project.status}
-            </Badge>
-          </div>
+              <Github className="h-4 w-4" />
+            </a>
+          </Button>
+        )}
+      </div>
 
-          {/* Content */}
-          <div onClick={() => setActive(true)} className="p-6 space-y-4 flex-grow">
-            <motion.h3
-              layoutId={`title-${project.name}-${id}`}
-              className="text-xl font-bold text-foreground group-hover:text-primary transition-colors"
-            >
-              {project.name}
-            </motion.h3>
-
-            <p
-              className="text-sm text-muted-foreground line-clamp-3"
-            >
-              {project.description}
-            </p>
-
-            {/* Technologies */}
-            <div className="pt-1">
-              <div className="flex flex-wrap gap-2">
-                {project.technology.frontend.slice(0, 3).map((tech) => (
-                  <Badge key={tech} variant="secondary" className="text-xs">
-                    {tech}
-                  </Badge>
-                ))}
-                {(project.technology.frontend.length > 3 || project.technology.backend.length > 0) && (
-                  <Badge variant="outline" className="text-xs">
-                    +{project.technology.frontend.length + project.technology.backend.length - 3}
-                  </Badge>
-                )}
-              </div>
-            </div>
-
-            {/* Timeline */}
-            <div className="flex items-center text-xs text-muted-foreground">
-              <Calendar className="h-3 w-3 mr-1" />
-              <span>
-                {formatDate(project.duration.start)} - {project.duration.end === new Date().toLocaleString() ? "Present" : formatDate(project.duration.end)}
-              </span>
-            </div>
-          </div>
-
-          {/* Actions Bar */}
-          <div className="px-6 pb-6 flex justify-between items-center">
-            {/* View Details Button */}
-            <Button
-              onClick={() => setActive(true)}
-              variant="ghost"
-              size="sm"
-              className="flex items-center gap-1 hover:text-primary"
-            >
-              <Info className="h-4 w-4" /> Details
-            </Button>
-
-            {/* External Links */}
-            <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
-              {project.live_link.frontend && (
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-8 w-8 rounded-full border-primary/20 hover:border-primary/60 text-muted-foreground hover:text-primary transition-colors"
-                  asChild
-                >
-                  <a
-                    href={project.live_link.frontend}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Live Demo"
-                  >
-                    <Globe className="h-4 w-4" />
-                  </a>
-                </Button>
-              )}
-
-              {project.code_repo.frontend && (
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-8 w-8 rounded-full border-primary/20 hover:border-primary/60 text-muted-foreground hover:text-primary transition-colors"
-                  asChild
-                >
-                  <a
-                    href={project.code_repo.frontend}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="GitHub Repository"
-                  >
-                    <Github className="h-4 w-4" />
-                  </a>
-                </Button>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </>
+    </div>
   );
 }

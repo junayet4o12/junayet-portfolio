@@ -1,44 +1,16 @@
-'use client'
 import Image from "next/image";
 import { Github, Linkedin } from "lucide-react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import Resume from "./resume";
 import SubtleGridBg from "./subtle-grid-bg";
 import { FaWhatsapp } from "react-icons/fa6";
 import ScrollDown from "./scroll-down";
 import ViewProjectBtn from "./view-project-btn";
+import { ImageAnimationBuble } from "./hero-motion-components";
 
 export default function HeroSection() {
-
-  // Container variants for staggered animations
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  // Individual item variants
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
-    }
-  };
-
-
   return (
-    <section
-      
-      className="relative min-h-[calc(100vh-112px)] flex items-center bg-gradient-to-br from-background via-background to-background/90 overflow-hidden"
-    >
+    <section className="relative min-h-[calc(100vh-112px)] flex items-center bg-gradient-to-br from-background via-background to-background/90 overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Subtle grid background */}
@@ -57,37 +29,32 @@ export default function HeroSection() {
 
       {/* Main content */}
       <div className="container mx-auto px-4 py-8 lg:py-16 relative z-10">
-        <motion.div
-          initial="hidden"
-          animate={'visible'}
-          variants={containerVariants}
-          className="flex flex-col-reverse lg:grid   lg:grid-cols-2 gap-y-8 gap-x-16 items-center"
-        >
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-y-8 gap-x-16 items-center">
           {/* Text content */}
-          <div className=" space-y-4 lg:space-y-8 w-full">
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary text-xs sm:text-sm font-medium rounded-full">
+          <div className="space-y-4 lg:space-y-8 w-full">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary text-xs sm:text-sm font-medium rounded-full">
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
               Backend Developer
-            </motion.div>
-
-            <div className="space-y-4">
-              <motion.h1 variants={itemVariants} className="text-2xl sm:text-4xl lg:text-6xl font-bold tracking-tight">
-                <span className="text-primary">Junayet Alam</span>
-                <span className="block mt-2 text-foreground">Building digital experiences.</span>
-              </motion.h1>
-
-              <motion.p variants={itemVariants} className="text-muted-foreground text-lg max-w-lg leading-relaxed hidden lg:block">
-                I create modern, responsive web applications with the MERN stack. Focusing on clean code,
-                intuitive user experiences, and performance-optimized solutions.
-              </motion.p>
             </div>
 
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-2">
-              <Resume />
-             <ViewProjectBtn/>
-            </motion.div>
+            <div className="space-y-4">
+              <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold tracking-tight">
+                <span className="text-primary">Junayet Alam</span>
+                <span className="block mt-2 text-foreground">Building digital experiences.</span>
+              </h1>
 
-            <motion.div variants={itemVariants}>
+              <p className="text-muted-foreground text-lg max-w-lg leading-relaxed hidden lg:block">
+                I create modern, responsive web applications with the MERN stack. Focusing on clean code,
+                intuitive user experiences, and performance-optimized solutions.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Resume />
+              <ViewProjectBtn />
+            </div>
+
+            <div>
               <div className="flex flex-col sm:flex-row gap-6 lg:pt-6 items-start sm:items-center">
                 <div className="flex items-center gap-3">
                   <Link
@@ -142,57 +109,30 @@ export default function HeroSection() {
                   <span className="text-xs text-muted-foreground">MERN Stack Expertise</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Scroll indicator */}
-           <ScrollDown/>
+            <ScrollDown />
           </div>
 
           {/* Image content */}
-          <motion.div
-            variants={itemVariants}
-            className="flex justify-center lg:justify-end relative w-full"
-          >
+          <div className="flex justify-center lg:justify-end relative w-full">
             <div className="relative w-full max-w-md lg:max-w-xl mx-auto lg:mr-0">
               {/* Image frame with decorative elements */}
               <div className="relative w-full aspect-square rounded-full">
-                {/* Profile image with layered frames */}
                 <div className="relative h-full w-full">
-                  {/* Outer decorative ring */}
                   <div className="absolute -inset-3 bg-gradient-to-tr from-primary/30 via-primary/20 to-transparent rounded-full blur-lg opacity-70"></div>
 
-                  {/* Decorative particles */}
-                  <motion.div
-                    animate={{
-                      rotate: 360,
-                      transition: { duration: 20, repeat: Infinity, ease: "linear" }
-                    }}
-                    className="absolute inset-0"
-                  >
-                    {[...Array(6)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute w-3 h-3 bg-primary rounded-full"
-                        style={{
-                          top: `${50 + 45 * Math.sin(i * (Math.PI / 3))}%`,
-                          left: `${50 + 45 * Math.cos(i * (Math.PI / 3))}%`,
-                          opacity: 0.3 + (i % 3) * 0.1
-                        }}
-                      />
-                    ))}
-                  </motion.div>
-
-                  {/* Inner frame */}
+                  <ImageAnimationBuble />
                   <div className="absolute inset-0 rounded-full border border-primary/30"></div>
 
-                  {/* Image container */}
                   <div className="absolute inset-2 bg-gradient-to-tr from-primary/10 to-background rounded-full">
                     <div className="absolute inset-2 overflow-hidden rounded-full border-4 border-background shadow-2xl">
                       <Image
                         src='/junayet-alam-profile.png'
                         alt="Junayet Alam - Backend Developer"
                         fill
-                        className={`object-cover object-center scale-105 mt-5 grayImg`}
+                        className="object-cover object-center scale-105 mt-5 grayImg"
                         priority
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
@@ -201,11 +141,7 @@ export default function HeroSection() {
                 </div>
               </div>
 
-              {/* Experience badge */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6, duration: 0.5 }}
+              <div
                 className="absolute -right-4 top-1/4 bg-background shadow-lg rounded-full py-2 px-4 border border-border flex items-center gap-2"
               >
                 <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
@@ -215,21 +151,16 @@ export default function HeroSection() {
                   <p className="font-medium">Years of</p>
                   <p className="text-muted-foreground">Experience</p>
                 </div>
-              </motion.div>
-
-              {/* Available badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.5 }}
+              </div>
+              <div
                 className="absolute -left-6 bottom-1/4 bg-background shadow-lg rounded-full py-2 px-3 border border-border flex items-center gap-2"
               >
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                 <div className="text-xs font-medium">Currently At <Link className="underline text-blue-400" href={'https://www.linkedin.com/company/smtechnology/'} target="_blank" ><strong>SM Technology</strong></Link></div>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

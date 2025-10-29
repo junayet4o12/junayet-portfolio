@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Home, User, Briefcase, Image as ImageIcon, Code, BookOpen, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeToggle } from './theme-toggle';
-import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 
 const navItems = [
@@ -172,8 +171,7 @@ export default function Header() {
                                 <span className="w-5 h-5">{React.cloneElement(item.icon, { size: 20 })}</span>
                             </div>
                             {activeSection === item.href && (
-                                <motion.div
-                                    layoutId="activeBottomNav"
+                                <div
                                     className="absolute top-0 w-4/5 h-1 bg-primary rounded-full"
                                 />
                             )}

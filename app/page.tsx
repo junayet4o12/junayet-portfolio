@@ -12,7 +12,7 @@ import StatusHeader from "@/components/status-header"
 import ThemeColorToggle from "@/components/theme-color-toggle"
 
 
-export default function SyntheticV0PageForDeployment() {
+export default function page() {
   return <div className="relative">
     <ThemeColorToggle />
     <StatusHeader />

@@ -1,18 +1,10 @@
 import { ExperienceData } from '@/type';
-import {motion} from 'framer-motion'
 import { Card } from '../ui/card';
 import { ChevronRight } from 'lucide-react';
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
-  }
-};
+
 export default function ESCExperienceCard({ experience }: { experience: ExperienceData }) {
   return (
-    <motion.div variants={itemVariants}>
+    <div>
       <Card className="bg-background/50 border border-border/60 p-7 space-y-4 hover:shadow-lg transition-all duration-300 h-full relative overflow-hidden backdrop-blur-sm">
         {/* Subtle accent line on the left side */}
         <div className="absolute left-0 top-0 w-1 h-full bg-primary" />
@@ -37,6 +29,6 @@ export default function ESCExperienceCard({ experience }: { experience: Experien
           </div>
         </div>
       </Card>
-    </motion.div>
+    </div>
   );
 }
