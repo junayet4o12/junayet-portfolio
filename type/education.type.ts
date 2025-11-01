@@ -4,5 +4,4 @@ export type Education = {
     field: string;
     period: string;
     gpa: string;
-    achievements: string[];
 };

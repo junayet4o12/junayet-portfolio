@@ -86,13 +86,13 @@ export default function LatestProjectsSection() {
 
             {/* Additional project stats */}
             <div
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pt-8"
+              className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 pt-8"
             >
               {[
-                { label: 'Completed Projects', value: projects.filter(p => p.status === 'completed').length },
-                { label: 'In Progress', value: projects.filter(p => p.status === 'in progress').length },
-                { label: 'Technologies', value: '15+' },
-                { label: 'Client Satisfaction', value: '100%' },
+                { label: 'Completed Projects', value: 10},
+                { label: 'In Progress', value: 3},
+                { label: 'Technologies', value: '30+' },
+                // { label: 'Client Satisfaction', value: '100%' },
               ].map((stat, i) => (
                 <div
                   key={i}

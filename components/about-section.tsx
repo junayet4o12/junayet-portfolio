@@ -1,12 +1,21 @@
-
-import { Github, Linkedin, Mail, Phone, MapPin, Calendar, Globe, Languages } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from './ui/button';
-import SectionTitle from './section-title';
-import { Badge } from './ui/badge';
-import SubtleGridBg from './subtle-grid-bg';
-import { FaWhatsapp } from 'react-icons/fa6';
-import ExperienceCounter from './experience-counter';
+import {
+  Github,
+  Linkedin,
+  Mail,
+  Phone,
+  MapPin,
+  Calendar,
+  Globe,
+  Languages,
+} from "lucide-react";
+import Link from "next/link";
+import { Button } from "./ui/button";
+import SectionTitle from "./section-title";
+import { Badge } from "./ui/badge";
+import SubtleGridBg from "./subtle-grid-bg";
+import { FaWhatsapp } from "react-icons/fa6";
+import ExperienceCounter from "./experience-counter";
+import { Card, CardHeader, CardContent } from "./ui/card";
 
 const dob = new Date("2003-07-09");
 const today = new Date();
@@ -16,14 +25,30 @@ const hasBirthdayPassed =
   (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
 const finalAge = hasBirthdayPassed ? age : age - 1;
 
-// Personal information with icons
 const personalInfo = [
-  { icon: <Calendar className="w-4 h-4" />, label: "Date of Birth", value: `July 09, 2003 (Age: ${finalAge})` },
-  { icon: <Mail className="w-4 h-4" />, label: "Email", value: "muhammadjunayetmaruf@gmail.com", link: "mailto:muhammadjunayetmaruf@gmail.com" },
-  { icon: <Phone className="w-4 h-4" />, label: "Contact", value: "+8801632884012" },
+  {
+    icon: <Calendar className="w-4 h-4" />,
+    label: "Date of Birth",
+    value: `July 09, 2003 (Age: ${finalAge})`,
+  },
+  {
+    icon: <Mail className="w-4 h-4" />,
+    label: "Email",
+    value: "muhammadjunayetmaruf@gmail.com",
+    link: "mailto:muhammadjunayetmaruf@gmail.com",
+  },
+  {
+    icon: <Phone className="w-4 h-4" />,
+    label: "Contact",
+    value: "+8801632884012",
+  },
   { icon: <MapPin className="w-4 h-4" />, label: "Address", value: "Feni, Bangladesh" },
   { icon: <Globe className="w-4 h-4" />, label: "Nationality", value: "Bangladeshi" },
-  { icon: <Languages className="w-4 h-4" />, label: "Languages", value: "Bangla (native), English" },
+  {
+    icon: <Languages className="w-4 h-4" />,
+    label: "Languages",
+    value: "Bangla (native), English",
+  },
 ];
 
 const socialLinks = [
@@ -44,19 +69,20 @@ const socialLinks = [
   },
 ];
 
-// Skills data
 const skills = [
-  { name: "React", level: 90 },
-  { name: "Node.js", level: 85 },
-  { name: "MongoDB", level: 80 },
-  { name: "Express", level: 85 },
-  { name: "Next.js", level: 75 },
-  { name: "TypeScript", level: 70 },
-  { name: "Tailwind", level: 90 },
-  { name: "JWT", level: 90 },
-  { name: "ZOD", level: 90 },
-  { name: "ShadCn", level: 90 },
+  "Node.js",
+  "Express.js",
+  "Prisma",
+  "TypeScript",
+  "Socket.io",
+  "Stripe",
+  "Next.js",
+  "Tailwind",
+  "JWT",
+  "ZOD",
+  "ShadCn"
 ];
+
 
 export default function AboutSection() {
   return (
@@ -76,29 +102,25 @@ export default function AboutSection() {
 
       {/* Main content */}
       <div className="container mx-auto px-4 relative z-10 space-y-12">
-        {/* Section Header */}
         <SectionTitle
           title1="ABOUT ME"
-          title2={{
-            active: ' Who I Am',
-            base: 'Know'
-          }}
+          title2={{ active: " Who I Am", base: "Know" }}
           subtitle="Backend Developer focused on creating responsive and user-friendly web applications"
         />
 
-        {/* Main Content Grid */}
         <div className="grid lg:grid-cols-2 gap-10">
           {/* Left Side: Personal Info */}
-          <div className="space-y-8 max-w-full overflow-hidden">
-            <div className="p-6 md:p-8 bg-background/50 border border-border rounded-2xl backdrop-blur-sm shadow-lg">
-              <h3 className="text-2xl font-bold mb-6">
-                <span className="text-primary">Personal</span> Information
-              </h3>
-
-              <div className="space-y-5">
+          <div className="space-y-8">
+            <Card className="border-border bg-background/50 backdrop-blur-sm shadow-lg">
+              <CardHeader>
+                <h3 className="text-2xl font-bold">
+                  <span className="text-primary">Personal</span> Information
+                </h3>
+              </CardHeader>
+              <CardContent className="space-y-5">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-                    <span className="font-bold">JA</span>
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold">
+                    JA
                   </div>
                   <div>
                     <h4 className="font-bold text-lg">Junayet Alam</h4>
@@ -130,8 +152,8 @@ export default function AboutSection() {
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
 
             {/* Social Links */}
             <div className="flex flex-wrap items-center gap-4">
@@ -155,44 +177,41 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* Right Side: Biography and Skills */}
+          {/* Right Side: Biography & Skills */}
           <div className="space-y-8">
-            <div className="p-6 md:p-8 bg-background/50 border border-border rounded-2xl backdrop-blur-sm shadow-lg">
-              <h3 className="text-2xl font-bold mb-6">
-                <span className="text-primary">My</span> Biography
-              </h3>
+            <Card className="border-border bg-background/50 backdrop-blur-sm shadow-lg">
+              <CardHeader>
+                <h3 className="text-2xl font-bold">
+                  <span className="text-primary">My</span> Biography
+                </h3>
+              </CardHeader>
+              <CardContent className="space-y-4 text-muted-foreground">
+                <p>
+                  I am Junayet Alam, a Backend developer from Feni, Bangladesh.
+                  Studied at Feni Polytechnic Institute (Computer Technology).
+                  Currently working on SM Technology as a Node.js Backend
+                  Developer (sometimes Full-stack).
+                </p>
+                <p>
+                  Always in progress for increasing my Backend coding skills,
+                  experience, and quality. My main focus is optimization,
+                  reducing response time, and ensuring top-notch security.
+                  Currently exploring PostgreSQL.
+                </p>
 
-              <div className="space-y-4 text-muted-foreground">
-                <p>
-                  I&apos;m a passionate Backend Developer with expertise in building modern web applications.
-                  My journey in web development started with a curiosity about how websites work, which
-                  eventually led me to dive deep into the MERN stack.
-                </p>
-                <p>
-                  I&apos;ve completed 1 team project and 6+ personal projects based on the MERN stack. My specialty
-                  and interest lie in building functionality in both the Front-End and Back-End to maximize
-                  user-friendliness.
-                </p>
-                <p>
-                  I enjoy taking on challenging problems and finding elegant solutions. I&apos;m constantly
-                  learning and staying updated with the latest technologies in web development.
-                </p>
-              </div>
-
-              {/* Skills */}
-              <div className="mt-8">
-                <h4 className="text-lg font-semibold mb-4">Technical Skills</h4>
-                <div className="space-x-1">
-                  {skills.map((skill) => (
-                    <Badge key={skill.name} variant="secondary">
-                      {skill.name}
-                    </Badge>
-                  ))}
+                <div className="mt-8">
+                  <h4 className="text-lg font-semibold mb-4">Technical Skills</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {skills.map((skill) => (
+                      <Badge key={skill} variant="secondary">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
 
-            {/* Experience Counter */}
             <ExperienceCounter />
           </div>
         </div>

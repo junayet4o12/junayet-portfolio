@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity */
 "use client"
 
 import { useTheme } from "next-themes"
@@ -14,7 +15,6 @@ export function ThemeToggle() {
     setTheme(theme === "dark" ? "light" : "dark");
   }
 
-console.log('hello')
 
   return (
     <Button

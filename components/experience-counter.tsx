@@ -12,7 +12,7 @@ export default function ExperienceCounter() {
             </div>
             <div className="p-6 bg-background/50 border border-border rounded-xl backdrop-blur-sm shadow-lg text-center">
                 <div className="text-3xl font-bold text-primary">
-                    <CountUp end={7} suffix="+" duration={5} />
+                    <CountUp end={20} suffix="+" duration={5} />
                 </div>
                 <p className="text-muted-foreground text-sm">Projects Completed</p>
             </div>

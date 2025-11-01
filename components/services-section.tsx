@@ -1,18 +1,16 @@
-import { ArrowRight, Code2, UsersRound, Workflow } from 'lucide-react';
+import {  Code2, UsersRound, Workflow } from 'lucide-react';
 import SectionTitle from "./section-title";
 import SubtleGridBg from "./subtle-grid-bg";
 
 export default function ServicesSection() {
   return (
     <section
-      id="services"
+      id="expertise"
       className="relative py-24 bg-gradient-to-br from-background via-background/95 to-background/90 overflow-hidden"
     >
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         <SubtleGridBg />
-
-       
       </div>
 
       {/* Main content */}
@@ -20,32 +18,31 @@ export default function ServicesSection() {
         <SectionTitle
           title1="WHAT I DO"
           title2={{
-            base: 'MY SERVICES &',
+            base: 'MY ROLE &',
             active: 'EXPERTISE'
           }}
-          subtitle="I specialize in building modern web applications with clean code, scalable architecture, 
-            and elegant UI using the MERN stack and Tailwind."
+          subtitle="Currently working as a developer focused on building efficient, scalable, and clean web applications. Always exploring new technologies and improving both frontend and backend performance."
         />
 
-        {/* Services Grid */}
+        {/* Expertise Grid */}
         <div className="grid md:grid-cols-3 gap-8">
-          <ServiceCard
+          <ExpertiseCard
             icon={<Code2 className="h-10 w-10" />}
-            title="MERN STACK DEVELOPMENT"
-            description="Modern full-stack apps using MongoDB, Express, React, and Node.js with clean code, REST APIs, and secure architecture."
+            title="BACKEND/FULL-STACK DEVELOPMENT"
+            description="Designing and developing full-stack web apps using Next.js, Node.js, Express, Prisma and MongoDB with a focus on clean code and performance optimization."
           />
 
-          <ServiceCard
+          <ExpertiseCard
             icon={<Workflow className="h-10 w-10" />}
-            title="INDUSTRY-STANDARD WORKFLOW"
-            description="Using professional workflows including branching strategies, pull requests, code reviews, and modular design for maintainability."
+            title="CLEAN WORKFLOW & BEST PRACTICES"
+            description="Following industry-standard practices such as version control, modular structure, API validation, and efficient collaboration using Git and CI/CD."
             featured={true}
           />
 
-          <ServiceCard
+          <ExpertiseCard
             icon={<UsersRound className="h-10 w-10" />}
-            title="TEAM-BASED MERN PROJECTS"
-            description="Built scalable MERN apps with teammates, managing roles like frontend/backend, deployment, and API design collaboratively."
+            title="TEAM COLLABORATION & PROJECT EXECUTION"
+            description="Collaborating with teammates on large-scale MERN projects, handling both frontend and backend roles, deployment, and code review responsibilities."
           />
         </div>
       </div>
@@ -53,14 +50,14 @@ export default function ServicesSection() {
   );
 }
 
-interface ServiceCardProps {
+interface ExpertiseCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
   featured?: boolean;
 }
 
-function ServiceCard({ icon, title, description, featured = false }: ServiceCardProps) {
+function ExpertiseCard({ icon, title, description, featured = false }: ExpertiseCardProps) {
   return (
     <div className="relative">
       <div
@@ -74,7 +71,7 @@ function ServiceCard({ icon, title, description, featured = false }: ServiceCard
         {/* Background effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/5 opacity-0"></div>
 
-        {/* Service icon */}
+        {/* Icon */}
         <div
           className={`
           mb-6 w-16 h-16 rounded-full flex items-center justify-center
@@ -89,15 +86,15 @@ function ServiceCard({ icon, title, description, featured = false }: ServiceCard
           {title}
         </h3>
 
-        <p className="text-muted-foreground mb-8 text-sm leading-relaxed">
+        <p className="text-muted-foreground  text-sm leading-relaxed">
           {description}
         </p>
 
         {/* Action link */}
-        <div className="inline-flex items-center text-sm font-medium text-primary">
+        {/* <div className="inline-flex items-center text-sm font-medium text-primary">
           Learn More
           <ArrowRight className="ml-2 h-4 w-4" />
-        </div>
+        </div> */}
 
         {/* Featured indicator */}
         {featured && (
@@ -105,7 +102,7 @@ function ServiceCard({ icon, title, description, featured = false }: ServiceCard
         )}
       </div>
 
-      {/* Bottom glow effect for featured card */}
+      {/* Bottom glow effect */}
       {featured && (
         <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-primary/30 rounded-full blur-md"></div>
       )}

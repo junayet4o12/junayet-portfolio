@@ -11,7 +11,7 @@ const navItems = [
     { name: 'EXPERIENCE', icon: <Briefcase size={16} />, href: '#experience' },
     { name: 'PORTFOLIO', icon: <ImageIcon size={16} />, href: '#projects' },
     { name: 'EDUCATION', icon: <BookOpen size={16} />, href: '#education' },
-    { name: 'SERVICE', icon: <Code size={16} />, href: '#services' },
+    { name: 'EXPERTISE', icon: <Code size={16} />, href: '#expertise' },
     { name: 'CONTACT', icon: <Mail size={16} />, href: '#contact', hiddenInMobile: true },
 ];
 
@@ -61,6 +61,7 @@ export default function Header() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
 
     return (
         <>
